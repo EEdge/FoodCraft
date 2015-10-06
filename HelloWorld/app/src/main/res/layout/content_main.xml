@@ -27,6 +27,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:text="Hello FoodCraft from Sapan"
+            android:id="@+id/textView" />
+
     </LinearLayout>
 
 </RelativeLayout>
