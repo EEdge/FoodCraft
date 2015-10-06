@@ -2,4 +2,5 @@
     <string name="app_name">Hello World</string>
     <string name="action_settings">Settings</string>
     <string name="helloworld">Hello FoodCraft from Paul</string>
+    <string name="hello_from_brook">Brook says Hi!</string>
 </resources>
