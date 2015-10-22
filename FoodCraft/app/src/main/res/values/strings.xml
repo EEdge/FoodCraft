@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">FoodCraft</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="upc">Scan a UPC code</string>
+    <string name="upc_scanner">Scan a UPC code</string>
+    <string name="database_backend">Use the database</string>
+    <string name="search_frontend">Use the search frontend</string>
+    <string name="googlemaps_api">Use Google Maps</string>
+    <string name="bigoven_api">Search an ingredient in BigOven </string>
+    <string name="yummly_api">Search an ingredient in Yummly </string>
 </resources>

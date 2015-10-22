@@ -2,92 +2,50 @@ package sfsu.csc413.foodcraft;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import android.content.Intent;
 
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
-
-    private Button upcbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.upcbutton = (Button) this.findViewById(R.id.upc);
-        this.upcbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.initiateScan();
-            }
-        });
     }
 
+    /** This is the method called when a user hit the "Scan a UPC Code" button in our main activity.
+     *  It initiates the scanning using the ZXing intentIntegrator
+     *  Calls onActivityResult when the scan is completed
+     * @param view
+     *  Written by Paul Klein
+     */
+    public void scan_barcode(View view){
+        IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+        integrator.initiateScan();
+    }
+
+    /** This method is called when the scan initiated by scan_Barcode completes. It parses the scanned UPC code,
+     *      and hands it off to the UPCRequest class to fetch the item from the UPC database.
+     *  The ingredient is returned as a toast.
+     *  TODO: When a ingredient is returned, add that ingredient to the current ingredient list.
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     * Written by Paul Klein
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        UPCRequest barcode_scanner = new UPCRequest("https://api.outpan.com/v1/products/",
+                "name", "459563971cd36022e52e0c936ce2836c");
         if (scanResult != null) {
-            fetch_ingrident_via_UPC(scanResult.getContents());
+            barcode_scanner.craftUPCRequest(scanResult.getContents(), this);
         }
-
-    }
-
-    public void fetch_ingrident_via_UPC(String upc_code) {
-        String url = "https://api.outpan.com/v1/products/" + upc_code + "/name";
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (com.android.volley.Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (!response.getString("name").equals("null")) {
-                                send_toast(response.getString("name"));
-                            } else {
-                                send_toast("UPC Not Found!");
-                            }
-                        } catch (Exception exception) {
-                            send_toast(exception.toString());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                HashMap<String, String> params = new HashMap<String, String>();
-                String creds = String.format("%s:", "459563971cd36022e52e0c936ce2836c");
-                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
-                params.put("Authorization", auth);
-                return params;
-            }
-        };
-        VolleyRequest.getInstance(this).addToRequestQueue(jsObjRequest);
-    }
-
-    public void send_toast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

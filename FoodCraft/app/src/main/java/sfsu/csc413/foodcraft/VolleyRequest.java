@@ -1,15 +1,16 @@
 package sfsu.csc413.foodcraft;
 
-/**
- * Created by pklein on 10/11/15.
- */
-
 import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+/**
+ * A simple Volley Class that creates our RequestQueue
+ * Written by Paul Klein (modified from version found somewhere online, will add a link later)
+ * TODO: Add a link to the original source
+ */
 public class VolleyRequest {
 
     private static VolleyRequest mInstance;
