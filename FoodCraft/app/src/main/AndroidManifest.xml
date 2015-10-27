@@ -4,6 +4,7 @@
 
     <!-- Internet Permission added due to our API calls, and Volley requests. - PK -->
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +18,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".IngredientSearch"
+            android:label="@string/title_activity_ingredient_search"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

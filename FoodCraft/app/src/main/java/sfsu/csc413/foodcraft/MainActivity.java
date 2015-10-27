@@ -70,4 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void searchActivitySwitch(View view) {
+        Intent intent = new Intent(MainActivity.this, IngredientSearch.class);
+        startActivity(intent);
+    }
 }
