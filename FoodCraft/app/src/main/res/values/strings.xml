@@ -2,6 +2,7 @@
     <string name="app_name">FoodCraft</string>
     <string name="action_settings">Settings</string>
     <string name="upc_scanner">Scan a UPC code</string>
+    <string name="upc_scanner_fragment">Scan a UPC code via Fragment</string>
     <string name="database_backend">Use the database</string>
     <string name="search_frontend">Use the search frontend</string>
     <string name="googlemaps_api">Use Google Maps</string>
