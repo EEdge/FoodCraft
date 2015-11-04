@@ -7,4 +7,5 @@
     <string name="googlemaps_api">Use Google Maps</string>
     <string name="bigoven_api">Search an ingredient in BigOven </string>
     <string name="yummly_api">Search an ingredient in Yummly </string>
+    <string name="title_activity_yummly_search" >YummlySearchActivity</string>
 </resources>

@@ -18,6 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".YummlySearchActivity"
+            android:label="@string/title_activity_yummly_search"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="sfsu.csc413.foodcraft.YummlySearchActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
