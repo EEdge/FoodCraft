@@ -1,5 +1,9 @@
 package sfsu.csc413.foodcraft;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 /**
  * @file:Utilities.java
  * @author: brook thomas
@@ -10,6 +14,22 @@ public class Utilities {
 
     /** Private constructor - class exists solely for static methods */
     private Utilities() {}
+
+    /**
+     * Given a list of ingredients, returns a randomized subset of the specified size.
+     * @param ingredients A list of ingredients.
+     * @param size The desired size of the return subset.
+     * @return A randomized subset of the ingredients.
+     */
+    public static List<String> getRandomSubset(List<String> ingredients, int size) {
+
+        long seed = System.nanoTime();
+
+        Collections.shuffle(ingredients, new Random(seed));
+
+        return ingredients.subList(0,size);
+
+    }
 
     /**
      * Strips non-ASCII characters from a string.
