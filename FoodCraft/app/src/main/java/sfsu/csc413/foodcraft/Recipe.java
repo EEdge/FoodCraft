@@ -19,4 +19,8 @@ public class Recipe {
         this.ingredients = new ArrayList<>();
     }
 
+    protected void addIngredient (String ingredient) {
+        ingredients.add(ingredient);
+    }
+
 }
