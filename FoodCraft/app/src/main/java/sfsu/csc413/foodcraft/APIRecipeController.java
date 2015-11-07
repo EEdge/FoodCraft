@@ -20,6 +20,9 @@ import static sfsu.csc413.foodcraft.YummlyHandler.yummlytoRecipe;
  * Adds the request to volley request queue
  */
 public class APIRecipeController {
+
+    public static final int YUMMLY_API = 1;
+
     /**
      * requests JSONObject from formatted url and sends the response to be converted to an array of
      * Recipe

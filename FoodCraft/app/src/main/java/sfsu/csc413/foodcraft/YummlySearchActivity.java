@@ -44,12 +44,12 @@ public class YummlySearchActivity extends AppCompatActivity {
         //adapter = new ArrayAdapter(this, R.layout.item_layout, R.id.title, items);
         //listView.setAdapter(adapter);
 
-
+        /*
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String url = formatYummlySearchURL(mSearchText.getText().toString());
+                //String url = formatYummlySearchURL(mSearchText.getText().toString());
 
                 //refresh listview
                 //adapter.clear();
@@ -65,6 +65,7 @@ public class YummlySearchActivity extends AppCompatActivity {
 
             }
         });
+        */
         }
     }
 

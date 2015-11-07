@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  *
  */
@@ -14,19 +16,18 @@ public class YummlyHandler {
     private static final String YUMMLY_ID = "222ff589";
     private static final String YUMMLY_KEY = "2c26bf6069830ab90b07f6fa26cbef3b";
     private static final String YUMMLY_ENDPOINT_SEARCH = "http://api.yummly.com/v1/api/recipes";
-    static final int api = 1;
+
     /**
      * Formats yummly search url from search string
-     * @param searchText
+     * @param ingredients
      * @return url
      */
-    public static String formatYummlySearchURL(String searchText) {
+    public static String formatYummlySearchURL(List<String> ingredients) {
 
-        String ingredientSearch[] = searchText.split(" ");
         String encodedIngredient = "";
 
-        for (int i = 0; i < ingredientSearch.length; i++)
-            encodedIngredient += "&allowedIngredient[]=" + ingredientSearch[i];
+        for (int i = 0; i < ingredients.size(); i++)
+            encodedIngredient += "&allowedIngredient[]=" + ingredients.get(i);
 
         String url = YUMMLY_ENDPOINT_SEARCH +
                 "?_app_id=" + YUMMLY_ID +
@@ -58,7 +59,7 @@ public class YummlyHandler {
             for (int x = 0; x < length; x++) {
                 JSONObject recipe = results.getJSONObject(x);
                 String id = recipe.getString("id");
-                recipeList[x] = new Recipe(api, id);
+                recipeList[x] = new Recipe(APIRecipeController.YUMMLY_API, id);
             }
             return recipeList;
         } catch (JSONException e) {
