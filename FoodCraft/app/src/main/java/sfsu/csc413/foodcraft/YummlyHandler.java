@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,9 +19,9 @@ public class YummlyHandler {
     private static final String YUMMLY_ENDPOINT_SEARCH = "http://api.yummly.com/v1/api/recipes";
 
     /**
-     * Formats yummly search url from search string
-     * @param ingredients
-     * @return url
+     * Given a list of user-defined ingredients, returns a formatted API search call for Yummly
+     * @param ingredients A list of ingredients as Strings.
+     * @return url A formatted URL ready for Volley.
      */
     public static String formatYummlySearchURL(List<String> ingredients) {
 
@@ -42,31 +43,47 @@ public class YummlyHandler {
     }
 
     /**
-     * Converts JSON response to an array of Recipe objects.
-     * API is defined as 1 for Recipe object.
-     * @param response
-     * @return recipeList
+     * Given the raw JSON response of search results from Yummly, will return a list of formatted
+     * Recipe objects ready to be sent to the Results activity.
+     * @param response a raw JSON blob of search results.
+     * @return A list of Recipe objects.
      */
-    public static Recipe[] yummlytoRecipe(JSONObject response) {
+    public static List<Recipe> yummlytoRecipe(JSONObject response) {
+
         JSONArray results;
-        Recipe[] recipeList = new Recipe[0];
+        List<Recipe> recipes = new ArrayList<>();
+
         try {
+
             results = response.getJSONArray("matches");
 
-            int length = results.length();
-            recipeList = new Recipe[length + 1];
+            for (int x = 0; x < results.length(); x++) {
 
-            for (int x = 0; x < length; x++) {
+                Recipe buildRecipe = new Recipe();
+
                 JSONObject recipe = results.getJSONObject(x);
-                String id = recipe.getString("id");
-                recipeList[x] = new Recipe(APIRecipeController.YUMMLY_API, id);
+
+                buildRecipe.id = recipe.getString("id");
+                buildRecipe.api = APIRecipeController.YUMMLY_API;
+
+                JSONArray ingredientList = recipe.getJSONArray("ingredients");
+
+                for (int y = 0; y < ingredientList.length(); y++) {
+                    String ing = ingredientList.getString(y);
+                    buildRecipe.addIngredient(ing);
+                }
+
+                recipes.add(buildRecipe);
             }
-            return recipeList;
+
+            return recipes;
+
         } catch (JSONException e) {
+
             e.printStackTrace();
         }
-        return recipeList;
-    }
 
+        return recipes;
+    }
 
 }
