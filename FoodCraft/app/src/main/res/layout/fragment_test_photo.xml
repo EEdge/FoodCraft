@@ -3,17 +3,33 @@
     android:layout_height="match_parent" tools:context="sfsu.csc413.foodcraft.TestPhotoFragment"
     android:background="#ffbf00">
 
-    <!-- TODO: Update blank fragment layout -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/barcode_scanner_container">
+
+        <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/barcode_scanner_image"/>
+
+
         <com.journeyapps.barcodescanner.CompoundBarcodeView
             android:id="@+id/barcode_scanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true">
+            <com.journeyapps.barcodescanner.BarcodeView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/zxing_barcode_surface">
+                <com.journeyapps.barcodescanner.ViewfinderView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/zxing_viewfinder_view"/>
+            </com.journeyapps.barcodescanner.BarcodeView>
         </com.journeyapps.barcodescanner.CompoundBarcodeView>
+
     </FrameLayout>
 
 </FrameLayout>
