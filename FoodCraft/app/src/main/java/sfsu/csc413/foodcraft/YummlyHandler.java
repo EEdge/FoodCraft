@@ -27,15 +27,15 @@ public class YummlyHandler {
 
         String encodedIngredient = "";
 
-        for (int i = 0; i < ingredients.size(); i++)
-            encodedIngredient += "&allowedIngredient[]=" + ingredients.get(i);
+        for (int i = 0; i < ingredients.size(); i++) {
+            encodedIngredient += "&allowedIngredient[]=" + ingredients.get(i).replace(" ","%20");
+        }
 
         String url = YUMMLY_ENDPOINT_SEARCH +
                 "?_app_id=" + YUMMLY_ID +
                 "&_app_key=" + YUMMLY_KEY +
                 encodedIngredient +
-                "&maxResult=20" +
-                "&requirePictures=true";
+                "&maxResult=10";
 
         Log.i("API_CALL", url);
 
@@ -48,10 +48,11 @@ public class YummlyHandler {
      * @param response a raw JSON blob of search results.
      * @return A list of Recipe objects.
      */
-    public static List<Recipe> yummlytoRecipe(JSONObject response) {
+    public static List<Recipe> yummlyToRecipe(JSONObject response) {
 
         JSONArray results;
-        List<Recipe> recipes = new ArrayList<>();
+
+        List<Recipe> recipeList = new ArrayList<>();
 
         try {
 
@@ -64,26 +65,28 @@ public class YummlyHandler {
                 JSONObject recipe = results.getJSONObject(x);
 
                 buildRecipe.id = recipe.getString("id");
-                buildRecipe.api = APIRecipeController.YUMMLY_API;
+
+                buildRecipe.api = RecipeSearch.YUMMLY_API;
 
                 JSONArray ingredientList = recipe.getJSONArray("ingredients");
 
                 for (int y = 0; y < ingredientList.length(); y++) {
+
                     String ing = ingredientList.getString(y);
-                    buildRecipe.addIngredient(ing);
+                    buildRecipe.ingredients.add(ing);
                 }
 
-                recipes.add(buildRecipe);
+                recipeList.add(buildRecipe);
             }
-
-            return recipes;
+            Log.i("YTR","Working fine");
+            return recipeList;
 
         } catch (JSONException e) {
 
             e.printStackTrace();
         }
 
-        return recipes;
+        return recipeList;
     }
 
 }

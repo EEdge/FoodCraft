@@ -1,9 +1,11 @@
 package sfsu.csc413.foodcraft;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static sfsu.csc413.foodcraft.YummlyHandler.formatYummlySearchURL;
 
@@ -20,52 +23,51 @@ import static sfsu.csc413.foodcraft.YummlyHandler.formatYummlySearchURL;
  */
 public class YummlySearchActivity extends AppCompatActivity {
 
-    private EditText mSearchText;
     private Button mSearchButton;
-    private TextView mResultText;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> items;
+    private RecipeSearch searchRequest;
+    private List<String> ingredients;
+    private YummlySearchActivity selfReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yummly_search);
-        final Context context;
-        context = getApplicationContext();
 
-
-        mSearchText = (EditText) findViewById(R.id.searchQuery);
         mSearchButton = (Button) findViewById(R.id.searchButton);
-        mResultText = (TextView) findViewById(R.id.searchResultDisplay);
+        ingredients = new ArrayList<String>();
+        selfReference = this;
 
-        //create listview
-        //ListView listView = (ListView) findViewById(R.id.listv);
-        //items = new ArrayList<>();
-        //adapter = new ArrayAdapter(this, R.layout.item_layout, R.id.title, items);
-        //listView.setAdapter(adapter);
+        ingredients.add("bacon");
+        ingredients.add("spinach");
+        ingredients.add("black pepper");
+        ingredients.add("olive oil");
 
-        /*
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //String url = formatYummlySearchURL(mSearchText.getText().toString());
+                searchRequest = new RecipeSearch(ingredients, getApplicationContext(), selfReference);
 
-                //refresh listview
-                //adapter.clear();
-                //adapter.notifyDataSetChanged();
-
-                //Check if search field is empty
-                if (TextUtils.isEmpty(mSearchText.getText())) {
-                    return;
-                }
-
-                APIRecipeController request = new APIRecipeController();
-                request.recipeRequest(url, context);
+                searchRequest.run();
 
             }
         });
-        */
-        }
+    }
+
+    protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
+
+        Intent intent = new Intent(selfReference, TempResultActivity.class);
+
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable(TempResultActivity.RECIPE_SEARCH_RESULTS, recipes);
+
+        intent.putExtras(bundle);
+
+        startActivity(intent);
+
+    }
+
+
     }
 

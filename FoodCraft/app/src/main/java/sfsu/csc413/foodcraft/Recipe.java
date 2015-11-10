@@ -1,32 +1,23 @@
 package sfsu.csc413.foodcraft;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  */
-public class Recipe {
+public class Recipe implements Serializable {
 
     protected int api;
     protected String id;
     protected List<String> ingredients;
 
-    Recipe () {}
-
-    Recipe(int api, String id) {
-        this.api = api;
-        this.id = id;
-        this.ingredients = new ArrayList<>();
+    Recipe () {
+        ingredients = new ArrayList<>();
     }
 
-    /**
-     * Adds a new ingredients to the Recipe. Note: no duplicate protection.
-     * @param ingredient An ingredient.
-     */
-    protected void addIngredient (String ingredient) {
-        ingredients.add(ingredient);
-    }
+
 
 }
