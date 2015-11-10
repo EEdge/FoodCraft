@@ -1,9 +1,7 @@
 package sfsu.csc413.foodcraft;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -21,7 +19,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * RecipeSearch is a core class that intermediates between the Search activity and the Search Results
+ * activity. An instance of the RecipeSearch class should be considered 'one time use', and every
+ * new search should begin with instantiating a new instance.
+ *
+ * @author: Maria Lienkaemper, Brook Thomas
+ * @version: 0.1
+ *
+ */
 public class RecipeSearch {
 
     public static final int YUMMLY_API = 1;
@@ -32,6 +38,15 @@ public class RecipeSearch {
     private YummlySearchActivity searchActivity;
     private int desiredNumberOfRecipes = 20;
 
+    /**
+     * Constructor method that defines the new search.
+     *
+     * @param ingredients The list of ingredients provided to the Search activity both by the user and
+     *                    user stored defaults.
+     * @param context The application context.
+     * @param searchActivity A reference to the Search activity. The results of the search will be returned
+     *                       to this activity.
+     */
     public RecipeSearch (List<String> ingredients, Context context, YummlySearchActivity searchActivity)  {
         recipes = new ArrayList<>();
         this.ingredients = ingredients;
@@ -39,10 +54,19 @@ public class RecipeSearch {
         this.searchActivity = searchActivity;
     }
 
+    /**
+     * We might ditch this method - it's redundant at this point.
+     */
     public void run () {
         searchCycle(ingredients);
     }
 
+    /**
+     * Given a list of ingredients, will search the Recipe APIs for ever decreasing subsets until
+     * the target number of recipes is hit, or the subset size reaches zero.
+     *
+     * @param ingredients A list of ingredients.
+     */
     private void searchCycle (final List<String> ingredients) {
 
         if (ingredients.size()==0) {
@@ -63,18 +87,15 @@ public class RecipeSearch {
                             recipes.addAll(results);
 
                             if (recipes.size() >= desiredNumberOfRecipes) {
-                                Log.i("XXX","Attempting to call searchActivity methods");
+
                                 searchActivity.launchSearchResultsActivity(recipes);
 
                             } else {
-                                Log.i("ON_RESPONSE","Size insufficent");
                                 searchCycle(Utilities.getRandomSubset(ingredients, ingredients.size()-1));
                             }
 
-
                         } catch (Exception e) {
-                            Log.i("RECIPE_SEARCH", "Error parsing JSON");
-                            e.printStackTrace();
+                            Log.i("searchCycle()", "Error.");
                         }
 
                     }

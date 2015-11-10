@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * @file:Utilities.java
  * @author: brook thomas
- * @version: v0.1
+ * @version: 0.1
  *
  */
 public class Utilities {

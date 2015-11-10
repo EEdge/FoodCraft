@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The Recipe class is a container class for transmitting essential information about
+ * a recipe between activities.
  *
+ * @author: Brook Thomas, Maria Lienkaemper
+ * @version: 0.1
  */
 public class Recipe implements Serializable {
 
@@ -17,7 +21,5 @@ public class Recipe implements Serializable {
     Recipe () {
         ingredients = new ArrayList<>();
     }
-
-
 
 }

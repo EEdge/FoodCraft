@@ -19,8 +19,8 @@ public class YummlyHandler {
     private static final String YUMMLY_ENDPOINT_SEARCH = "http://api.yummly.com/v1/api/recipes";
 
     /**
-     * Given a list of user-defined ingredients, returns a formatted API search call for Yummly
-     * @param ingredients A list of ingredients as Strings.
+     * Given a list of ingredients, returns a formatted API search call for the Yummly API.
+     * @param ingredients A String list of ingredients.
      * @return url A formatted URL ready for Volley.
      */
     public static String formatYummlySearchURL(List<String> ingredients) {
@@ -51,7 +51,6 @@ public class YummlyHandler {
     public static List<Recipe> yummlyToRecipe(JSONObject response) {
 
         JSONArray results;
-
         List<Recipe> recipeList = new ArrayList<>();
 
         try {
@@ -61,29 +60,25 @@ public class YummlyHandler {
             for (int x = 0; x < results.length(); x++) {
 
                 Recipe buildRecipe = new Recipe();
-
                 JSONObject recipe = results.getJSONObject(x);
 
                 buildRecipe.id = recipe.getString("id");
-
                 buildRecipe.api = RecipeSearch.YUMMLY_API;
 
                 JSONArray ingredientList = recipe.getJSONArray("ingredients");
 
                 for (int y = 0; y < ingredientList.length(); y++) {
-
                     String ing = ingredientList.getString(y);
                     buildRecipe.ingredients.add(ing);
                 }
 
                 recipeList.add(buildRecipe);
             }
-            Log.i("YTR","Working fine");
+
             return recipeList;
 
         } catch (JSONException e) {
-
-            e.printStackTrace();
+            Log.i("yummlyToRecipe()","Error.");
         }
 
         return recipeList;
