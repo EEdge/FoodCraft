@@ -35,7 +35,7 @@ public class YummlyHandler {
                 "?_app_id=" + YUMMLY_ID +
                 "&_app_key=" + YUMMLY_KEY +
                 encodedIngredient +
-                "&maxResult=10";
+                "&maxResult=30";
 
         Log.i("API_CALL", url);
 
@@ -63,7 +63,7 @@ public class YummlyHandler {
                 JSONObject recipe = results.getJSONObject(x);
 
                 buildRecipe.id = recipe.getString("id");
-                buildRecipe.api = RecipeSearch.YUMMLY_API;
+                buildRecipe.api = RecipeSearchRequest.YUMMLY_API;
 
                 JSONArray ingredientList = recipe.getJSONArray("ingredients");
 
@@ -78,7 +78,7 @@ public class YummlyHandler {
             return recipeList;
 
         } catch (JSONException e) {
-            Log.i("yummlyToRecipe()","Error.");
+            Log.i("yummlyToRecipe()", "Error.");
         }
 
         return recipeList;

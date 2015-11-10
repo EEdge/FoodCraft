@@ -20,15 +20,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * RecipeSearch is a core class that intermediates between the Search activity and the Search Results
- * activity. An instance of the RecipeSearch class should be considered 'one time use', and every
+ * RecipeSearchRequest is a core class that intermediates between the Search activity and the Search Results
+ * activity. An instance of the RecipeSearchRequest class should be considered 'one time use', and every
  * new search should begin with instantiating a new instance.
  *
  * @author: Maria Lienkaemper, Brook Thomas
  * @version: 0.1
  *
  */
-public class RecipeSearch {
+public class RecipeSearchRequest {
 
     public static final int YUMMLY_API = 1;
 
@@ -41,23 +41,19 @@ public class RecipeSearch {
     /**
      * Constructor method that defines the new search.
      *
-     * @param ingredients The list of ingredients provided to the Search activity both by the user and
-     *                    user stored defaults.
      * @param context The application context.
      * @param searchActivity A reference to the Search activity. The results of the search will be returned
      *                       to this activity.
      */
-    public RecipeSearch (List<String> ingredients, Context context, YummlySearchActivity searchActivity)  {
-        recipes = new ArrayList<>();
-        this.ingredients = ingredients;
+    public RecipeSearchRequest(Context context, YummlySearchActivity searchActivity)  {
         this.context = context;
         this.searchActivity = searchActivity;
     }
 
-    /**
-     * We might ditch this method - it's redundant at this point.
-     */
-    public void run () {
+    public void run (List<String> ingredients) {
+        this.ingredients = ingredients;
+        recipes = new ArrayList<>();
+
         searchCycle(ingredients);
     }
 
@@ -70,6 +66,8 @@ public class RecipeSearch {
     private void searchCycle (final List<String> ingredients) {
 
         if (ingredients.size()==0) {
+            // we can call a newSearch method on the searchActivity from here
+            // should check if we have any results at all, can potentially roll with just a few
             return;
         }
 
