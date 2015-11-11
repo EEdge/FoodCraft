@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        new Eula(this).show();
+        new LocationServices(this).show();
     }
 
     /** This is the method called when a user hit the "Scan a UPC Code" button in our main activity.
