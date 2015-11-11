@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class SharedPreferences extends AppCompatActivity {
 
     CheckBox check1, check2, check3, check4, check5;
@@ -85,4 +87,13 @@ public class SharedPreferences extends AppCompatActivity {
         builder.setMessage(message);
         builder.show();
     }
+
+    /*public ArrayList<String> getSharedPreferences () {
+        ArrayList<String> list = new ArrayList<>();
+        if(check1.isChecked()) list.add(check1.getText());
+        if(check2.isChecked()) list.add(check2.getText());
+        if(check3.isChecked()) list.add(check3.getText());
+        if(check4.isChecked()) list.add(check4.getText());
+        if(check5.isChecked()) list.add(check5.getText());
+    }*/
 }

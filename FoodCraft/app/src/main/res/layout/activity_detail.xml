@@ -32,10 +32,6 @@
 
     </LinearLayout>
 
-    <include
-      android:id="@+id/toolbar"
-      layout="@layout/toolbar_detail"/>
-
   </FrameLayout>
 
   <FrameLayout
@@ -81,7 +77,7 @@
     android:layout_marginTop="-10dp"
     android:text="Recipe Ingredients "
     android:textAppearance="?android:attr/textAppearanceSmall"
-    android:textColor="@android:color/white" />
+    android:textColor="@android:color/black" />
 
   <ListView
     android:id="@+id/list"

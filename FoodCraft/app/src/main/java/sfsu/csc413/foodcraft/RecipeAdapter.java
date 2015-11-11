@@ -38,18 +38,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.name);
-        //Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
+        Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
 
-        //Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), recipe.getImageResourceId(mContext));
-        /*Bitmap photo = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.generic);
-
+        Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), recipe.getImageResourceId(mContext));
 
         Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {
             public void onGenerated(Palette palette) {
                 int mutedLight = palette.getMutedColor(mContext.getResources().getColor(android.R.color.black));
                 holder.recipeNameHolder.setBackgroundColor(mutedLight);
             }
-        });*/
+        });
     }
 
     @Override

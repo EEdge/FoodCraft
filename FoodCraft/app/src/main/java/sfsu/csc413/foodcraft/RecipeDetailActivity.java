@@ -1,6 +1,7 @@
 package sfsu.csc413.foodcraft;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,12 +9,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.lang.String;
+import java.util.ArrayList;
+
 public class RecipeDetailActivity extends AppCompatActivity {
 
     public static final String RECIPE_DETAILS = "sfsu.csc413.foodcraft.RECIPE_DETAILS";
     TextView txt_ingredientsList, txt_servingSize, txt_totalTime, txt_title;
 
     private RecipeDetail mRecipeDetail;
+    private ArrayList<String> preferencesIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         txt_servingSize = (TextView)findViewById(R.id.serving_size);
         txt_totalTime = (TextView)findViewById(R.id.total_time);
         txt_title = (TextView)findViewById(R.id.recipe_name);
+        //preferencesIngredients = SharedPreferences.getSharedPreferences();
 
         /* Unpack */
         Intent intent = getIntent();
