@@ -2,11 +2,19 @@
     <string name="app_name">FoodCraft</string>
     <string name="action_settings">Settings</string>
     <string name="upc_scanner">Scan a UPC code</string>
+    <string name="upc_scanner_fragment">Scan a UPC code via Fragment</string>
     <string name="database_backend">Use the database</string>
     <string name="search_frontend">Use the search frontend</string>
     <string name="googlemaps_api">Use Google Maps</string>
     <string name="bigoven_api">Search an ingredient in BigOven </string>
     <string name="yummly_api">Search an ingredient in Yummly </string>
+    <string name="title_activity_ingredient_search">IngredientSearch</string>
+    <string name="app_label">IngredientSearch</string>
+    <string name="search_hint">Search Ingredients</string>
+    <string name="search">Search</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="locationMessage">Locations services are not enabled. Would you like to enable them now?</string>
     <string name="mainPage">The EULA has been accepted and this space is reserved for the main homepage.</string>
     <string name="updates">Updates in this version: Improved User Interface. </string>
@@ -58,6 +66,5 @@ which does not provide an original package as composed of FoodCraft, including b
 distribution media, documentation, registration cards, and insertions.</string>
     <string name="title_activity_yummly_search" >YummlySearchActivity</string>
     <string name="title_activity_temp_result">TempResultActivity</string>
-
     <string name="hello_world">Hello world!</string>
 </resources>
