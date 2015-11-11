@@ -30,18 +30,16 @@
       <LinearLayout
         android:id="@+id/recipeNameHolder"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:transitionName="tNameHolder">
 
         <TextView
           android:id="@+id/recipeName"
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_gravity="center_vertical"
           android:gravity="left"
-          android:paddingLeft="10dp"
           android:textAppearance="?android:attr/textAppearanceLarge"
           android:textColor="@android:color/white" />
 

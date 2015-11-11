@@ -14,6 +14,7 @@ import java.util.List;
  * @author: Brook Thomas, Maria Lienkaemper
  * @version: 0.1
  */
+
 public class Recipe implements Serializable {
 
     protected int api;
@@ -27,7 +28,7 @@ public class Recipe implements Serializable {
     }
 
     public int getImageResourceId(Context context) {
-        return context.getResources().getIdentifier("generic.jpg", "drawable", context.getPackageName());
+        return context.getResources().getIdentifier("generic", "drawable", context.getPackageName());
     }
-
 }
+
