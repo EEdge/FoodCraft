@@ -16,15 +16,18 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
-
+    Button button_datastore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        button_datastore = (Button)findViewById(R.id.button1);
 
         new Eula(this).show();
         new LocationServices(this).show();
+    }
+    public void dataStore (View view) {
+        startActivity(new Intent(getApplicationContext(), SharedPreferences.class));
     }
 
     /** This is the method called when a user hit the "Scan a UPC Code" button in our main activity.
