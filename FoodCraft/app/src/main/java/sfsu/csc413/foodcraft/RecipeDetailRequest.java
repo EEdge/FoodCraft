@@ -19,15 +19,15 @@ import java.util.Map;
 public class RecipeDetailRequest {
 
     Context mContext;
-    ResultsListActivity mRecipeDetails;
+    ResultsListActivity mResultsList;
 
 
-    RecipeDetailRequest (Context context, RecipeDetails detailsActivity) {
+    RecipeDetailRequest(Context context, ResultsListActivity detailsActivity) {
         mContext = context;
-        mRecipeDetails = detailsActivity;
+        mResultsList = detailsActivity;
     }
 
-    public void run (Recipe recipe) {
+    public void run(Recipe recipe) {
 
         String recipeID = recipe.id;
 
@@ -41,7 +41,7 @@ public class RecipeDetailRequest {
 
                             RecipeDetail detail = YummlyHandler.yummlyToDetail(response);
 
-                            mRecipeDetails.launchDetailActivity(detail);
+                            mResultsList.launchDetailActivity(detail);
 
 
                         } catch (Exception e) {
@@ -67,7 +67,6 @@ public class RecipeDetailRequest {
         VolleyRequest.getInstance(mContext).addToRequestQueue(req);
 
     }
-
 
 }
 

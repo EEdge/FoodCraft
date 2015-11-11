@@ -31,9 +31,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class DetailActivity extends Activity implements View.OnClickListener {
+public class DetailActivity {/*extends Activity implements View.OnClickListener {
 
-  public static final String EXTRA_PARAM_ID = "recipe_id";
+  /*public static final String EXTRA_PARAM_ID = "recipe_id";
   public static final String NAV_BAR_VIEW_NAME = Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME;
   private ListView mList;
   private ImageView mImageView;
@@ -214,5 +214,5 @@ public class DetailActivity extends Activity implements View.OnClickListener {
 
       }
     });
-  }
+  }*/
 }

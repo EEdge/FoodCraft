@@ -19,6 +19,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private ArrayList<String> preferencesIngredients;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

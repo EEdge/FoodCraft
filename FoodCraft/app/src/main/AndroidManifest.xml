@@ -39,6 +39,9 @@
             android:name=".SharedPreferences"
             android:label="@string/title_activity_shared_preferences" >
         </activity>
+        <activity
+            android:name=".ResultsListActivity" >
+        </activity>
     </application>
 
 </manifest>

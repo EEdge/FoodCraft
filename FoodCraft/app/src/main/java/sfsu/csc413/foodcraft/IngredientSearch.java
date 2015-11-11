@@ -133,12 +133,14 @@ public class IngredientSearch extends AppCompatActivity
 
     protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
 
+        Log.i("LAUNCH_RESULTS","Started with recipes list of length " + recipes.size());
+
         Intent intent = new Intent(this, ResultsListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
         intent.putExtras(bundle);
-        
-        startActivity(intent);
+        Log.i("LAUNCH_RESULTS","Starting new activity");
+        selfReference.startActivity(intent);
 
         }
 
