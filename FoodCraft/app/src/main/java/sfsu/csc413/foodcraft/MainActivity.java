@@ -52,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is called when the "search an ingredient in yummly" button is pressed.
+     * It goes to the Yummly search activity
+     * @param v
+     */
+    public void yummlyButtonListener(View v){
+        Intent intent = new Intent("sfsu.csc413.foodcraft.YummlySearchActivity");
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

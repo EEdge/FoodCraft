@@ -7,7 +7,6 @@
     <string name="googlemaps_api">Use Google Maps</string>
     <string name="bigoven_api">Search an ingredient in BigOven </string>
     <string name="yummly_api">Search an ingredient in Yummly </string>
-
     <string name="locationMessage">Locations services are not enabled. Would you like to enable them now?</string>
     <string name="mainPage">The EULA has been accepted and this space is reserved for the main homepage.</string>
     <string name="updates">Updates in this version: Improved User Interface. </string>
@@ -57,5 +56,8 @@ exclusion may not apply.
 \n\nThe software and accompanying documentation may not be provided by a \"Backup Service\" or any other vendor
 which does not provide an original package as composed of FoodCraft, including but not limited to all original
 distribution media, documentation, registration cards, and insertions.</string>
+    <string name="title_activity_yummly_search" >YummlySearchActivity</string>
+    <string name="title_activity_temp_result">TempResultActivity</string>
 
+    <string name="hello_world">Hello world!</string>
 </resources>
