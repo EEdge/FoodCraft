@@ -105,7 +105,7 @@ public class SplashScreenActivity extends Activity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 finish();
-                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashScreenActivity.this, IngredientSearch.class);
                 startActivity(intent);
             }
 

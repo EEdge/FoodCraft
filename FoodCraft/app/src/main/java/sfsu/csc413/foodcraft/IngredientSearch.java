@@ -107,6 +107,14 @@ public class IngredientSearch extends AppCompatActivity
 
     }
 
+    protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
+        Intent intent = new Intent(selfReference, ResultsListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        }
+
     private void populateIngredientSearchArray() {
         //method to populate array of searchable/selectable ingredient items
         foods.add("banana");
@@ -174,6 +182,7 @@ public class IngredientSearch extends AppCompatActivity
 
         return true;
     }
+
 
     public boolean onQueryTextChange(String newText) {
         //on text change, filter list to show search results as user types
