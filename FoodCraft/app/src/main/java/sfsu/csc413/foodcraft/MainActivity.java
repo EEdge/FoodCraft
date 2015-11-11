@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        new Eula(this).show();
+        new LocationServices(this).show();
     }
 
     /** This is the method called when a user hit the "Scan a UPC Code" button in our main activity.
@@ -50,6 +54,16 @@ public class MainActivity extends AppCompatActivity {
         if (scanResult != null) {
             barcode_scanner.craftUPCRequest(scanResult.getContents(), this);
         }
+    }
+
+    /**
+     * This method is called when the "search an ingredient in yummly" button is pressed.
+     * It goes to the Yummly search activity
+     * @param v
+     */
+    public void yummlyButtonListener(View v){
+        Intent intent = new Intent("sfsu.csc413.foodcraft.YummlySearchActivity");
+        startActivity(intent);
     }
 
     @Override
