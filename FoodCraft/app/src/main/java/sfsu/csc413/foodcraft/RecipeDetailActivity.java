@@ -14,6 +14,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private RecipeDetail mRecipeDetail;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
