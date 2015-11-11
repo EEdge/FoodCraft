@@ -16,6 +16,8 @@ public class Recipe implements Serializable {
 
     protected int api;
     protected String id;
+    protected String name;
+    protected String imageURL;
     protected List<String> ingredients;
 
     Recipe () {
