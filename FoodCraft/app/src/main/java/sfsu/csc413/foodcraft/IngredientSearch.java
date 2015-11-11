@@ -43,7 +43,7 @@ public class IngredientSearch extends AppCompatActivity
 
     //ArrayAdapters for both ListViews
     ArrayAdapter<String> lvIngredientSearchAdapter;
-    ArrayAdapter<String> lvSelectedIngredientsAdapter;
+    CustomAdapter<String> lvSelectedIngredientsAdapter;
 
     int listIndex = 0;
 
@@ -65,7 +65,7 @@ public class IngredientSearch extends AppCompatActivity
         lvIngredientSearch.setTextFilterEnabled(true);
 
         //initialize selected ingredient list, non-searchable
-        lvSelectedIngredientsAdapter = new CustomAdapter<String>(this, R.layout.list_item_selected_ingredients, R.id.selected_item, selectedFoods);
+        lvSelectedIngredientsAdapter = new CustomAdapter<>(this, R.layout.list_item_selected_ingredients, R.id.selected_item, selectedFoods);
         lvSelectedIngredients = (ListView) findViewById(R.id.selectedIngredientsListView);
         lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
 
@@ -107,13 +107,18 @@ public class IngredientSearch extends AppCompatActivity
 
     }
 
-    protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
-        Intent intent = new Intent(selfReference, ResultsListActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        }
+    public void onSearchButtonClick () {
+        RecipeSearchRequest searchRequest = new RecipeSearchRequest(getApplicationContext(), this);
+        searchRequest.run(selectedFoods);
+    }
+
+//    protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
+//        Intent intent = new Intent(this, ResultsListActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//        }
 
     private void populateIngredientSearchArray() {
         //method to populate array of searchable/selectable ingredient items
@@ -132,6 +137,7 @@ public class IngredientSearch extends AppCompatActivity
         foods.add("sweet potato");
         foods.add("pear");
     }
+
 
     public void togglePhotoFragment(View view) {
         if (!testPhotoFrag.isAdded()) {
