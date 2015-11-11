@@ -78,8 +78,9 @@ public class TestPhotoFragment extends Fragment {
     @TargetApi(Build.VERSION_CODES.M)
     public void scanFromFragment(View view) {
         barcodeView = (CompoundBarcodeView) view.findViewById(R.id.barcode_scanner);
-        barcodeView.decodeContinuous(callback);
-
+        barcodeView.initializeFromIntent(IntentIntegrator.forFragment(this).createScanIntent());
+        barcodeView.resume();
+        barcodeView.decodeSingle(callback);
     }
 
     private void displayToast() {
