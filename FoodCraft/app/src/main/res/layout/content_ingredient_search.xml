@@ -71,7 +71,8 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/search_button">
             <ListView
                 android:id="@+id/selectedIngredientsListView"
                 android:layout_width="match_parent"
@@ -82,9 +83,9 @@
 
         <Button
             android:id="@+id/search_button"
-            android:layout_width="100dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:hint="Search"
+            android:hint=">"
             android:layout_alignParentEnd="true"
             android:onClick="onSearchButtonClick"
             />
