@@ -42,6 +42,8 @@ public class ResultsListActivity extends Activity {
 
     recipeList = new ArrayList<>();
 
+    selfReference = this;
+
     // Unbundle
     Intent intent = getIntent();
     Bundle bundle = intent.getExtras();
@@ -114,14 +116,15 @@ public class ResultsListActivity extends Activity {
     }
 
     protected void launchDetailActivity (RecipeDetail recipeDetail) {
-
+        Log.i("LDA","1");
         Intent intent = new Intent(selfReference, RecipeDetailActivity.class);
+        Log.i("LDA","2");
         Bundle bundle = new Bundle();
+        Log.i("LDA","3");
         bundle.putSerializable(RecipeDetailActivity.RECIPE_DETAILS, recipeDetail);
+        Log.i("LDA", "4");
         intent.putExtras(bundle);
+        Log.i("LDA", "5");
         startActivity(intent);
-
-
-
     }
 }

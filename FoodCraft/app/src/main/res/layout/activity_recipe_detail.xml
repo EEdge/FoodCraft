@@ -26,7 +26,7 @@
             android:paddingRight="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Food Craft"
-            android:id="@+id/textView"
+            android:id="@+id/recipe_name"
             android:layout_gravity="center_horizontal"
             android:background="#05fefefe"
             android:textColor="#fd8adb9e"
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView5"
+                    android:id="@+id/total_time"
                     android:text="Medium Text"
                     android:textColor="#f7f9ef"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/textView3"
+                    android:id="@+id/serving_size"
                     android:textColor="#f7f9ef"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
 
@@ -142,20 +142,13 @@
                 android:layout_height="fill_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="4 whole Large (or 6 Medium) Yellow Onions, Halved Root To Tip, And Sliced Thin"
-                android:id="@+id/textView2"
+                android:id="@+id/ingredient_list"
                 android:paddingBottom="5dp"
                 android:textColor="#f7f9ef"
                 android:gravity="left"
                 style="@style/Base.TextAppearance.AppCompat.Small" />
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="1/2 cup of butter"
-                android:gravity="left"
-                android:id="@+id/textView8"
-                style="Base.TextAppearance.AppCompat.Small"
-                android:textColor="#f7f9ef" />
+
         </LinearLayout>
 
         <LinearLayout

@@ -42,6 +42,9 @@
         <activity
             android:name=".ResultsListActivity" >
         </activity>
+        <activity
+            android:name=".RecipeDetailActivity" >
+        </activity>
     </application>
 
 </manifest>

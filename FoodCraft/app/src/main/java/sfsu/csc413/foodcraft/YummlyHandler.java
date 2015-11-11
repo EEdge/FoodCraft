@@ -53,7 +53,7 @@ public class YummlyHandler {
         String url = YUMMLY_ENDPOINT_DETAIL +
                 recipeID +
                 "?_app_id=" + YUMMLY_ID +
-                "?_app_key=" + YUMMLY_KEY;
+                "&_app_key=" + YUMMLY_KEY;
 
         return url;
 
@@ -121,19 +121,20 @@ public class YummlyHandler {
         try {
 
             detail.title = response.getString("name");
-
             detail.totalTime = response.getString("totalTime");
-
             detail.numberServings = response.getInt("numberOfServings");
 
-            JSONObject images = response.getJSONArray("images").getJSONObject(0);
+            // placeholder image blah
+            detail.imageURL = "http://blah.com";
 
-            detail.imageURL = images.getString("hostedLargeURL");
-
-            JSONArray ingredientList = response.getJSONArray("ingredients");
-
+            JSONArray ingredientList = response.getJSONArray("ingredientLines");
+            Log.i("YTD","6" + " Ingredient List Length:" + ingredientList.length());
             for (int x = 0; x < ingredientList.length(); x++) {
-                detail.ingredients.add(ingredientList.getString(x));
+
+                String ing = ingredientList.getString(x);
+
+                detail.ingredients.add(ing);
+
             }
 
             return detail;

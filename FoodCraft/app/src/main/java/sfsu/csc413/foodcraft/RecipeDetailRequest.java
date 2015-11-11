@@ -33,6 +33,8 @@ public class RecipeDetailRequest {
 
         String url = YummlyHandler.formatYummlyDetailURL(recipeID);
 
+        Log.i("URL",url);
+
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -41,11 +43,13 @@ public class RecipeDetailRequest {
 
                             RecipeDetail detail = YummlyHandler.yummlyToDetail(response);
 
+                            Log.i("ONR","1");
                             mResultsList.launchDetailActivity(detail);
 
 
                         } catch (Exception e) {
                             Log.i("RecipeDetail.run()", "Error.");
+                            e.printStackTrace();
                         }
 
                     }
