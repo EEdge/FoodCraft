@@ -86,9 +86,10 @@ public class RecipeSearchRequest {
 
                             if (recipes.size() >= desiredNumberOfRecipes) {
 
-                                //searchActivity.launchSearchResultsActivity(recipes);
+                                searchActivity.launchSearchResultsActivity(recipes);
 
                             } else {
+
                                 searchCycle(Utilities.getRandomSubset(ingredients, ingredients.size()-1));
                             }
 

@@ -12,8 +12,9 @@
     <string name="app_label">IngredientSearch</string>
     <string name="search_hint">Search Ingredients</string>
     <string name="search">Search</string>
+    <string name="main_title">Recipe Results</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="locationMessage">Locations services are not enabled. Would you like to enable them now?</string>
     <string name="mainPage">The EULA has been accepted and this space is reserved for the main homepage.</string>

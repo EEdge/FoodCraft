@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -37,6 +38,9 @@ public class IngredientSearch extends AppCompatActivity
     ArrayList<String> foods = new ArrayList<>();
     static ArrayList<String> selectedFoods = new ArrayList<>();
 
+    // Activity self reference
+    IngredientSearch selfReference;
+
     //ListViews to display ArrayLists
     ListView lvIngredientSearch;
     static ListView lvSelectedIngredients;
@@ -44,6 +48,9 @@ public class IngredientSearch extends AppCompatActivity
     //ArrayAdapters for both ListViews
     ArrayAdapter<String> lvIngredientSearchAdapter;
     CustomAdapter<String> lvSelectedIngredientsAdapter;
+
+    // Buttons
+    Button searchButton;
 
     int listIndex = 0;
 
@@ -55,8 +62,10 @@ public class IngredientSearch extends AppCompatActivity
 
         setContentView(R.layout.activity_ingredient_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        searchButton = (Button) findViewById(R.id.foodcraft_search_button);
         setSupportActionBar(toolbar);
         populateIngredientSearchArray();
+        selfReference = this;
 
         //initialize searchable ingredient ListView
         lvIngredientSearchAdapter = new ArrayAdapter<>(this, R.layout.list_item_searchable_ingredients, R.id.searchable_ingredient_item, foods);
@@ -97,6 +106,15 @@ public class IngredientSearch extends AppCompatActivity
             }
         });
 
+        // on click searchButton
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecipeSearchRequest searchRequest = new RecipeSearchRequest(getApplicationContext(), selfReference);
+                searchRequest.run(selectedFoods);
+            }
+        });
+
         //initialize SearchView for searchable ingredient list
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) findViewById(R.id.menu_item_search);
@@ -107,18 +125,21 @@ public class IngredientSearch extends AppCompatActivity
 
     }
 
-    public void onSearchButtonClick () {
-        RecipeSearchRequest searchRequest = new RecipeSearchRequest(getApplicationContext(), this);
-        searchRequest.run(selectedFoods);
-    }
+    /*public void onSearchButtonClick () {
 
-//    protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
-//        Intent intent = new Intent(this, ResultsListActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
-//        intent.putExtras(bundle);
-//        startActivity(intent);
-//        }
+
+    }*/
+
+    protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
+
+        Intent intent = new Intent(this, ResultsListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
+        intent.putExtras(bundle);
+        
+        startActivity(intent);
+
+        }
 
     private void populateIngredientSearchArray() {
         //method to populate array of searchable/selectable ingredient items

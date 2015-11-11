@@ -113,7 +113,8 @@ public class YummlyHandler {
      * @param response A raw JSON recipe detail object.
      * @return A formatted RecipeDetail
      */
-    public static RecipeDetail yummlyToDetail (JSONObject response) {
+
+    /*public static RecipeDetail yummlyToDetail (JSONObject response) {
 
         RecipeDetail detail = new RecipeDetail();
 
@@ -142,6 +143,6 @@ public class YummlyHandler {
         }
 
        return detail;
-    }
+    }*/
 
 }

@@ -1,6 +1,8 @@
 package sfsu.csc413.foodcraft;
 
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,10 @@ public class Recipe implements Serializable {
 
     Recipe () {
         ingredients = new ArrayList<>();
+    }
+
+    public int getImageResourceId(Context context) {
+        return context.getResources().getIdentifier(this.imageURL, "drawable", context.getPackageName());
     }
 
 }

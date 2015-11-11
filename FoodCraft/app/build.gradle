@@ -31,4 +31,8 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
     compile 'com.google.zxing:core:3.2.0'
+    compile 'com.android.support:recyclerview-v7:23.+'
+    compile 'com.android.support:cardview-v7:23.+'
+    compile 'com.android.support:palette-v7:23.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.0'
 }
