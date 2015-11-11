@@ -19,7 +19,7 @@ import java.util.Map;
 public class RecipeDetailRequest {
 
     Context mContext;
-    RecipeDetails mRecipeDetails;
+    ResultsListActivity mRecipeDetails;
 
 
     RecipeDetailRequest (Context context, RecipeDetails detailsActivity) {
