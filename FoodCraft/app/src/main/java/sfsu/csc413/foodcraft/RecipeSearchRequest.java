@@ -35,7 +35,7 @@ public class RecipeSearchRequest {
     private List<String> ingredients;
     private ArrayList<Recipe> recipes;
     private Context context;
-    private YummlySearchActivity searchActivity;
+    private IngredientSearch searchActivity;
     private int desiredNumberOfRecipes = 20;
 
     /**
@@ -45,7 +45,7 @@ public class RecipeSearchRequest {
      * @param searchActivity A reference to the Search activity. The results of the search will be returned
      *                       to this activity.
      */
-    public RecipeSearchRequest(Context context, YummlySearchActivity searchActivity)  {
+    public RecipeSearchRequest(Context context, IngredientSearch searchActivity)  {
         this.context = context;
         this.searchActivity = searchActivity;
     }
@@ -89,6 +89,7 @@ public class RecipeSearchRequest {
                                 searchActivity.launchSearchResultsActivity(recipes);
 
                             } else {
+
                                 searchCycle(Utilities.getRandomSubset(ingredients, ingredients.size()-1));
                             }
 

@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -18,11 +19,20 @@ android {
         }
     }
 }
-
+repositories {
+    jcenter()
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.0.1'
     //This is a mirrored Volley Library that allows us to use Volley without having to GitClone and import it every time
     //  I like it because it cleans up our file structure. - PK
+    compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    compile 'com.google.zxing:core:3.2.0'
+    compile 'com.android.support:recyclerview-v7:23.+'
+    compile 'com.android.support:cardview-v7:23.+'
+    compile 'com.android.support:palette-v7:23.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.0'
 }

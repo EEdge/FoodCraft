@@ -41,19 +41,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_frontend"
-            android:onClick=""/>
+            android:onClick="searchActivitySwitch"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/database_backend"
-            android:onClick=""/>
+            android:onClick="dataStore"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/upc_scanner"
             android:onClick="scan_barcode"/>
+        <fragment
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_scan"
+            android:name="sfsu.csc413.foodcraft.MainActivity$ScanFragment" tools:layout="@layout/fragment_scan" />
 
     </LinearLayout>
 </RelativeLayout>
