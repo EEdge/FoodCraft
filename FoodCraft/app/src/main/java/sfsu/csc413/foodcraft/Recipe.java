@@ -22,6 +22,7 @@ public class Recipe implements Serializable {
     protected String name;
     protected String imageURL;
     protected List<String> ingredients;
+    protected String course;
 
     Recipe () {
         ingredients = new ArrayList<>();

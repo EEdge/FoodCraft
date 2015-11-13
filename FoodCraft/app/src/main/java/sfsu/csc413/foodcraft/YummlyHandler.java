@@ -93,7 +93,19 @@ public class YummlyHandler {
                     String ing = ingredientList.getString(y);
                     buildRecipe.ingredients.add(ing);
                 }
-                /* END ingredient build */
+                /* Retrieve Course */
+                JSONObject attributes = recipe.getJSONObject("attributes");
+                if (attributes.has("course")) {
+                    JSONArray courseArray = attributes.getJSONArray("course");
+                    if (courseArray.length() > 0) {
+                        buildRecipe.course = courseArray.getString(0);
+                    }
+                }
+
+                /* Retrieve Nutrition */
+
+
+
 
                 recipeList.add(buildRecipe);
             }
@@ -102,6 +114,7 @@ public class YummlyHandler {
 
         } catch (JSONException e) {
             Log.i("yummlyToRecipe()", "Error.");
+            e.printStackTrace();
         }
 
         return recipeList;
