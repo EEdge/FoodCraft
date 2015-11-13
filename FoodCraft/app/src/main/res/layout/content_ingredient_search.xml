@@ -40,12 +40,6 @@
             android:id="@+id/fragment_holder"
             >
         </FrameLayout>
-        <ListView
-            android:id="@+id/listView1"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:fastScrollEnabled="false">
-        </ListView>
     </FrameLayout>
 
     <View
@@ -72,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/search_button">
+            android:layout_toLeftOf="@+id/foodcraft_search_button">
             <ListView
                 android:id="@+id/selectedIngredientsListView"
                 android:layout_width="match_parent"

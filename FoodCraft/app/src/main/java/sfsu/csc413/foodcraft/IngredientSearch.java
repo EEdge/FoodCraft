@@ -7,6 +7,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientSearch extends AppCompatActivity
-        implements SearchView.OnQueryTextListener {
+        implements SearchView.OnQueryTextListener, SearchableIngredientFragment.OnFragmentInteractionListener {
 
     //ArrayLists for selectable foods and selected foods
     ArrayList<String> foods = new ArrayList<>();
@@ -43,23 +44,32 @@ public class IngredientSearch extends AppCompatActivity
     IngredientSearch selfReference;
 
     //ListViews to display ArrayLists
-    ListView lvIngredientSearch;
     static ListView lvSelectedIngredients;
 
     //ArrayAdapters for both ListViews
-    ArrayAdapter<String> lvIngredientSearchAdapter;
-    CustomAdapter<String> lvSelectedIngredientsAdapter;
+    //ArrayAdapter<String> lvIngredientSearchAdapter;
+    static CustomAdapter<String> lvSelectedIngredientsAdapter;
 
     // Buttons
     Button searchButton;
 
+    //SearchView
+    static SearchView searchView;
+
     int listIndex = 0;
 
     TestPhotoFragment testPhotoFrag = new TestPhotoFragment();
+    SearchableIngredientFragment searchableFrag = new SearchableIngredientFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.fragment_holder, searchableFrag);
+        transaction.show(searchableFrag);
+        transaction.commit();
 
         setContentView(R.layout.activity_ingredient_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -68,44 +78,9 @@ public class IngredientSearch extends AppCompatActivity
         populateIngredientSearchArray();
         selfReference = this;
 
-        //initialize searchable ingredient ListView
-        lvIngredientSearchAdapter = new ArrayAdapter<>(this, R.layout.list_item_searchable_ingredients, R.id.searchable_ingredient_item, foods);
-        lvIngredientSearch = (ListView) findViewById(R.id.listView1);
-        lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
-        lvIngredientSearch.setTextFilterEnabled(true);
-
         //initialize selected ingredient list, non-searchable
         lvSelectedIngredientsAdapter = new CustomAdapter<>(this, R.layout.list_item_selected_ingredients, R.id.selected_item, selectedFoods);
         lvSelectedIngredients = (ListView) findViewById(R.id.selectedIngredientsListView);
-        lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
-
-        //on click of searchable list item, add item to selected list
-        lvIngredientSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position,
-                                    long arg3) {
-                String value = (String) adapter.getItemAtPosition(position);
-                if (!isInArray(value, selectedFoods)) {
-                    selectedFoods.add(0, value);
-                    lvSelectedIngredients.setAdapter(lvSelectedIngredientsAdapter);
-                }
-            }
-        });
-
-        //on click of selected item list, delete item from list
-        lvSelectedIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position,
-                                    long arg3) {
-
-                listIndex = position;
-                selectedFoods.remove(position);
-                lvSelectedIngredients.deferNotifyDataSetChanged();
-
-                // assuming string and if you want to get the value on click of list item
-                // do what you intend to do on click of listview row
-            }
-        });
 
         // on click searchButton
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -118,28 +93,24 @@ public class IngredientSearch extends AppCompatActivity
 
         //initialize SearchView for searchable ingredient list
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) findViewById(R.id.menu_item_search);
+        searchView = (SearchView) findViewById(R.id.menu_item_search);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(this);//listen for text change
+
 
 
     }
 
-    /*public void onSearchButtonClick () {
-
-
-    }*/
 
     protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
 
-        Log.i("LAUNCH_RESULTS","Started with recipes list of length " + recipes.size());
+        Log.i("LAUNCH_RESULTS", "Started with recipes list of length " + recipes.size());
 
         Intent intent = new Intent(this, ResultsListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
         intent.putExtras(bundle);
-        Log.i("LAUNCH_RESULTS","Starting new activity");
+        Log.i("LAUNCH_RESULTS", "Starting new activity");
         selfReference.startActivity(intent);
 
         }
@@ -220,43 +191,21 @@ public class IngredientSearch extends AppCompatActivity
         return true;
     }
 
-    public boolean onQueryTextChange(String newText) {
-        //on text change, filter list to show search results as user types
-        filter(foods, newText);
-        return true;
+
+    @Override
+    public void onFragmentInteraction(String id) {
+
     }
 
+    @Override
     public boolean onQueryTextSubmit(String query) {
-        //on text submit, filter list to show search results as user types
-        filter(foods, query);
         return false;
     }
 
-    private void filter(ArrayList<String> searchableListArray, CharSequence searchQuery) {
-        //filter results by matching the query string and setting a new array to the ArrayAdapter on each text change
-        searchQuery = searchQuery.toString().toLowerCase();
-
-        ArrayList<String> newFilterResults;
-
-        if (searchQuery != null && searchQuery.length() > 0) {
-
-
-            ArrayList<String> auxData = new ArrayList<>();
-
-            for (int i = 0; i < searchableListArray.size(); i++) {
-                if (searchableListArray.get(i).toLowerCase().contains(searchQuery))
-                    auxData.add(searchableListArray.get(i));
-            }
-
-            newFilterResults = auxData;
-        } else {
-
-            newFilterResults = searchableListArray;
-        }
-        lvIngredientSearchAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.list_item_searchable_ingredients, R.id.searchable_ingredient_item, newFilterResults);
-        lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
-
 }
 
     class CustomAdapter<T> extends ArrayAdapter {
