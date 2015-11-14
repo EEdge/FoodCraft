@@ -148,7 +148,7 @@ public class YummlyHandler {
                 detail.ingredients.add(ing);
             }
 
-            // Get nutrition
+            // Get nutritional info
             JSONArray ingredients = response.getJSONArray("nutritionEstimates");
 
             for (int x = 0; x < ingredients.length(); x++) {
@@ -184,12 +184,6 @@ public class YummlyHandler {
                 }
 
             }
-
-            Log.i("YTD","Calories: " + detail.nutrition.get("calories"));
-            Log.i("YTD","Fat: " + detail.nutrition.get("fat"));
-            Log.i("YTD","Protein: " + detail.nutrition.get("protein"));
-            Log.i("YTD","Fiber: " + detail.nutrition.get("fiber"));
-            Log.i("YTD","Sugar: " + detail.nutrition.get("sugar"));
 
             return detail;
 
