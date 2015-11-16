@@ -30,10 +30,12 @@ public class ResultsListActivity extends Activity {
   private RecipeAdapter mAdapter;
   private boolean isListView;
     private List<Recipe> recipeList;
+    private ArrayList<String> selectedFoods;
   private Menu menu;
     private ResultsListActivity selfReference;
 
     public static final String RECIPE_SEARCH_RESULTS = "sfsu.csc413foodcraft.RECIPE_SEARCH_RESULTS";
+    public static final String SELECTED_FOODS_ARRAY = "sfsu.csc413foodcraft.SELECTED_FOODS_ARRAY";
 
     @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class ResultsListActivity extends Activity {
     setContentView(R.layout.activity_searchresults);
 
     recipeList = new ArrayList<>();
+    selectedFoods = new ArrayList<>();
 
     selfReference = this;
 
@@ -48,6 +51,7 @@ public class ResultsListActivity extends Activity {
     Intent intent = getIntent();
     Bundle bundle = intent.getExtras();
     recipeList = ((List<Recipe>) bundle.getSerializable(RECIPE_SEARCH_RESULTS));
+    selectedFoods = (bundle.getStringArrayList(SELECTED_FOODS_ARRAY));
 
     toolbar = (Toolbar) findViewById(R.id.toolbar);
 

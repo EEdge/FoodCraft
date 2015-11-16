@@ -109,6 +109,7 @@ public class IngredientSearch extends AppCompatActivity
         Intent intent = new Intent(this, ResultsListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
+        bundle.putStringArrayList(ResultsListActivity.SELECTED_FOODS_ARRAY, selectedFoods);
         intent.putExtras(bundle);
         Log.i("LAUNCH_RESULTS", "Starting new activity");
         selfReference.startActivity(intent);
