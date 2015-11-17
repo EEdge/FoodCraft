@@ -93,8 +93,19 @@ public class YummlyHandler {
                     String ing = ingredientList.getString(y);
                     buildRecipe.ingredients.add(ing);
                 }
-                /* END ingredient build */
+                /* Retrieve Course */
+                JSONObject attributes = recipe.getJSONObject("attributes");
+                if (attributes.has("course")) {
+                    JSONArray courseArray = attributes.getJSONArray("course");
+                    if (courseArray.length() > 0) {
+                        buildRecipe.course = courseArray.getString(0);
+                    }
+                }
+                else {
+                    buildRecipe.course = "Unknown";
+                }
 
+                /* Done */
                 recipeList.add(buildRecipe);
             }
 
@@ -102,6 +113,7 @@ public class YummlyHandler {
 
         } catch (JSONException e) {
             Log.i("yummlyToRecipe()", "Error.");
+            e.printStackTrace();
         }
 
         return recipeList;
@@ -120,13 +132,16 @@ public class YummlyHandler {
 
         try {
 
+            // The simple stuff
             detail.title = response.getString("name");
             detail.totalTime = response.getString("totalTime");
             detail.numberServings = response.getInt("numberOfServings");
 
-            // placeholder image blah
-            detail.imageURL = "http://blah.com";
+            // Get image
+            JSONObject images = response.getJSONArray("images").getJSONObject(0);
+            detail.imageURL = images.getString("hostedLargeUrl");
 
+            // Get ingredients
             JSONArray ingredientList = response.getJSONArray("ingredientLines");
             Log.i("YTD","6" + " Ingredient List Length:" + ingredientList.length());
             for (int x = 0; x < ingredientList.length(); x++) {
@@ -134,6 +149,42 @@ public class YummlyHandler {
                 String ing = ingredientList.getString(x);
 
                 detail.ingredients.add(ing);
+            }
+
+            // Get nutritional info
+            JSONArray ingredients = response.getJSONArray("nutritionEstimates");
+
+            for (int x = 0; x < ingredients.length(); x++) {
+
+                JSONObject element = ingredients.getJSONObject(x);
+
+                // We only care about some of the metrics in the array
+                switch (element.getString("attribute")) {
+
+                    case "ENERC_KCAL":
+                        detail.nutrition.put("calories",element.getString("value"));
+                        break;
+
+                    case "FAT":
+                        detail.nutrition.put("fat",element.getString("value"));
+                        break;
+
+                    case "PROCNT":
+                        detail.nutrition.put("protein",element.getString("value"));
+                        break;
+
+                    case "FIBTG":
+                        detail.nutrition.put("fiber",element.getString("value"));
+                        break;
+
+                    case "SUGAR":
+                        detail.nutrition.put("sugar",element.getString("value"));
+                        break;
+
+                    default:
+                        break;
+
+                }
 
             }
 
