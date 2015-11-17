@@ -101,6 +101,9 @@ public class YummlyHandler {
                         buildRecipe.course = courseArray.getString(0);
                     }
                 }
+                else {
+                    buildRecipe.course = "Unknown";
+                }
 
                 /* Done */
                 recipeList.add(buildRecipe);
