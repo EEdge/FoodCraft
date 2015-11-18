@@ -1,5 +1,6 @@
 package sfsu.csc413.foodcraft;
 
+import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
@@ -7,6 +8,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -58,13 +60,13 @@ public class IngredientSearch extends AppCompatActivity
 
     int listIndex = 0;
 
-    TestPhotoFragment testPhotoFrag = new TestPhotoFragment();
+    UPCFragment upcfrag = new UPCFragment();
+    //TestPhotoFragment testPhotoFrag;
     SearchableIngredientFragment searchableFrag = new SearchableIngredientFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.fragment_holder, searchableFrag);
@@ -101,6 +103,16 @@ public class IngredientSearch extends AppCompatActivity
 
     }
 
+    public void addselectedFoods(List<String> list){
+        if(selectedFoods.size() == 0){
+            lvSelectedIngredients.setAdapter(lvSelectedIngredientsAdapter);
+        }
+        for (String item : list){
+            selectedFoods.add(item);
+        }
+        lvSelectedIngredientsAdapter.notifyDataSetChanged();
+        togglePhotoFragment(upcfrag.getView());
+    }
 
     protected void launchSearchResultsActivity (ArrayList<Recipe> recipes) {
 
@@ -118,39 +130,33 @@ public class IngredientSearch extends AppCompatActivity
 
     private void populateIngredientSearchArray() {
         //method to populate array of searchable/selectable ingredient items
-        foods.add("banana");
-        foods.add("apple");
-        foods.add("grape");
-        foods.add("lemon");
-        foods.add("orange");
-        foods.add("bread");
-        foods.add("lime");
-        foods.add("chicken");
-        foods.add("ground beef");
-        foods.add("beef");
-        foods.add("ground chicken");
-        foods.add("potato");
-        foods.add("sweet potato");
-        foods.add("pear");
+        //Paul changed this from a static selection to the IngredientList class
+        IngredientList list = new IngredientList();
+        foods = list.ingredients;
     }
 
 
     public void togglePhotoFragment(View view) {
-        if (!testPhotoFrag.isAdded()) {
+        if (!upcfrag.isAdded()) {
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(R.id.fragment_holder, testPhotoFrag);
-            transaction.show(testPhotoFrag);
+            transaction.add(R.id.fragment_holder, upcfrag);
+            transaction.show(upcfrag);
+            transaction.hide(searchableFrag);
             transaction.commit();
-        } else if (testPhotoFrag.isHidden()) {
+        } else if (upcfrag.isHidden()) {
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.show(testPhotoFrag);
+            upcfrag.onResume();
+            transaction.show(upcfrag);
+            transaction.hide(searchableFrag);
             transaction.commit();
-        } else if (testPhotoFrag.isVisible()) {
+        } else if (upcfrag.isVisible()) {
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.hide(testPhotoFrag);
+            transaction.show(searchableFrag);
+            transaction.hide(upcfrag);
+            upcfrag.onPause();
             transaction.commit();
         }
     }
@@ -161,15 +167,6 @@ public class IngredientSearch extends AppCompatActivity
                 return true;
         }
         return false;
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        UPCRequest barcode_scanner = new UPCRequest("https://api.outpan.com/v1/products/",
-                "name", "459563971cd36022e52e0c936ce2836c");
-        if (scanResult != null) {
-            barcode_scanner.craftUPCRequest(scanResult.getContents(), this);
-        }
     }
 
     public static void deleteIngredient(int position, ArrayAdapter adapter) {
