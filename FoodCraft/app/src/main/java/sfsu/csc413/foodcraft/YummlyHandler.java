@@ -36,7 +36,7 @@ public class YummlyHandler {
                 "?_app_id=" + YUMMLY_ID +
                 "&_app_key=" + YUMMLY_KEY +
                 encodedIngredient +
-                "&maxResult=30";
+                "&maxResult=50";
 
         Log.i("API_CALL", url);
 
