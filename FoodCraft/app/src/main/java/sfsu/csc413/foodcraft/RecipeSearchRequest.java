@@ -80,7 +80,7 @@ public class RecipeSearchRequest {
 
                         try {
 
-                            List<Recipe> results = YummlyHandler.yummlyToRecipe(response);
+                            List<Recipe> results = YummlyHandler.yummlyToRecipe(response, ingredients);
 
                             recipes.addAll(results);
 

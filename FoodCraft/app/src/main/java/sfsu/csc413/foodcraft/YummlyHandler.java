@@ -66,7 +66,7 @@ public class YummlyHandler {
      * @param response a raw JSON blob of search results.
      * @return A list of Recipe objects.
      */
-    public static List<Recipe> yummlyToRecipe(JSONObject response) {
+    public static List<Recipe> yummlyToRecipe(JSONObject response, List<String> ingredients) {
 
         JSONArray results;
         List<Recipe> recipeList = new ArrayList<>();
@@ -91,6 +91,17 @@ public class YummlyHandler {
 
                 for (int y = 0; y < ingredientList.length(); y++) {
                     String ing = ingredientList.getString(y);
+                    //The following if logic does the matching for each ingredient while we are parsing the JSON array
+                    //This was added by Paul due to the lagging performance we were experiencing in the ResultsListActivity
+                    if (ingredients.contains(ing.toLowerCase())) {
+                        buildRecipe.matchedingredients++;
+                    } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-1))) {
+                        buildRecipe.matchedingredients++;
+                    } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-2))) {
+                        buildRecipe.matchedingredients++;
+                    } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-3)+"y")) {
+                        buildRecipe.matchedingredients++;
+                    }
                     buildRecipe.ingredients.add(ing);
                 }
                 /* Retrieve Course */
@@ -106,6 +117,10 @@ public class YummlyHandler {
                 }
 
                 /* Done */
+                //Potentially discard entries with zero parsed matches using the below code
+                /*
+                if (buildRecipe.matchedingredients > 0) recipeList.add(buildRecipe);
+                 */
                 recipeList.add(buildRecipe);
             }
 

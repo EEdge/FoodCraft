@@ -59,7 +59,7 @@ public class ResultsListActivity extends Activity {
         ArrayList<Integer> zeromatches = new ArrayList<Integer>(){};
         for (int i = 0; i < recipeList.size(); i++){
             Recipe aRecipe = recipeList.get(i);
-            for (String ingredient : selectedFoods) {
+            /*for (String ingredient : selectedFoods) {
                 if (aRecipe.ingredients.contains(ingredient)) {
                     aRecipe.matchedingredients++;
                 } else if (aRecipe.ingredients.contains(ingredient + "s")) {
@@ -69,7 +69,7 @@ public class ResultsListActivity extends Activity {
                 } else if (aRecipe.ingredients.contains(ingredient.substring(0,ingredient.length()-2) + "ies")) {
                     aRecipe.matchedingredients++;
                 }
-            }
+            }*/
             if (aRecipe.matchedingredients == 0) zeromatches.add(i);
         }
         //This removes entries with no matches
@@ -112,6 +112,14 @@ public class ResultsListActivity extends Activity {
         inflater.inflate(R.menu.menu_main, menu);
         this.menu = menu;
         return true;
+    }
+    public void filterCourse(String course){
+        //Manipulate recipeList here
+        mAdapter.recipeList = recipeList;
+        for (Recipe recipe : mAdapter.recipeList){
+            if (recipe.course.equals(course)) mAdapter.recipeList.remove(recipe);
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     protected void launchDetailActivity(RecipeDetail recipeDetail) {

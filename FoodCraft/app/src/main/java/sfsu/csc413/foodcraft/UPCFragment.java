@@ -41,7 +41,10 @@ public class UPCFragment extends Fragment {
     TaskCallback taskCallback = new TaskCallback() {
         @Override
         public void onTaskCompleted(List<String> result) {
-            ((IngredientSearch) getActivity()).addselectedFoods(result);
+            if (result.size() == 0){
+
+            }
+            else ((IngredientSearch) getActivity()).addselectedFoods(result);
             barcodeView.pause();
         }
     };

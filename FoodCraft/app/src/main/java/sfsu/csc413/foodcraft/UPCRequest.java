@@ -61,6 +61,7 @@ public class UPCRequest {
                             }
                             else {
                                 Toast.makeText(context, "Code Not Found!", Toast.LENGTH_LONG).show();
+                                parse_response("");
                             }
 
                         } catch (Exception exception) {
@@ -90,12 +91,27 @@ public class UPCRequest {
         IngredientList list = new IngredientList();
         String[] split_text = text.split("\\s+");
         List<String> results = new ArrayList<>();
-        for (String part: split_text) {
-            if (list.Contains(part.toLowerCase())){
-                results.add(part.toLowerCase());
-            }
+        if (text.length() < 1){
+            callback.onTaskCompleted(results);
         }
-        callback.onTaskCompleted(results);
+        else {
+            for (String part: split_text) {
+                if (list.Contains(part.toLowerCase())){
+                    results.add(part.toLowerCase());
+                }
+            }
+            if (results.size() == 0){
+                for (String part: split_text) {
+                    for (String secondpart : split_text) {
+                        String combo = part + " " + secondpart;
+                        if (list.Contains(combo.toLowerCase())){
+                            results.add(combo.toLowerCase());
+                        }
+                    }
+                }
+            }
+            callback.onTaskCompleted(results);
+        }
     }
 }
 

@@ -147,7 +147,7 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
 
     private boolean isInArray(String string, ArrayList<String> arrayList) {
         for (int i = 0; i < arrayList.size(); i++) {
-            if (string == arrayList.get(i))
+            if (string.equals(arrayList.get(i)))
                 return true;
         }
         return false;
