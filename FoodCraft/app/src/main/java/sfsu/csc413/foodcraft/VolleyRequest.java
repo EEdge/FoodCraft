@@ -1,9 +1,12 @@
 package sfsu.csc413.foodcraft;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.LruCache;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 /**
@@ -15,6 +18,7 @@ public class VolleyRequest {
 
     private static VolleyRequest mInstance;
     private RequestQueue mRequestQueue;
+    private ImageLoader mImageLoader;
     private static Context mCtx;
 
     private VolleyRequest(Context context) {
@@ -34,6 +38,15 @@ public class VolleyRequest {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+            mImageLoader = new ImageLoader(this.mRequestQueue, new ImageLoader.ImageCache() {
+                private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(10);
+                public void putBitmap(String url, Bitmap bitmap) {
+                    mCache.put(url, bitmap);
+                }
+                public Bitmap getBitmap(String url) {
+                    return mCache.get(url);
+                }
+            });
         }
         return mRequestQueue;
     }
