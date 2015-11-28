@@ -12,15 +12,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/fragment_holder"
-            android:layout_below="@+id/searchview_container"
-            android:layout_alignParentBottom="true">
-        </FrameLayout>
+        android:layout_weight="2">
 
         <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
             android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay"
@@ -32,46 +24,63 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/fragment_holder"
+            android:layout_below="@+id/searchview_container"
+            android:layout_alignParentBottom="true">
+        </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@id/toolbar_holder"
-            android:id="@+id/searchview_container">
+            android:id="@+id/searchview_container"
+            >
+
             <android.support.v7.widget.SearchView
                 app:showAsAction="always|collapseActionView"
                 android:icon="@android:drawable/ic_menu_search"
                 android:id="@+id/menu_item_search"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:title="Search"
+                android:queryHint="Find recipes with..."
                 android:iconifiedByDefault="true"
-                android:layout_weight="8" />
+                android:layout_weight="8"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="#e1e1e1"/>
             <Button
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:hint="Scan UPC"
-                android:onClick="togglePhotoFragment"/>
+                android:onClick="togglePhotoFragment"
+                android:background="#a61218"
+                android:textColorHint="#ffffff"/>
+
         </LinearLayout>
 
 
     </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Selected ingredients:"
-        android:textColor="#000000" />
-
-    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+        android:layout_height="3dp"
+        android:id="@+id/spacer"
+        android:background="#a21823"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Include Ingredients"
+        android:padding="8dp"
+        android:paddingLeft="14dp"
+        android:textSize="18dp"
+        android:textColor="#90111c"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -94,9 +103,11 @@
             android:id="@+id/foodcraft_search_button"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="Search"
+            android:hint="Find Recipes"
             android:layout_alignParentBottom="true"
-            />
+            android:background="#a62128"
+            android:textColorHint="#ffffff"
+            android:textSize="18dp"/>
     </RelativeLayout>
 
 </LinearLayout>

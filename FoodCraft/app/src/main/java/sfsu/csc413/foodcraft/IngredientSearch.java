@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
@@ -232,7 +233,7 @@ public class IngredientSearch extends AppCompatActivity
 
             t.setText(string);
 
-            Button button = (Button) v.findViewById(R.id.delete);
+            ImageButton button = (ImageButton) v.findViewById(R.id.delete);
             button.setTag(position);
             button.setOnClickListener(new View.OnClickListener() {
 
