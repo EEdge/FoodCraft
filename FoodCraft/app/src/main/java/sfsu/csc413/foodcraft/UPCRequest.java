@@ -11,7 +11,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,6 +24,7 @@ public class UPCRequest {
     private String url;
     private String modifer;
     private String APIkey;
+    private TaskCallback callback;
 
     /**
      * The constructor for the UPCRequest class that establishes our variables.
@@ -44,8 +47,9 @@ public class UPCRequest {
      * Written by Paul Klein
      *  TODO: Parse Item for Ingredients, and return that ingredient as a String instead of a toast.
      */
-    public void craftUPCRequest(String upc_code, final Context context){
+    public void craftUPCRequest(String upc_code, final Context context, TaskCallback callback){
         final String requesturl = url + upc_code + "/" + modifer;
+        this.callback = callback;
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (requesturl, null, new Response.Listener<JSONObject>() {
 
@@ -53,22 +57,23 @@ public class UPCRequest {
                     public void onResponse(JSONObject response) {
                         try {
                             if (!response.getString(modifer).equals("null")) {
-                                send_toast(response.getString(modifer), context);
+                                parse_response(response.getString(modifer));
                             }
                             else {
-                                send_toast("UPC Not Found!!", context);
+                                Toast.makeText(context, "Code Not Found!", Toast.LENGTH_LONG).show();
+                                parse_response("");
                             }
 
                         } catch (Exception exception) {
                             VolleyLog.e("Error: ", exception.toString());
-                            send_toast("Error!", context);
+                            Toast.makeText(context, "Error!", Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.e("Error: ", error.getMessage());
-                        send_toast("Error!", context);
+                        Toast.makeText(context, "Error!", Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
@@ -82,14 +87,31 @@ public class UPCRequest {
         };
         VolleyRequest.getInstance(context).addToRequestQueue(jsObjRequest);
     }
-
-    /**
-     * A simple toast abstraction that reduces code size.
-     * @param message
-     * @param context
-     * Written by Paul Klein
-     */
-    public void send_toast(String message, Context context) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    public void parse_response(String text){
+        IngredientList list = new IngredientList();
+        String[] split_text = text.split("\\s+");
+        List<String> results = new ArrayList<>();
+        if (text.length() < 1){
+            callback.onTaskCompleted(results);
+        }
+        else {
+            for (String part: split_text) {
+                if (list.Contains(part.toLowerCase())){
+                    results.add(part.toLowerCase());
+                }
+            }
+            if (results.size() == 0){
+                for (String part: split_text) {
+                    for (String secondpart : split_text) {
+                        String combo = part + " " + secondpart;
+                        if (list.Contains(combo.toLowerCase())){
+                            results.add(combo.toLowerCase());
+                        }
+                    }
+                }
+            }
+            callback.onTaskCompleted(results);
+        }
     }
 }
+

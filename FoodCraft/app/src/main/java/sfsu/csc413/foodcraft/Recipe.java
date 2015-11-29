@@ -15,20 +15,24 @@ import java.util.List;
  * @version: 0.1
  */
 
-public class Recipe implements Serializable {
+public class Recipe implements Serializable, Comparable<Recipe>  {
 
     protected int api;
     protected String id;
     protected String name;
     protected String imageURL;
     protected List<String> ingredients;
-
+    protected String course;
+    protected int matchedingredients = 0;
     Recipe () {
         ingredients = new ArrayList<>();
     }
 
     public int getImageResourceId(Context context) {
         return context.getResources().getIdentifier("generic", "drawable", context.getPackageName());
+    }
+    public int compareTo(Recipe other) {
+        return Integer.compare((this.ingredients.size() - this.matchedingredients), (other.ingredients.size() - other.matchedingredients));
     }
 }
 

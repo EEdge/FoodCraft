@@ -1,6 +1,6 @@
 package sfsu.csc413.foodcraft;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 
 /**
@@ -8,7 +8,7 @@ import java.util.HashSet;
  */
 public class IngredientList {
 
-    private  HashSet<String> ingredients = new HashSet<String>();
+    public ArrayList<String> ingredients = new ArrayList<String>();
 
     IngredientList(){
         ingredients.add("apple");

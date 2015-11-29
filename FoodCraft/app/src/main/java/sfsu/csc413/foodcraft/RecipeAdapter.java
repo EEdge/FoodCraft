@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import com.squareup.picasso.Picasso;
 
@@ -36,12 +37,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        // where we updated the contents of each card
+
         final Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.name);
+
+        holder.progressBar.setProgress((recipe.matchedingredients/recipe.ingredients.size())*100);
+        holder.ingredientText.setText("Matched Ingredients " + recipe.matchedingredients + ". Total "+ recipe.ingredients.size());
+
         Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
 
         Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), recipe.getImageResourceId(mContext));
 
+        // do in background for smooth scrolling
         Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {
             public void onGenerated(Palette palette) {
                 int mutedLight = palette.getMutedColor(mContext.getResources().getColor(android.R.color.black));
@@ -61,12 +69,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public TextView recipeName;
         public ImageView recipeImage;
 
+        public TextView ingredientText;
+        public ProgressBar progressBar;
+
         public ViewHolder(View itemView) {
             super(itemView);
             recipeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
             recipeName = (TextView) itemView.findViewById(R.id.recipeName);
             recipeNameHolder = (LinearLayout) itemView.findViewById(R.id.recipeNameHolder);
             recipeImage = (ImageView) itemView.findViewById(R.id.recipeImage);
+
+            ingredientText = (TextView) itemView.findViewById(R.id.textProgress);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+
             recipeHolder.setOnClickListener(this);
         }
 
