@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import java.lang.String;
@@ -52,4 +53,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
 
 
+    public void glossarySearch(View view){
+            Intent intent = new Intent(this, GlossaryActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(RecipeDetailActivity.RECIPE_DETAILS, mRecipeDetail);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
 }
