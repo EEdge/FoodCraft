@@ -19,12 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-<<<<<<< HEAD
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-=======
 import android.widget.EditText;
->>>>>>> master
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
