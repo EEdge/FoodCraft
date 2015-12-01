@@ -59,17 +59,6 @@ public class ResultsListActivity extends Activity {
         ArrayList<Integer> zeromatches = new ArrayList<Integer>(){};
         for (int i = 0; i < recipeList.size(); i++){
             Recipe aRecipe = recipeList.get(i);
-            /*for (String ingredient : selectedFoods) {
-                if (aRecipe.ingredients.contains(ingredient)) {
-                    aRecipe.matchedingredients++;
-                } else if (aRecipe.ingredients.contains(ingredient + "s")) {
-                    aRecipe.matchedingredients++;
-                } else if (aRecipe.ingredients.contains(ingredient + "es")) {
-                    aRecipe.matchedingredients++;
-                } else if (aRecipe.ingredients.contains(ingredient.substring(0,ingredient.length()-2) + "ies")) {
-                    aRecipe.matchedingredients++;
-                }
-            }*/
             if (aRecipe.matchedingredients == 0) zeromatches.add(i);
         }
         //This removes entries with no matches
@@ -78,7 +67,6 @@ public class ResultsListActivity extends Activity {
         }
 
         Collections.sort(recipeList);
-        //Collections.reverse(recipeList);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
