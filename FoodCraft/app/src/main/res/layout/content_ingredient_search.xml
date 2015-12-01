@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:text="Include Ingredients"
         android:padding="8dp"
-        android:paddingLeft="14dp"
+        android:paddingLeft="20dp"
         android:textSize="18dp"
         android:textColor="#90111c"/>
 
