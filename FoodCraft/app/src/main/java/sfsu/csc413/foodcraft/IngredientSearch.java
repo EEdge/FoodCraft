@@ -19,7 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+<<<<<<< HEAD
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+=======
 import android.widget.EditText;
+>>>>>>> master
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -287,9 +292,9 @@ class CustomAdapter<T> extends ArrayAdapter {
 
         t.setText(string);
 
-        Button button = (Button) v.findViewById(R.id.delete);
-        button.setTag(position);
-        button.setOnClickListener(new View.OnClickListener() {
+            ImageButton button = (ImageButton) v.findViewById(R.id.delete);
+            button.setTag(position);
+            button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
