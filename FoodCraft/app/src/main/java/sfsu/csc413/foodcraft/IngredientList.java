@@ -241,6 +241,7 @@ public class IngredientList {
         ingredients.add("green pepper");
         ingredients.add("ham");
         ingredients.add("carrot");
+        ingredients.add("cake");
         ingredients.add("low sodium chicken");
         ingredients.add("all-purpose flour");
         ingredients.add("milk");
