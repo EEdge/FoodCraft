@@ -89,8 +89,9 @@ public class RecipeSearchRequest {
                                 searchActivity.launchSearchResultsActivity(recipes);
 
                             } else {
-
-                                searchCycle(Utilities.getRandomSubset(ingredients, ingredients.size()-1));
+                                Thread.sleep(1000);
+                                ingredients.remove(ingredients.size()-1);
+                                searchCycle(ingredients);
                             }
 
                         } catch (Exception e) {
