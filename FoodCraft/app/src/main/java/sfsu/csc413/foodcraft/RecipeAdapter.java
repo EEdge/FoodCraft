@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ProgressBar;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,10 +44,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         final Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.name);
 
-        holder.progressBar.setProgress((recipe.matchedingredients/recipe.ingredients.size())*100);
-        holder.ingredientText.setText("Matched Ingredients " + recipe.matchedingredients + ". Total "+ recipe.ingredients.size());
-
         Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
+        ImageLoader mImageLoader = VolleyRequest.getInstance(mContext).getImageLoader();
+        holder.recipeImage.setImageUrl(recipe.imageURL, mImageLoader);
 
         Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), recipe.getImageResourceId(mContext));
 
@@ -67,7 +68,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public LinearLayout recipeHolder;
         public LinearLayout recipeNameHolder;
         public TextView recipeName;
-        public ImageView recipeImage;
+        //public ImageView recipeImage;
+        public NetworkImageView recipeImage;
 
         public TextView ingredientText;
         public ProgressBar progressBar;
@@ -77,11 +79,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             recipeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
             recipeName = (TextView) itemView.findViewById(R.id.recipeName);
             recipeNameHolder = (LinearLayout) itemView.findViewById(R.id.recipeNameHolder);
-            recipeImage = (ImageView) itemView.findViewById(R.id.recipeImage);
-
-            ingredientText = (TextView) itemView.findViewById(R.id.textProgress);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
-
+            recipeImage = (NetworkImageView) itemView.findViewById(R.id.NetworkrecipeImage);
             recipeHolder.setOnClickListener(this);
         }
 

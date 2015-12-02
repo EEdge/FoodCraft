@@ -84,7 +84,9 @@ public class YummlyHandler {
                 buildRecipe.api = RecipeSearchRequest.YUMMLY_API;
                 buildRecipe.name = recipe.getString("recipeName");
 
-                buildRecipe.imageURL = recipe.getJSONObject("imageUrlsBySize").getString("90");
+                String small_image = recipe.getJSONObject("imageUrlsBySize").getString("90");
+                String choppedImage = small_image.substring(0, small_image.length() - 4);
+                buildRecipe.imageURL = choppedImage + "360";
 
                 /* Builds Ingredient List */
                 JSONArray ingredientList = recipe.getJSONArray("ingredients");
