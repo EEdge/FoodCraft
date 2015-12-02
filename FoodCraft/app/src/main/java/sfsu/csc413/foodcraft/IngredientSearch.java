@@ -49,6 +49,7 @@ public class IngredientSearch extends AppCompatActivity
 
     // Buttons
     Button searchButton;
+    Button scanButton;
 
     //SearchView
     static SearchView searchView;
@@ -70,6 +71,7 @@ public class IngredientSearch extends AppCompatActivity
         setContentView(R.layout.activity_ingredient_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         searchButton = (Button) findViewById(R.id.foodcraft_search_button);
+        scanButton = (Button) findViewById(R.id.buttonScanUPC);
         setSupportActionBar(toolbar);
         populateIngredientSearchArray();
         selfReference = this;
@@ -209,6 +211,7 @@ public class IngredientSearch extends AppCompatActivity
             transaction.add(R.id.fragment_holder, upcfrag);
             transaction.show(upcfrag);
             transaction.hide(searchableFrag);
+            scanButton.setHint("Cancel");
             transaction.commit();
         } else if (upcfrag.isHidden()) {
             FragmentManager manager = getFragmentManager();
@@ -216,12 +219,14 @@ public class IngredientSearch extends AppCompatActivity
             upcfrag.onResume();
             transaction.show(upcfrag);
             transaction.hide(searchableFrag);
+            scanButton.setHint("Cancel");
             transaction.commit();
         } else if (upcfrag.isVisible()) {
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.show(searchableFrag);
             transaction.hide(upcfrag);
+            scanButton.setHint("Scan UPC");
             upcfrag.onPause();
             transaction.commit();
         }

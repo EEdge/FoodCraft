@@ -54,6 +54,7 @@
                 android:focusableInTouchMode="false"
                 android:background="#e1e1e1"/>
             <Button
+                android:id="@+id/buttonScanUPC"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
