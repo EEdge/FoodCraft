@@ -8,6 +8,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.xml.sax.*;
+import javax.xml.parsers.*;
+import org.xml.sax.helpers.*;
+
+import java.io.IOException;
+import java.io.StringReader;
+
 /**
  *
  */
@@ -16,6 +23,8 @@ public class GlossarySearch {
     private static final String BIGOVEN_KEY = "vVK4HI1I9NublKJqy5QAEV00J861jtbS";
     private Context context;
     private RecipeDetail detail;
+    private GlossarySearch mGlossarySearch;
+    String parsedEntry = "";
 
     GlossarySearch(Context context, RecipeDetail detail){
         this.context = context;
@@ -32,14 +41,26 @@ public class GlossarySearch {
         return url;
     }
 
-    public StringRequest requestGlossaryResponse(String url){
+    public void requestGlossaryResponse(String url){
         // String result;
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        sendDefinition(response);
+
+                        try {
+                            processResponse(response);
+                        } catch (SAXException e) {
+                            e.printStackTrace();
+                        } catch (ParserConfigurationException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.i("GLOSSARY_SEARCH", "Glossary Search Request successful");
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -50,12 +71,25 @@ public class GlossarySearch {
         // Add the request to the RequestQueue.
         VolleyRequest.getInstance(context).addToRequestQueue(stringRequest);
 
-        return stringRequest;
-
     }
 
-    public String sendDefinition(String response){
-        return response;
+    public String processResponse(String response) throws SAXException, ParserConfigurationException, IOException {
+
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        SAXParser sp = spf.newSAXParser();
+        XMLReader xr = sp.getXMLReader();
+
+        GlossaryXmlHandler mXMLHandler = new GlossaryXmlHandler();
+        xr.setContentHandler(mXMLHandler);
+        InputSource inStream = new InputSource();
+        inStream.setCharacterStream(new StringReader(response));
+        xr.parse(inStream);
+
+        GlossaryData entry = mXMLHandler.entry;
+        parsedEntry += entry.getTerm() + '\n';
+        parsedEntry += entry.getDefinition();
+
+        return parsedEntry;
     }
 
 }
