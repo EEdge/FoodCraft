@@ -174,6 +174,16 @@ public class IngredientSearch extends AppCompatActivity
 
         Log.i("LAUNCH_RESULTS", "Started with recipes list of length " + recipes.size());
 
+        // Add ingredients I always have to selectedFoods
+        android.content.SharedPreferences sharedPrefs = getSharedPreferences("myprefs", MODE_PRIVATE);
+
+        if (sharedPrefs.getBoolean("salt", false)) { selectedFoods.add("salt"); }
+        if (sharedPrefs.getBoolean("pepper",false)) { selectedFoods.add("pepper"); }
+        if (sharedPrefs.getBoolean("sugar",false)) { selectedFoods.add("sugar"); }
+        if (sharedPrefs.getBoolean("butter",false)) { selectedFoods.add("butter"); }
+        if (sharedPrefs.getBoolean("eggs",false)) { selectedFoods.add("eggs"); }
+        if (sharedPrefs.getBoolean("water",false)) { selectedFoods.add("water"); }
+
         Intent intent = new Intent(this, ResultsListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);

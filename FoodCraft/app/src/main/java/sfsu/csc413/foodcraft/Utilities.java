@@ -7,14 +7,14 @@ import java.util.Random;
 /**
  * @file:Utilities.java
  * @author: brook thomas
- * @version: 0.1
+ * @version: 0.2
  *
  */
 public class Utilities {
 
     /** Private constructor - class exists solely for static methods */
     private Utilities() {}
-    
+
     /**
      * Strips non-ASCII characters from a string.
      *
