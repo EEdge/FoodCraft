@@ -2,6 +2,7 @@ package sfsu.csc413.foodcraft;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -10,7 +11,6 @@ import com.android.volley.toolbox.StringRequest;
 
 import org.xml.sax.*;
 import javax.xml.parsers.*;
-import org.xml.sax.helpers.*;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -18,17 +18,21 @@ import java.io.StringReader;
 /**
  *
  */
-public class GlossarySearch {
+public class GlossarySearch{
     private static final String BIGOVEN_GLOSSARY_ENDPOINT_SEARCH = "http://api.bigoven.com/glossary/byterm/";
     private static final String BIGOVEN_KEY = "vVK4HI1I9NublKJqy5QAEV00J861jtbS";
-    private Context context;
-    private RecipeDetail detail;
-    private GlossarySearch mGlossarySearch;
+    Context context;
+    RecipeDetail detail;
+    GlossarySearch mGlossarySearch;
     String parsedEntry = "";
+    TextView textView;
+    public GlossaryActivity activity;
 
-    GlossarySearch(Context context, RecipeDetail detail){
+
+    GlossarySearch(Context context, RecipeDetail detail, TextView textView){
         this.context = context;
         this.detail = detail;
+        this.textView = textView;
     }
 
     public static String ingredientGlossarySearchURL(String ingredient) {
@@ -41,7 +45,8 @@ public class GlossarySearch {
         return url;
     }
 
-    public void requestGlossaryResponse(String url){
+    public void requestGlossaryResponse(String url, final RecipeDetail detail){
+
         // String result;
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -49,8 +54,10 @@ public class GlossarySearch {
                     @Override
                     public void onResponse(String response) {
 
+                        mGlossarySearch = new GlossarySearch(context, detail, textView);
+
                         try {
-                            processResponse(response);
+                            processResponse(response, mGlossarySearch);
                         } catch (SAXException e) {
                             e.printStackTrace();
                         } catch (ParserConfigurationException e) {
@@ -59,7 +66,7 @@ public class GlossarySearch {
                             e.printStackTrace();
                         }
 
-                        Log.i("GLOSSARY_SEARCH", "Glossary Search Request successful");
+                        Log.i("GLOSSARY_SEARCH", "Glossary Search Request Successful");
 
                     }
                 }, new Response.ErrorListener() {
@@ -73,7 +80,8 @@ public class GlossarySearch {
 
     }
 
-    public String processResponse(String response) throws SAXException, ParserConfigurationException, IOException {
+    public String processResponse(String response, GlossarySearch mGlossarySearch)
+            throws SAXException, ParserConfigurationException, IOException {
 
         SAXParserFactory spf = SAXParserFactory.newInstance();
         SAXParser sp = spf.newSAXParser();
@@ -89,7 +97,15 @@ public class GlossarySearch {
         parsedEntry += entry.getTerm() + '\n';
         parsedEntry += entry.getDefinition();
 
+
+        //TextView textView = (TextView) this.activity.findViewById(R.id.glossary_entry);
+        textView.setText(this.parsedEntry);
+
         return parsedEntry;
+    }
+
+    public GlossarySearch getGlossarySearch(){
+        return mGlossarySearch;
     }
 
 }

@@ -1,7 +1,7 @@
 package sfsu.csc413.foodcraft;
 
 /**
- *
+ * http://www.mysamplecode.com/2011/11/android-parse-xml-file-example-using.html
  */
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

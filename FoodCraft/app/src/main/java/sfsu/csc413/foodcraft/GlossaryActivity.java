@@ -11,8 +11,9 @@ public class GlossaryActivity extends AppCompatActivity {
 
     public static final String RECIPE_DETAILS = "sfsu.csc413.foodcraft.RECIPE_DETAILS";
     TextView txt_glossary;
-    private RecipeDetail mRecipeDetail;
-    private Context context;
+    RecipeDetail mRecipeDetail;
+    GlossarySearch mGlossarySearch;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +25,16 @@ public class GlossaryActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         mRecipeDetail = (RecipeDetail) bundle.getSerializable(RECIPE_DETAILS);
 
-        GlossarySearch mGlossarySearch = new GlossarySearch(context,mRecipeDetail);
+        mGlossarySearch = new GlossarySearch(context,mRecipeDetail, txt_glossary);
+
+        //Clean ingredient search string
         //String cleanedIngredient = Utilities.cleanString(mRecipeDetail.ingredients.get(0));
         //String search = GlossarySearch.ingredientGlossarySearchURL(cleanedIngredient);
         String search = GlossarySearch.ingredientGlossarySearchURL("avocado");
-        mGlossarySearch.requestGlossaryResponse(search);
 
-        txt_glossary.setText(mGlossarySearch.parsedEntry);
+        mGlossarySearch.requestGlossaryResponse(search, mRecipeDetail);
 
-        //txt_glossary.setText(Html.fromHtml(String.valueOf(mGlossarySearch.requestGlossaryResponse(search))));
+        //txt_glossary.setText(Html.fromHtml(String.valueOf(mGlossarySearch.parsedEntry)));
+
     }
 }
