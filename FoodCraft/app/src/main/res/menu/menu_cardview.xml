@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="sfsu.csc413.foodcraft.ResultsListActivity">
+    tools:context="sfsu.csc413.foodcraft.CardviewActivity">
     <item android:id="@+id/action_breakfast"
         android:title="@string/breakfast_cuisine"
         android:orderInCategory="100"

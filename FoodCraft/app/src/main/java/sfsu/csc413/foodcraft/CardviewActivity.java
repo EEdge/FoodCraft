@@ -19,7 +19,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
 
-public class ResultsListActivity extends ActionBarActivity {
+public class CardviewActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
     private Spinner spinner_nav;
@@ -29,13 +29,13 @@ public class ResultsListActivity extends ActionBarActivity {
 
     private RecyclerView mRecyclerView;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
-    private RecipeAdapter mAdapter;
+    private CardviewAdapter mAdapter;
     private boolean isListView;
     private List<Recipe> recipeList;
     private List<Recipe> modifyRecipe;
     private ArrayList<String> selectedFoods;
     private Menu menu;
-    private ResultsListActivity selfReference;
+    private CardviewActivity selfReference;
 
     public static final String RECIPE_SEARCH_RESULTS = "sfsu.csc413foodcraft.RECIPE_SEARCH_RESULTS";
     public static final String SELECTED_FOODS_ARRAY = "sfsu.csc413foodcraft.SELECTED_FOODS_ARRAY";
@@ -43,7 +43,7 @@ public class ResultsListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_searchresults);
+        setContentView(R.layout.activity_cardview_toolbar);
 
         recipeList = new ArrayList<>();
         selectedFoods = new ArrayList<>();
@@ -82,7 +82,7 @@ public class ResultsListActivity extends ActionBarActivity {
         mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
 
         mRecyclerView.setHasFixedSize(true); //Data size is fixed - improves performance
-        mAdapter = new RecipeAdapter(this, recipeList);
+        mAdapter = new CardviewAdapter(this, recipeList);
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(onItemClickListener);
@@ -90,7 +90,7 @@ public class ResultsListActivity extends ActionBarActivity {
         isListView = true;
     }
 
-    RecipeAdapter.OnItemClickListener onItemClickListener = new RecipeAdapter.OnItemClickListener() {
+    CardviewAdapter.OnItemClickListener onItemClickListener = new CardviewAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
             Recipe selected_recipe = recipeList.get(position);
@@ -158,7 +158,7 @@ public class ResultsListActivity extends ActionBarActivity {
             mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
 
             mRecyclerView.setHasFixedSize(true); //Data size is fixed - improves performance
-            mAdapter = new RecipeAdapter(this, modifyRecipe);
+            mAdapter = new CardviewAdapter(this, modifyRecipe);
             mRecyclerView.setAdapter(mAdapter);
 
             mAdapter.setOnItemClickListener(onItemClickListener);

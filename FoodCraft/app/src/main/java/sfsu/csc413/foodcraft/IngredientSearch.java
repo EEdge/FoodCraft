@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -187,10 +188,10 @@ public class IngredientSearch extends AppCompatActivity
         if (sharedPrefs.getBoolean("eggs",false)) { selectedFoods.add("eggs"); }
         if (sharedPrefs.getBoolean("water",false)) { selectedFoods.add("water"); }
 
-        Intent intent = new Intent(this, ResultsListActivity.class);
+        Intent intent = new Intent(this, CardviewActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ResultsListActivity.RECIPE_SEARCH_RESULTS, recipes);
-        bundle.putStringArrayList(ResultsListActivity.SELECTED_FOODS_ARRAY, selectedFoods);
+        bundle.putSerializable(CardviewActivity.RECIPE_SEARCH_RESULTS, recipes);
+        bundle.putStringArrayList(CardviewActivity.SELECTED_FOODS_ARRAY, selectedFoods);
         intent.putExtras(bundle);
         Log.i("LAUNCH_RESULTS", "Starting new activity");
         selfReference.startActivity(intent);

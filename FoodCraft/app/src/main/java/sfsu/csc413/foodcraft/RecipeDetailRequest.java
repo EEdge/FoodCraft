@@ -19,10 +19,10 @@ import java.util.Map;
 public class RecipeDetailRequest {
 
     Context mContext;
-    ResultsListActivity mResultsList;
+    CardviewActivity mResultsList;
 
 
-    RecipeDetailRequest(Context context, ResultsListActivity detailsActivity) {
+    RecipeDetailRequest(Context context, CardviewActivity detailsActivity) {
         mContext = context;
         mResultsList = detailsActivity;
     }
