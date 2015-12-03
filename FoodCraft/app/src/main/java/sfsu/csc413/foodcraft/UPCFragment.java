@@ -30,6 +30,7 @@ public class UPCFragment extends Fragment {
         @Override
         public void barcodeResult(BarcodeResult result) {
             UPCRequest barcode_scanner = new UPCRequest(getActivity());
+            //TODO HANDLE NULL RESPONSE
             if (result != null) {
                 if (barcode_scanner.getCachedCode(result.toString()).product_title != null){
                     List<UPCObject> objlist = new ArrayList<UPCObject>(){};
