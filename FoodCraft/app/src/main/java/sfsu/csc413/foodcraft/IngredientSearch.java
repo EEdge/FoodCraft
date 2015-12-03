@@ -1,15 +1,10 @@
 package sfsu.csc413.foodcraft;
 
-import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
-import android.content.ClipData;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,19 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +62,8 @@ public class IngredientSearch extends AppCompatActivity
         transaction.commit();
 
         setContentView(R.layout.activity_ingredient_search);
+        new Eula(this).show();
+        new LocationServices(this).show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         searchButton = (Button) findViewById(R.id.foodcraft_search_button);
         setSupportActionBar(toolbar);

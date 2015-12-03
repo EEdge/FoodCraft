@@ -3,35 +3,36 @@ package sfsu.csc413.foodcraft;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toolbar;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Spinner;
 
-public class ResultsListActivity extends Activity {
+
+public class ResultsListActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
+    private Spinner spinner_nav;
+
+
+    private Activity myActivity;
 
     private RecyclerView mRecyclerView;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
     private RecipeAdapter mAdapter;
     private boolean isListView;
     private List<Recipe> recipeList;
+    private List<Recipe> modifyRecipe;
     private ArrayList<String> selectedFoods;
     private Menu menu;
     private ResultsListActivity selfReference;
@@ -54,8 +55,9 @@ public class ResultsListActivity extends Activity {
         Bundle bundle = intent.getExtras();
         recipeList = ((List<Recipe>) bundle.getSerializable(RECIPE_SEARCH_RESULTS));
         selectedFoods = (bundle.getStringArrayList(SELECTED_FOODS_ARRAY));
+
         //The following block sorts through the list to find the amount of matched ingredients in the recipes. It then sorts
-        //the list based on the result of (TotalIngredients - MatchedIngredients) least to greatests
+        //the list based on the result of (TotalIngredients - MatchedIngredients) least to greatest.
         ArrayList<Integer> zeromatches = new ArrayList<Integer>(){};
         for (int i = 0; i < recipeList.size(); i++){
             Recipe aRecipe = recipeList.get(i);
@@ -72,6 +74,7 @@ public class ResultsListActivity extends Activity {
             }*/
             if (aRecipe.matchedingredients == 0) zeromatches.add(i);
         }
+
         //This removes entries with no matches
         for (int i = 0; i< zeromatches.size(); i++){
             recipeList.remove(zeromatches.get(i)-i);
@@ -79,7 +82,12 @@ public class ResultsListActivity extends Activity {
 
         Collections.sort(recipeList);
         //Collections.reverse(recipeList);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        spinner_nav = (Spinner) findViewById(R.id.spinner_nav);
+        setUpActionBar();
+        addItemsToSpinner();
+
 
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
@@ -108,18 +116,69 @@ public class ResultsListActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu=menu;
         return true;
     }
-    public void filterCourse(String course){
-        //Manipulate recipeList here
-        mAdapter.recipeList = recipeList;
-        for (Recipe recipe : mAdapter.recipeList){
-            if (recipe.course.equals(course)) mAdapter.recipeList.remove(recipe);
+
+    private void setUpActionBar() {
+        if (toolbar != null) {
+            setActionBar(toolbar);
+            getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActionBar().setDisplayShowTitleEnabled(false);
+            getActionBar().setElevation(7);
         }
-        mAdapter.notifyDataSetChanged();
+    }
+
+   @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+       if (id == R.id.action_settings) {
+           Intent intent = new Intent(this,SharedPreferences.class);
+           startActivity(intent);
+           return true;
+       }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public void sortCourse(String course) {
+
+        modifyRecipe = new ArrayList<>(recipeList);
+
+        for (int i = recipeList.size() - 1; i >= 0; i--){
+            Recipe aRecipe = recipeList.get(i);
+
+            if (aRecipe.course != null && !aRecipe.course.equals(course)) {
+                System.out.println("Removing Course: " + aRecipe.course);
+                modifyRecipe.remove(i);
+
+            }
+            else if (aRecipe.course==null) {
+                modifyRecipe.remove(i);
+            }
+        }
+        if (modifyRecipe.size() != 0) {
+            mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+
+            mRecyclerView = (RecyclerView) findViewById(R.id.list);
+            mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
+
+            mRecyclerView.setHasFixedSize(true); //Data size is fixed - improves performance
+            mAdapter = new RecipeAdapter(this, modifyRecipe);
+            mRecyclerView.setAdapter(mAdapter);
+
+            mAdapter.setOnItemClickListener(onItemClickListener);
+
+            isListView = true;
+        }
+
     }
 
     protected void launchDetailActivity(RecipeDetail recipeDetail) {
@@ -133,5 +192,111 @@ public class ResultsListActivity extends Activity {
         intent.putExtras(bundle);
         Log.i("LDA", "5");
         startActivity(intent);
+    }
+
+    // add items into spinner dynamically
+    public void addItemsToSpinner() {
+
+        //modifyRecipe = new ArrayList<String>();
+
+        /*for (int i = recipeList.size() - 1; i >= 0; i--){
+            Recipe aRecipe = recipeList.get(i);
+            if (aRecipe.course !=null ) {
+                modifyRecipe.add(aRecipe.course);
+                System.out.println(modifyRecipe);
+            }
+
+
+            else if (aRecipe.course==null) {
+                modifyRecipe.remove(i);
+            }
+*/
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Filter By");
+        list.add("Breakfast");
+        list.add("Lunch");
+        list.add("Appetizers");
+        list.add("Main Dishes");
+        list.add("Breads");
+        list.add("Salads");
+        list.add("Desserts");
+        list.add("Beverages");
+
+        // Custom ArrayAdapter with spinner item layout to set popup background
+
+        CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
+                getApplicationContext(), list);
+
+        // Default ArrayAdapter with default spinner item layout, getting some
+        // view rendering problem in lollypop device, need to test in other
+        // devices
+
+  /*
+   * ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this,
+   * android.R.layout.simple_spinner_item, list);
+   * spinAdapter.setDropDownViewResource
+   * (android.R.layout.simple_spinner_dropdown_item);
+   */
+
+        spinner_nav.setAdapter(spinAdapter);
+
+        spinner_nav.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View v, int position, long id)
+            {
+                // On selecting a spinner item
+                String item = adapter.getItemAtPosition(position).toString();
+                System.out.println(item);
+                if (item.equals ("Breakfast"))
+                {
+                    sortCourse("Breakfast and Brunch");
+                }
+
+                if (item.equals ("Lunch"))
+                {
+                    sortCourse("Lunch and Snacks");
+                }
+
+                if (item.equals ("Breads"))
+                {
+                    sortCourse("Breads");
+                }
+
+                if (item.equals ("Main Dishes"))
+                {
+                    sortCourse("Main Dishes");
+                }
+
+                if (item.equals ("Salads"))
+                {
+                    sortCourse("Salads");
+                }
+
+                if (item.equals ("Desserts"))
+                {
+                    sortCourse("Desserts");
+                }
+
+                if (item.equals ("Beverages"))
+                {
+                    sortCourse("Beverages");
+                }
+
+                if (item.equals ("Appetizers"))
+                {
+                    sortCourse("Appetizers");
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
     }
 }

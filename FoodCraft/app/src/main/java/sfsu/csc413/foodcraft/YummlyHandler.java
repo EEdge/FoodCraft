@@ -92,7 +92,7 @@ public class YummlyHandler {
                 for (int y = 0; y < ingredientList.length(); y++) {
                     String ing = ingredientList.getString(y);
                     //The following if logic does the matching for each ingredient while we are parsing the JSON array
-                    //This was added by Paul due to the lagging performance we were experiencing in the ResultsListActivity
+                    //This was added by Paul due to the lagging performance we were experiencing in the activity_cardview
                     if (ingredients.contains(ing.toLowerCase())) {
                         buildRecipe.matchedingredients++;
                     } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-1))) {

@@ -56,10 +56,6 @@ public class SharedPreferences extends AppCompatActivity {
 
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
 
-
-
-
-
     }
     public void displayData (View view) {
 

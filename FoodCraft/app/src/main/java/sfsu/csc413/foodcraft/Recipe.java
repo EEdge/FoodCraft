@@ -23,7 +23,7 @@ public class Recipe implements Serializable, Comparable<Recipe>  {
     protected String imageURL;
     protected List<String> ingredients;
     protected String course;
-    protected int matchedingredients = 0;
+    protected int  matchedingredients = 0;
     Recipe () {
         ingredients = new ArrayList<>();
     }
