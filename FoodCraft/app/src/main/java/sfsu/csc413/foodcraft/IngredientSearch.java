@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -69,6 +68,8 @@ public class IngredientSearch extends AppCompatActivity
         transaction.commit();
 
         setContentView(R.layout.activity_ingredient_search);
+        new Eula(this).show();
+        new LocationServices(this).show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         searchButton = (Button) findViewById(R.id.foodcraft_search_button);
         scanButton = (Button) findViewById(R.id.buttonScanUPC);

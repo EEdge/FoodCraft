@@ -1,7 +1,6 @@
 package sfsu.csc413.foodcraft;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.graphics.Palette;
@@ -12,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ProgressBar;
+
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -33,7 +32,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_places, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_cardview, parent, false);
         return new ViewHolder(view);
     }
 
@@ -43,7 +42,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         final Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.name);
-
+        holder.ingredientText.setText((recipe.course));
         Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
         ImageLoader mImageLoader = VolleyRequest.getInstance(mContext).getImageLoader();
         holder.recipeImage.setImageUrl(recipe.imageURL, mImageLoader);
@@ -72,13 +71,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public NetworkImageView recipeImage;
 
         public TextView ingredientText;
-        public ProgressBar progressBar;
+
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             recipeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
             recipeName = (TextView) itemView.findViewById(R.id.recipeName);
             recipeNameHolder = (LinearLayout) itemView.findViewById(R.id.recipeNameHolder);
+            ingredientText = (TextView) itemView.findViewById(R.id.textProgress);
             recipeImage = (NetworkImageView) itemView.findViewById(R.id.NetworkrecipeImage);
             recipeHolder.setOnClickListener(this);
         }
