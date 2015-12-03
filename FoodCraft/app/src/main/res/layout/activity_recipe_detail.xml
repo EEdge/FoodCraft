@@ -2,17 +2,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="false"
-    android:background="#62728a">
+    android:background="#ffffff">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:layout_width="fill_parent"
             android:layout_height="300dp"
-            android:id="@+id/imageView"
+            android:id="@+id/recipe_image"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.43"
             android:scaleType="fitXY"
@@ -28,17 +28,25 @@
             android:text="Food Craft"
             android:id="@+id/recipe_name"
             android:layout_gravity="center_horizontal"
-            android:background="#05fefefe"
-            android:textColor="#fd8adb9e"
+            android:background="#ffffff"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal|bold|italic"
+            android:textColor="#a62128"
             android:textIsSelectable="false"
-            style="@style/TextAppearance.AppCompat.Title" />
+            style="@style/TextAppearance.AppCompat.Title"
+            android:textSize="23dp"/>
+
+        <View
+            android:layout_width="365dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft="10dp"
+            android:background="#a62128"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:layout_weight="0.03"
@@ -57,7 +65,7 @@
                     android:scaleType="centerCrop"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:src="@drawable/clock" />
+                    android:src="@drawable/hourglass" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,7 +73,9 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Total time : "
                     android:id="@+id/textView4"
-                    android:textColor="#f7f9ef"
+                    android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif-condensed"
                     android:textAlignment="center"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
 
@@ -75,10 +85,15 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:id="@+id/total_time"
                     android:text="Medium Text"
-                    android:textColor="#f7f9ef"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#000000"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
 
             </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#c0c0c0"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -99,9 +114,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Number of servings : "
+                    android:text="Servings : "
                     android:id="@+id/textView9"
-                    android:textColor="#f7f9ef"
+                    android:paddingLeft="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#000000"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
 
                 <TextView
@@ -110,12 +127,92 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
                     android:id="@+id/serving_size"
-                    android:textColor="#f7f9ef"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#000000"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
 
             </LinearLayout>
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#c0c0c0"/>
         </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="22dp"
+                    android:scaleType="centerCrop"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/nutrition" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nutrition  "
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/textView2"
+                    style="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text   "
+                    android:id="@+id/nutrition_key"
+                    style="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#000000"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  Medium Text"
+                    android:id="@+id/nutrition_value"
+                    android:paddingLeft="20dp"
+                    style="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#000000"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="365dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:background="#a62128"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -126,10 +223,12 @@
             android:text="Ingredients"
             android:gravity="center"
             android:id="@+id/textView7"
-            android:textColor="#f7f9ef"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#a62128"
             style="@style/Base.TextAppearance.AppCompat.Title"
             android:textAlignment="center"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -141,38 +240,36 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="4 whole Large (or 6 Medium) Yellow Onions, Halved Root To Tip, And Sliced Thin"
+                android:text="New Text"
                 android:id="@+id/ingredient_list"
                 android:paddingBottom="5dp"
-                android:textColor="#f7f9ef"
+                android:paddingLeft="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="#000000"
                 android:gravity="left"
-                style="@style/Base.TextAppearance.AppCompat.Small" />
+                style="@style/Base.TextAppearance.AppCompat.Small"
+                android:textSize="15dp" />
 
 
         </LinearLayout>
 
+
+
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="#a62128">
+
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120dp"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="35dp"
-                    android:layout_height="30dp"
-                    android:scaleType="centerCrop"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:src="@drawable/recipe" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,13 +279,17 @@
                     android:text="View Recipe"
                     android:id="@+id/textView6"
                     android:linksClickable="true"
-                    android:textColor="#0e0e0d"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="#ffffff"
                     android:textIsSelectable="false"
                     style="@style/TextAppearance.AppCompat.Title" />
 
+
             </LinearLayout>
 
+
         </LinearLayout>
+
 
     </LinearLayout>
 

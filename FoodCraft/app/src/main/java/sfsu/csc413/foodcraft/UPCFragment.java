@@ -1,6 +1,7 @@
 package sfsu.csc413.foodcraft;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,6 +15,7 @@ import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static sfsu.csc413.foodcraft.R.layout.upc_scan;
@@ -22,14 +24,22 @@ import static sfsu.csc413.foodcraft.R.layout.upc_scan;
 public class UPCFragment extends Fragment {
 
     private CompoundBarcodeView barcodeView;
+    UPCRequest barcode_scanner = new UPCRequest(getActivity());
 
     BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
-            UPCRequest barcode_scanner = new UPCRequest("https://api.outpan.com/v1/products/",
-                    "name", "459563971cd36022e52e0c936ce2836c");
+            UPCRequest barcode_scanner = new UPCRequest(getActivity());
+            //TODO HANDLE NULL RESPONSE
             if (result != null) {
-                barcode_scanner.craftUPCRequest(result.toString(), getActivity(), taskCallback);
+                if (barcode_scanner.getCachedCode(result.toString()).product_title != null){
+                    List<UPCObject> objlist = new ArrayList<UPCObject>(){};
+                    objlist.add(barcode_scanner.getCachedCode(result.toString()));
+                    ((IngredientSearch) getActivity()).addselectedFoods(objlist, true);
+                }
+                else {
+                    barcode_scanner.craftUPCRequest(result.toString(), getActivity(), taskCallback);
+                }
             }
         }
 
@@ -40,11 +50,14 @@ public class UPCFragment extends Fragment {
 
     TaskCallback taskCallback = new TaskCallback() {
         @Override
-        public void onTaskCompleted(List<String> result) {
-            if (result.size() == 0){
-
-            }
-            else ((IngredientSearch) getActivity()).addselectedFoods(result);
+        public void onTaskCompleted(List<UPCObject> result) {
+            ((IngredientSearch) getActivity()).addselectedFoods(result, false);
+            barcodeView.pause();
+        }
+        public void onTaskCompleted(UPCObject result, boolean cached) {
+            List<UPCObject> resultlist = new ArrayList<UPCObject>();
+            resultlist.add(result);
+            ((IngredientSearch) getActivity()).addselectedFoods(resultlist, false);
             barcodeView.pause();
         }
     };
@@ -85,5 +98,8 @@ public class UPCFragment extends Fragment {
         barcodeView.initializeFromIntent(IntentIntegrator.forFragment(this).createScanIntent());
         barcodeView.resume();
         barcodeView.decodeSingle(callback);
+    }
+    public void addtoDatabase(String code, String title, Context context){
+        barcode_scanner.insertCachedCode(code, title, context);
     }
 }

@@ -24,13 +24,13 @@
       <include
       layout="@layout/toolbar"/>
 
-    <ImageView
-        android:id="@+id/recipeImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:transitionName="tImage" />
-
+      <com.android.volley.toolbox.NetworkImageView
+          android:id="@+id/NetworkrecipeImage"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="centerCrop"
+          android:transitionName="tImage"
+          />
     <LinearLayout
         android:id="@+id/mainHolder"
         android:layout_width="match_parent"
@@ -56,7 +56,6 @@
 
     </LinearLayout>
   </FrameLayout>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

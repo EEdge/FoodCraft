@@ -7,6 +7,8 @@ import java.util.List;
  */
 public class TaskCallback implements TaskCallbackInterface{
     @Override
-    public void onTaskCompleted(List<String> result){
+    public void onTaskCompleted(String result, boolean cached){
+    }
+    public void onTaskCompleted(List<UPCObject> result){
     }
 }

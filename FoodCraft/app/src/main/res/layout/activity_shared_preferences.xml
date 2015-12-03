@@ -4,13 +4,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="sfsu.csc413.foodcraft.Activity2">
+    tools:context="sfsu.csc413.foodcraft.Activity2"
+    android:background="#ffffff">
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Salt"
-        android:id="@+id/checkBox1"
+        android:id="@+id/salt"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="26dp"
@@ -20,8 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sugar"
-        android:id="@+id/checkBox2"
-        android:layout_below="@+id/checkBox1"
+        android:id="@+id/sugar"
+        android:layout_below="@+id/salt"
         android:layout_alignParentStart="true"
         android:checked="false" />
 
@@ -29,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Butter"
-        android:id="@+id/checkBox3"
-        android:layout_below="@+id/checkBox2"
+        android:id="@+id/butter"
+        android:layout_below="@+id/sugar"
         android:layout_alignParentStart="true"
         android:checked="false" />
 
@@ -38,17 +39,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Eggs"
-        android:id="@+id/checkBox4"
+        android:id="@+id/eggs"
         android:checked="false"
-        android:layout_below="@+id/checkBox3"
+        android:layout_below="@+id/butter"
         android:layout_alignParentStart="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Oil"
-        android:id="@+id/checkBox5"
-        android:layout_below="@+id/checkBox4"
+        android:text="Pepper"
+        android:id="@+id/pepper"
+        android:layout_below="@+id/eggs"
         android:layout_alignParentStart="true"
         android:checked="false" />
 
@@ -57,17 +58,28 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/button1"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:onClick="saveData" />
+        android:onClick="saveData"
+        android:background="#a62128"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/flour"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp" />
 
-    <Button
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Display"
-        android:id="@+id/button2"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="42dp"
-        android:onClick="displayData" />
+        android:text="Water"
+        android:id="@+id/water"
+        android:layout_below="@+id/pepper"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flour"
+        android:id="@+id/flour"
+        android:checked="false"
+        android:layout_below="@+id/water"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

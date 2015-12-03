@@ -61,17 +61,6 @@ public class ResultsListActivity extends ActionBarActivity {
         ArrayList<Integer> zeromatches = new ArrayList<Integer>(){};
         for (int i = 0; i < recipeList.size(); i++){
             Recipe aRecipe = recipeList.get(i);
-            /*for (String ingredient : selectedFoods) {
-                if (aRecipe.ingredients.contains(ingredient)) {
-                    aRecipe.matchedingredients++;
-                } else if (aRecipe.ingredients.contains(ingredient + "s")) {
-                    aRecipe.matchedingredients++;
-                } else if (aRecipe.ingredients.contains(ingredient + "es")) {
-                    aRecipe.matchedingredients++;
-                } else if (aRecipe.ingredients.contains(ingredient.substring(0,ingredient.length()-2) + "ies")) {
-                    aRecipe.matchedingredients++;
-                }
-            }*/
             if (aRecipe.matchedingredients == 0) zeromatches.add(i);
         }
 
@@ -81,8 +70,6 @@ public class ResultsListActivity extends ActionBarActivity {
         }
 
         Collections.sort(recipeList);
-        //Collections.reverse(recipeList);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         spinner_nav = (Spinner) findViewById(R.id.spinner_nav);
         setUpActionBar();
