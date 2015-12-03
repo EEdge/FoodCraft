@@ -34,7 +34,5 @@ public class GlossaryActivity extends AppCompatActivity {
 
         mGlossarySearch.requestGlossaryResponse(search, mRecipeDetail);
 
-        //txt_glossary.setText(Html.fromHtml(String.valueOf(mGlossarySearch.parsedEntry)));
-
     }
 }

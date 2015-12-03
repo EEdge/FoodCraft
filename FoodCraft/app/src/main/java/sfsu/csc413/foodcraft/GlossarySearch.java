@@ -26,8 +26,6 @@ public class GlossarySearch{
     GlossarySearch mGlossarySearch;
     String parsedEntry = "";
     TextView textView;
-    public GlossaryActivity activity;
-
 
     GlossarySearch(Context context, RecipeDetail detail, TextView textView){
         this.context = context;
@@ -97,15 +95,11 @@ public class GlossarySearch{
         parsedEntry += entry.getTerm() + '\n';
         parsedEntry += entry.getDefinition();
 
-
-        //TextView textView = (TextView) this.activity.findViewById(R.id.glossary_entry);
         textView.setText(this.parsedEntry);
+        //txt_glossary.setText(Html.fromHtml(String.valueOf(mGlossarySearch.parsedEntry)));
 
         return parsedEntry;
     }
 
-    public GlossarySearch getGlossarySearch(){
-        return mGlossarySearch;
-    }
 
 }
