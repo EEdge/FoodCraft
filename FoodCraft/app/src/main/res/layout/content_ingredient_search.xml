@@ -98,7 +98,7 @@
         <Button
             android:id="@+id/foodcraft_search_button"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:hint="Find Recipes"
             android:layout_alignParentBottom="true"
             android:background="#a62128"
