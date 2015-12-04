@@ -33,6 +33,7 @@ public class CardviewActivity extends ActionBarActivity {
     private boolean isListView;
     private List<Recipe> recipeList;
     private List<Recipe> modifyRecipe;
+    private List<String> templist;
     private ArrayList<String> selectedFoods;
     private Menu menu;
     private CardviewActivity selfReference;
@@ -184,40 +185,52 @@ public class CardviewActivity extends ActionBarActivity {
     // add items into spinner dynamically
     public void addItemsToSpinner() {
 
-        //modifyRecipe = new ArrayList<String>();
+        templist = new ArrayList<>();
 
-        /*for (int i = recipeList.size() - 1; i >= 0; i--){
+        for (int i = recipeList.size() - 1; i >= 0; i--) {
             Recipe aRecipe = recipeList.get(i);
-            if (aRecipe.course !=null ) {
-                modifyRecipe.add(aRecipe.course);
-                System.out.println(modifyRecipe);
+            if (aRecipe.course != null) {
+                if (!templist.contains(aRecipe.course)){
+                    templist.add(aRecipe.course);
+                }
+                System.out.println(templist);
             }
+        }
 
+            ArrayList<String> list = new ArrayList<>();
+            list.add("Filter By");
+        if (templist.contains("Breakfast and Brunch")) {
+            list.add("Breakfast");
+        }
+        if (templist.contains("Lunch and Snacks")) {
+            list.add("Lunch");
+        }
+        if (templist.contains("Appetizers")) {
+            list.add("Appetizers");
+        }
+        if (templist.contains("Main Dishes")) {
+            list.add("Main Dishes");
+        }
+        if (templist.contains("Breads")) {
+            list.add("Breads");
+        }
+        if (templist.contains("Salads")) {
+            list.add("Salads");
+        }
+        if (templist.contains("Desserts")) {
+            list.add("Desserts");
+        }
+        if (templist.contains("Beverages")) {
+            list.add("Beverages");
+        }
+            // Custom ArrayAdapter with spinner item layout to set popup background
 
-            else if (aRecipe.course==null) {
-                modifyRecipe.remove(i);
-            }
-*/
+            CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
+                    getApplicationContext(), list);
 
-        ArrayList<String> list = new ArrayList<>();
-        list.add("Filter By");
-        list.add("Breakfast");
-        list.add("Lunch");
-        list.add("Appetizers");
-        list.add("Main Dishes");
-        list.add("Breads");
-        list.add("Salads");
-        list.add("Desserts");
-        list.add("Beverages");
-
-        // Custom ArrayAdapter with spinner item layout to set popup background
-
-        CustomSpinnerAdapter spinAdapter = new CustomSpinnerAdapter(
-                getApplicationContext(), list);
-
-        // Default ArrayAdapter with default spinner item layout, getting some
-        // view rendering problem in lollypop device, need to test in other
-        // devices
+            // Default ArrayAdapter with default spinner item layout, getting some
+            // view rendering problem in lollypop device, need to test in other
+            // devices
 
   /*
    * ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this,
@@ -226,64 +239,55 @@ public class CardviewActivity extends ActionBarActivity {
    * (android.R.layout.simple_spinner_dropdown_item);
    */
 
-        spinner_nav.setAdapter(spinAdapter);
+            spinner_nav.setAdapter(spinAdapter);
 
-        spinner_nav.setOnItemSelectedListener(new OnItemSelectedListener() {
+            spinner_nav.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View v, int position, long id)
-            {
-                // On selecting a spinner item
-                String item = adapter.getItemAtPosition(position).toString();
-                System.out.println(item);
-                if (item.equals ("Breakfast"))
-                {
-                    sortCourse("Breakfast and Brunch");
+                @Override
+                public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
+                    // On selecting a spinner item
+                    String item = adapter.getItemAtPosition(position).toString();
+                    System.out.println(item);
+                    if (item.equals("Breakfast")) {
+                        sortCourse("Breakfast and Brunch");
+                    }
+
+                    if (item.equals("Lunch")) {
+                        sortCourse("Lunch and Snacks");
+                    }
+
+                    if (item.equals("Breads")) {
+                        sortCourse("Breads");
+                    }
+
+                    if (item.equals("Main Dishes")) {
+                        sortCourse("Main Dishes");
+                    }
+
+                    if (item.equals("Salads")) {
+                        sortCourse("Salads");
+                    }
+
+                    if (item.equals("Desserts")) {
+                        sortCourse("Desserts");
+                    }
+
+                    if (item.equals("Beverages")) {
+                        sortCourse("Beverages");
+                    }
+
+                    if (item.equals("Appetizers")) {
+                        sortCourse("Appetizers");
+                    }
+
                 }
 
-                if (item.equals ("Lunch"))
-                {
-                    sortCourse("Lunch and Snacks");
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+
                 }
+            });
 
-                if (item.equals ("Breads"))
-                {
-                    sortCourse("Breads");
-                }
-
-                if (item.equals ("Main Dishes"))
-                {
-                    sortCourse("Main Dishes");
-                }
-
-                if (item.equals ("Salads"))
-                {
-                    sortCourse("Salads");
-                }
-
-                if (item.equals ("Desserts"))
-                {
-                    sortCourse("Desserts");
-                }
-
-                if (item.equals ("Beverages"))
-                {
-                    sortCourse("Beverages");
-                }
-
-                if (item.equals ("Appetizers"))
-                {
-                    sortCourse("Appetizers");
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-
+        }
     }
-}

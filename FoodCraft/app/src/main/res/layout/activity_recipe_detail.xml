@@ -9,10 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/activity_recipe_detail_toolbar" />
+
         <com.android.volley.toolbox.NetworkImageView
             android:layout_width="fill_parent"
             android:layout_height="300dp"
             android:id="@+id/recipe_image"
+            android:layout_below="@id/toolbar"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.43"
             android:scaleType="fitXY"

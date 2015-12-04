@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,13 +25,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.widget.Toolbar;
 import java.util.ArrayList;
+
 import java.util.List;
+
+
 
 public class IngredientSearch extends AppCompatActivity
         implements SearchView.OnQueryTextListener, SearchableIngredientFragment.OnFragmentInteractionListener {
 
+    private Toolbar toolbar;
     //ArrayLists for selectable foods and selected foods
     ArrayList<String> foods = new ArrayList<>();
     static ArrayList<String> selectedFoods = new ArrayList<>();
@@ -71,10 +74,15 @@ public class IngredientSearch extends AppCompatActivity
         setContentView(R.layout.activity_ingredient_search);
         new Eula(this).show();
         new LocationServices(this).show();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         searchButton = (Button) findViewById(R.id.foodcraft_search_button);
         scanButton = (Button) findViewById(R.id.buttonScanUPC);
-        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            setActionBar(toolbar);
+            getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActionBar().setDisplayShowTitleEnabled(false);
+            getActionBar().setElevation(7);
+        }
         populateIngredientSearchArray();
         selfReference = this;
 
@@ -320,7 +328,6 @@ class CustomAdapter<T> extends ArrayAdapter {
 
         return v;
     }
-
 
 }
 

@@ -41,7 +41,6 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
 
         final Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.name);
-        holder.ingredientText.setText((recipe.course));
         Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
         ImageLoader mImageLoader = VolleyRequest.getInstance(mContext).getImageLoader();
         holder.recipeImage.setImageUrl(recipe.imageURL, mImageLoader);
@@ -69,16 +68,11 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
         //public ImageView recipeImage;
         public NetworkImageView recipeImage;
 
-        public TextView ingredientText;
-
-
-
         public ViewHolder(View itemView) {
             super(itemView);
             recipeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
             recipeName = (TextView) itemView.findViewById(R.id.recipeName);
             recipeNameHolder = (LinearLayout) itemView.findViewById(R.id.recipeNameHolder);
-            ingredientText = (TextView) itemView.findViewById(R.id.textProgress);
             recipeImage = (NetworkImageView) itemView.findViewById(R.id.NetworkrecipeImage);
             recipeHolder.setOnClickListener(this);
         }

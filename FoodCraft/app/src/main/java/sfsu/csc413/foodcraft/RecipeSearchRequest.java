@@ -36,7 +36,7 @@ public class RecipeSearchRequest {
     private ArrayList<Recipe> recipes;
     private Context context;
     private IngredientSearch searchActivity;
-    private int desiredNumberOfRecipes = 20;
+    private int desiredNumberOfRecipes = 50;
 
     /**
      * Constructor method that defines the new search.
