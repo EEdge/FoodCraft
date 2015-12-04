@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -76,7 +77,11 @@ public class IngredientSearch extends AppCompatActivity
         if (toolbar != null) {
             setActionBar(toolbar);
             getActionBar().setDisplayHomeAsUpEnabled(false);
-            getActionBar().setDisplayShowTitleEnabled(false);
+            getActionBar().setDisplayShowTitleEnabled(true);
+
+            // https://stackoverflow.com/questions/16240605/change-action-bar-title-color -- Brilliant!
+            getActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Select Ingredients</font>"));
+
             getActionBar().setElevation(7);
         }
         selfReference = this;

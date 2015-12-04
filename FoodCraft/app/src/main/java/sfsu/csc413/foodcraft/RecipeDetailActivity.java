@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +41,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (toolbar != null) {
             setActionBar(toolbar);
             getActionBar().setDisplayHomeAsUpEnabled(false);
-            getActionBar().setDisplayShowTitleEnabled(false);
+            getActionBar().setDisplayShowTitleEnabled(true);
+
+            // https://stackoverflow.com/questions/16240605/change-action-bar-title-color -- Brilliant!
+            getActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Recipe Details</font>"));
+
             getActionBar().setElevation(7);
         }
 
