@@ -99,6 +99,8 @@ public class YummlyHandler {
                         buildRecipe.matchedingredients++;
                     } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-1))) {
                         buildRecipe.matchedingredients++;
+                    } else if (ingredients.contains(Utilities.cleanString(ing))) {
+                        buildRecipe.matchedingredients++;
                     } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-2))) {
                         buildRecipe.matchedingredients++;
                     } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-3)+"y")) {
