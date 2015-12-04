@@ -28,9 +28,11 @@ public class GlossaryActivity extends AppCompatActivity {
         mGlossarySearch = new GlossarySearch(context,mRecipeDetail, txt_glossary);
 
         //Clean ingredient search string
-        //String cleanedIngredient = Utilities.cleanString(mRecipeDetail.ingredients.get(0));
-        //String search = GlossarySearch.ingredientGlossarySearchURL(cleanedIngredient);
-        String search = GlossarySearch.ingredientGlossarySearchURL("avocado");
+        String cleanedIngredient = Utilities.cleanString(mRecipeDetail.ingredients.get(0));
+        //cleanedIngredient = cleanedIngredient.replaceFirst(" ", "");
+        cleanedIngredient = cleanedIngredient.replace(" ", "%20");
+        String search = GlossarySearch.ingredientGlossarySearchURL(cleanedIngredient);
+        //String search = GlossarySearch.ingredientGlossarySearchURL("egg");
 
         mGlossarySearch.requestGlossaryResponse(search, mRecipeDetail);
 

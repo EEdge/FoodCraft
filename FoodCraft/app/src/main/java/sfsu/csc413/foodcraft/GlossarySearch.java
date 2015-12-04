@@ -1,8 +1,10 @@
 package sfsu.csc413.foodcraft;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -21,11 +23,14 @@ import java.io.StringReader;
 public class GlossarySearch{
     private static final String BIGOVEN_GLOSSARY_ENDPOINT_SEARCH = "http://api.bigoven.com/glossary/byterm/";
     private static final String BIGOVEN_KEY = "vVK4HI1I9NublKJqy5QAEV00J861jtbS";
-    Context context;
+    Context context ;
     RecipeDetail detail;
     GlossarySearch mGlossarySearch;
     String parsedEntry = "";
     TextView textView;
+    CharSequence text = "Ingredient Not Found";
+    int duration = Toast.LENGTH_SHORT;
+    Toast toast;
 
     GlossarySearch(Context context, RecipeDetail detail, TextView textView){
         this.context = context;
@@ -52,19 +57,20 @@ public class GlossarySearch{
                     @Override
                     public void onResponse(String response) {
 
-                        mGlossarySearch = new GlossarySearch(context, detail, textView);
+                            mGlossarySearch = new GlossarySearch(context, detail, textView);
 
-                        try {
-                            processResponse(response, mGlossarySearch);
-                        } catch (SAXException e) {
-                            e.printStackTrace();
-                        } catch (ParserConfigurationException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                            try {
 
-                        Log.i("GLOSSARY_SEARCH", "Glossary Search Request Successful");
+                                processResponse(response, mGlossarySearch);
+                            } catch (SAXException e) {
+                                e.printStackTrace();
+                            } catch (ParserConfigurationException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Log.i("GLOSSARY_SEARCH", "Glossary Search Request Successful");
 
                     }
                 }, new Response.ErrorListener() {
@@ -92,14 +98,18 @@ public class GlossarySearch{
         xr.parse(inStream);
 
         GlossaryData entry = mXMLHandler.entry;
-        parsedEntry += entry.getTerm() + '\n';
+        parsedEntry += entry.getTerm();
         parsedEntry += entry.getDefinition();
 
-        textView.setText(this.parsedEntry);
-        //txt_glossary.setText(Html.fromHtml(String.valueOf(mGlossarySearch.parsedEntry)));
+        if(entry.getGlossaryEntryID().equals("0")){
+            toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        else {
+            textView.setText(Html.fromHtml(String.valueOf(this.parsedEntry)));
+        }
 
         return parsedEntry;
     }
-
 
 }

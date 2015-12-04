@@ -33,11 +33,13 @@ public class GlossaryXmlHandler extends DefaultHandler {
 
         currentElement = false;
 
-        /** set value */
+        // set value
         if (localName.equalsIgnoreCase("Term"))
             entry.setTerm(currentValue);
         else if (localName.equalsIgnoreCase("Definition"))
             entry.setDefinition(currentValue);
+        else if (localName.equalsIgnoreCase("GlossaryEntryID"))
+            entry.setGlossaryEntryID(currentValue);
     }
 
     // Called to get tag characters

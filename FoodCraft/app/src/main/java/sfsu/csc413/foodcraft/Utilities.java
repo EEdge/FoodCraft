@@ -98,7 +98,8 @@ public class Utilities {
         String[] keywords = {"granulated", "boiling", "softened", "diced", "sliced", "slices", "slice",
                 "ground", "shredded", "grated", "minced", "dried", "finely chopped", "chopped",
                 "mashed", "crushed", "boiled", "baked", "cold", "warm", "hot", "warmed", "fresh",
-                "cooked", "large", "medium", "small", "plain", "distilled", "frozen"};
+                "cooked", "large", "medium", "small", "plain", "distilled", "frozen", "pitted","peeled",
+                "cup", "tsp", "tbsp", "and", "/", ",","1","2","3","4","5","6","7","8","9"};
 
 
         // Replace keywords with nothing

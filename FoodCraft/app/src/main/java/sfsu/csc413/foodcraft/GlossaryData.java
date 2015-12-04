@@ -7,6 +7,7 @@ public class GlossaryData {
 
     String term = null;
     String definition = null;
+    String glossaryID = null;
 
     public String getTerm() {
         return term;
@@ -20,5 +21,11 @@ public class GlossaryData {
 
     public void setDefinition(String definition) {
         this.definition = definition;
+    }
+
+    public String getGlossaryEntryID(){return glossaryID;}
+
+    public void setGlossaryEntryID(String glossaryID){
+        this.glossaryID = glossaryID;
     }
 }
