@@ -143,8 +143,7 @@ public class CardviewActivity extends ActionBarActivity {
         for (int i = recipeList.size() - 1; i >= 0; i--){
             Recipe aRecipe = recipeList.get(i);
 
-            if (aRecipe.course != null && !aRecipe.course.equals(course)) {
-                System.out.println("Removing Course: " + aRecipe.course);
+            if (aRecipe.course != null && !aRecipe.course.equals(course) && !course.equals("All")) {
                 modifyRecipe.remove(i);
 
             }
@@ -193,12 +192,12 @@ public class CardviewActivity extends ActionBarActivity {
                 if (!templist.contains(aRecipe.course)){
                     templist.add(aRecipe.course);
                 }
-                System.out.println(templist);
             }
         }
 
             ArrayList<String> list = new ArrayList<>();
             list.add("Filter By");
+            list.add("All");
         if (templist.contains("Breakfast and Brunch")) {
             list.add("Breakfast");
         }
@@ -247,7 +246,9 @@ public class CardviewActivity extends ActionBarActivity {
                 public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
                     // On selecting a spinner item
                     String item = adapter.getItemAtPosition(position).toString();
-                    System.out.println(item);
+                    if (item.equals("All")) {
+                        sortCourse("All");
+                    }
                     if (item.equals("Breakfast")) {
                         sortCourse("Breakfast and Brunch");
                     }
