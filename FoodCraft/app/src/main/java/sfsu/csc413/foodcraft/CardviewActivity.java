@@ -56,20 +56,6 @@ public class CardviewActivity extends ActionBarActivity {
         Bundle bundle = intent.getExtras();
         recipeList = ((List<Recipe>) bundle.getSerializable(RECIPE_SEARCH_RESULTS));
         selectedFoods = (bundle.getStringArrayList(SELECTED_FOODS_ARRAY));
-
-        //The following block sorts through the list to find the amount of matched ingredients in the recipes. It then sorts
-        //the list based on the result of (TotalIngredients - MatchedIngredients) least to greatest.
-        ArrayList<Integer> zeromatches = new ArrayList<Integer>(){};
-        for (int i = 0; i < recipeList.size(); i++){
-            Recipe aRecipe = recipeList.get(i);
-            if (aRecipe.matchedingredients == 0) zeromatches.add(i);
-        }
-
-        //This removes entries with no matches
-        for (int i = 0; i< zeromatches.size(); i++){
-            recipeList.remove(zeromatches.get(i)-i);
-        }
-
         Collections.sort(recipeList);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         spinner_nav = (Spinner) findViewById(R.id.spinner_nav);

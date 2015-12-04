@@ -44,16 +44,6 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
         Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
         ImageLoader mImageLoader = VolleyRequest.getInstance(mContext).getImageLoader();
         holder.recipeImage.setImageUrl(recipe.imageURL, mImageLoader);
-
-        Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), recipe.getImageResourceId(mContext));
-
-        // do in background for smooth scrolling
-        Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {
-            public void onGenerated(Palette palette) {
-                int mutedLight = palette.getMutedColor(mContext.getResources().getColor(android.R.color.black));
-                holder.recipeNameHolder.setBackgroundColor(mutedLight);
-            }
-        });
     }
 
     @Override
