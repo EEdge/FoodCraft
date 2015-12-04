@@ -29,7 +29,7 @@ public class Recipe implements Serializable, Comparable<Recipe>  {
     }
 
     public int getImageResourceId(Context context) {
-        return context.getResources().getIdentifier("generic", "drawable", context.getPackageName());
+        return context.getResources().getIdentifier("background_plate", "drawable", context.getPackageName());
     }
     public int compareTo(Recipe other) {
         return Integer.compare((this.ingredients.size() - this.matchedingredients), (other.ingredients.size() - other.matchedingredients));

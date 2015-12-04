@@ -68,7 +68,7 @@
                 android:layout_weight="2"
                 android:hint="Scan UPC"
                 android:onClick="togglePhotoFragment"
-                android:background="#a61218"
+                android:background="#a62128"
                 android:textColorHint="#ffffff"/>
 
         </LinearLayout>

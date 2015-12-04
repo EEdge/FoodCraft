@@ -33,8 +33,7 @@ import java.util.List;
 public class IngredientSearch extends AppCompatActivity
         implements SearchView.OnQueryTextListener, SearchableIngredientFragment.OnFragmentInteractionListener {
 
-    //ArrayLists for selectable foods and selected foods
-    ArrayList<String> foods = new ArrayList<>();
+    //ArrayLists for selected foods
     static ArrayList<String> selectedFoods = new ArrayList<>();
 
     // Activity self reference
@@ -53,8 +52,6 @@ public class IngredientSearch extends AppCompatActivity
 
     //SearchView
     static SearchView searchView;
-
-    int listIndex = 0;
 
     UPCFragment upcfrag = new UPCFragment();
     SearchableIngredientFragment searchableFrag = new SearchableIngredientFragment();
@@ -75,7 +72,6 @@ public class IngredientSearch extends AppCompatActivity
         searchButton = (Button) findViewById(R.id.foodcraft_search_button);
         scanButton = (Button) findViewById(R.id.buttonScanUPC);
         setSupportActionBar(toolbar);
-        populateIngredientSearchArray();
         selfReference = this;
 
         //initialize selected ingredient list, non-searchable
@@ -198,14 +194,6 @@ public class IngredientSearch extends AppCompatActivity
 
     }
 
-    private void populateIngredientSearchArray() {
-        //method to populate array of searchable/selectable ingredient items
-        //Paul changed this from a static selection to the IngredientList class
-        IngredientList list = new IngredientList();
-        foods = list.ingredients;
-    }
-
-
     public void togglePhotoFragment(View view) {
         if (!upcfrag.isAdded()) {
             FragmentManager manager = getFragmentManager();
@@ -232,14 +220,6 @@ public class IngredientSearch extends AppCompatActivity
             upcfrag.onPause();
             transaction.commit();
         }
-    }
-
-    private boolean isInArray(String string, ArrayList<String> arrayList) {
-        for (int i = 0; i < arrayList.size(); i++) {
-            if (string == arrayList.get(i))
-                return true;
-        }
-        return false;
     }
 
     public static void deleteIngredient(int position, ArrayAdapter adapter) {

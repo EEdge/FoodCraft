@@ -41,20 +41,10 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
 
         final Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.name);
-        holder.ingredientText.setText((recipe.course));
-        Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
         ImageLoader mImageLoader = VolleyRequest.getInstance(mContext).getImageLoader();
         holder.recipeImage.setImageUrl(recipe.imageURL, mImageLoader);
+        Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
 
-        Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), recipe.getImageResourceId(mContext));
-
-        // do in background for smooth scrolling
-        Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {
-            public void onGenerated(Palette palette) {
-                int mutedLight = palette.getMutedColor(mContext.getResources().getColor(android.R.color.black));
-                holder.recipeNameHolder.setBackgroundColor(mutedLight);
-            }
-        });
     }
 
     @Override
@@ -69,8 +59,6 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
         //public ImageView recipeImage;
         public NetworkImageView recipeImage;
 
-        public TextView ingredientText;
-
 
 
         public ViewHolder(View itemView) {
@@ -78,7 +66,6 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
             recipeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
             recipeName = (TextView) itemView.findViewById(R.id.recipeName);
             recipeNameHolder = (LinearLayout) itemView.findViewById(R.id.recipeNameHolder);
-            ingredientText = (TextView) itemView.findViewById(R.id.textProgress);
             recipeImage = (NetworkImageView) itemView.findViewById(R.id.NetworkrecipeImage);
             recipeHolder.setOnClickListener(this);
         }
