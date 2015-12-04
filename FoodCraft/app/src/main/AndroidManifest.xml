@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="sfsu.csc413.foodcraft" >
+    package="sfsu.csc413.foodcraft">
 
     <!-- Internet Permission added due to our API calls, and Volley requests. - PK -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,7 +11,7 @@
         android:icon="@mipmap/ic_launcher"
         android:screenOrientation="portrait"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".SplashScreenActivity"
             android:label="@string/app_name"
@@ -26,8 +26,7 @@
             android:name=".IngredientSearch"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_ingredient_search"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".SharedPreferences"
             android:screenOrientation="portrait"

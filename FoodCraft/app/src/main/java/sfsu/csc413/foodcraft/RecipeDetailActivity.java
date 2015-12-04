@@ -9,7 +9,11 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+<<<<<<< HEAD
 import android.widget.ImageView;
+=======
+import android.view.View;
+>>>>>>> glossarySearch
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -104,7 +108,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         return true;
     }
+
+    public void glossarySearch(View view){
+            Intent intent = new Intent(this, GlossaryActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(RecipeDetailActivity.RECIPE_DETAILS, mRecipeDetail);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
 }
