@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -26,6 +27,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     TextView txt_ingredientsList, txt_servingSize, txt_totalTime, txt_title, txt_nutritionKey,txt_nutritionValue;
     NetworkImageView recipe_image;
 
+    private Toolbar toolbar;
     private RecipeDetail mRecipeDetail;
     private ArrayList<String> preferencesIngredients;
 
@@ -34,6 +36,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setActionBar(toolbar);
+            getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActionBar().setDisplayShowTitleEnabled(false);
+            getActionBar().setElevation(7);
+        }
+
 
         txt_ingredientsList = (TextView) findViewById(R.id.ingredient_list);
         txt_servingSize = (TextView) findViewById(R.id.serving_size);
@@ -85,5 +95,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         txt_ingredientsList.setText(builder3.toString());
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        return true;
+    }
 }
