@@ -36,7 +36,8 @@ public class YummlyHandler {
                 "?_app_id=" + YUMMLY_ID +
                 "&_app_key=" + YUMMLY_KEY +
                 encodedIngredient +
-                "&maxResult=50";
+                "&maxResult=50" +
+                "&requirePictures=true";
 
         Log.i("API_CALL", url);
 
@@ -66,12 +67,10 @@ public class YummlyHandler {
      * @param response a raw JSON blob of search results.
      * @return A list of Recipe objects.
      */
-    public static List<Recipe> yummlyToRecipe(JSONObject response, List<String> ingredients) {
+    public static List<Recipe> yummlyToRecipe(JSONObject response, List<String> ingredients) throws Exception {
 
         JSONArray results;
         List<Recipe> recipeList = new ArrayList<>();
-
-        try {
 
             results = response.getJSONArray("matches");
 
@@ -130,13 +129,7 @@ public class YummlyHandler {
 
             return recipeList;
 
-        } catch (JSONException e) {
-            Log.i("yummlyToRecipe()", "Error.");
-            e.printStackTrace();
         }
-
-        return recipeList;
-    }
 
     /**
      * Given a Yummly Recipe ID, will return a formatted RecipeDetail object.

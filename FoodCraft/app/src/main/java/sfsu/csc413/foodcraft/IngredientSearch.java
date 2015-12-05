@@ -26,6 +26,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 import java.util.ArrayList;
 
@@ -133,7 +134,7 @@ public class IngredientSearch extends AppCompatActivity
         LayoutInflater li = getLayoutInflater();
         final View promptsView = li.inflate(R.layout.single_ingredient_alert, null);
         EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-        userInput.setText(product.original_title,TextView.BufferType.EDITABLE);
+        userInput.setText(product.original_title, TextView.BufferType.EDITABLE);
 
         new AlertDialog.Builder(this.selfReference)
                 .setView(promptsView)
@@ -234,9 +235,9 @@ public class IngredientSearch extends AppCompatActivity
         }
     }
 
-    public static void deleteIngredient(int position, ArrayAdapter adapter) {
-        selectedFoods.remove(position);
-        adapter.notifyDataSetChanged();
+    public void createToast (String text) {
+        // Modified from https://developer.android.com/guide/topics/ui/notifiers/toasts.html
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
