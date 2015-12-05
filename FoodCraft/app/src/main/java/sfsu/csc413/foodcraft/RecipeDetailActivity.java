@@ -9,11 +9,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-<<<<<<< HEAD
 import android.widget.ImageView;
-=======
 import android.view.View;
->>>>>>> glossarySearch
 import android.widget.TextView;
 import android.widget.Toolbar;
 
