@@ -115,6 +115,7 @@ public class IngredientSearch extends AppCompatActivity
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) findViewById(R.id.menu_item_search);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("eggs, bacon, etc.");
         searchView.setSubmitButtonEnabled(true);
 
 
