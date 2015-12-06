@@ -15,6 +15,7 @@ public class RecipeDetail implements Serializable {
     protected String totalTime;
     protected int numberServings;
     protected String imageURL;
+    protected String recipeURL;
     protected List<String> ingredients;
     protected Map<String,String> nutrition;
 
