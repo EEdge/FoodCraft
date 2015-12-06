@@ -181,6 +181,8 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
 
         ArrayList<String> newFilterResults;
 
+        Boolean queryIsUnique = true;
+
         if (searchQuery != null && searchQuery.length() > 0) {
 
 
@@ -192,6 +194,12 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
             }
 
             newFilterResults = auxData;
+
+            for (int j = 0; j < newFilterResults.size(); j++) {
+               if ((String) searchQuery == newFilterResults.get(j)) queryIsUnique = false;
+            }
+
+            if (queryIsUnique) newFilterResults.add(0, (String) searchQuery);
         } else {
 
             newFilterResults = searchableListArray;
