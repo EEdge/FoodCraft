@@ -220,4 +220,11 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
         searchableIngredients = list.ingredients;
     }
 
+    public void refreshArray () {
+        populateArray();
+        if (lvIngredientSearchAdapter != null) {
+            lvIngredientSearchAdapter.notifyDataSetChanged();
+        }
+    }
+
 }
