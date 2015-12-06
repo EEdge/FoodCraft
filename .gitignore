@@ -28,3 +28,6 @@ proguard/
 
 # Idea Files
 .idea/*
+FoodCraft/.idea
+/*/.idea/*
+*.iml

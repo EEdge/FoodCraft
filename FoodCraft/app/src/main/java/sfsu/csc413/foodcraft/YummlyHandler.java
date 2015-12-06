@@ -102,8 +102,6 @@ public class YummlyHandler {
                         buildRecipe.matchedingredients++;
                     } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-2))) {
                         buildRecipe.matchedingredients++;
-                    } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-3)+"y")) {
-                        buildRecipe.matchedingredients++;
                     }
                     buildRecipe.ingredients.add(ing);
                 }
