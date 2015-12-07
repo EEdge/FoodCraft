@@ -15,7 +15,6 @@ public class IngredientList {
 
 
     IngredientList(){
-        ingredients.add("apple");
         ingredients.add("abalone");
         ingredients.add("agave nectar");
         ingredients.add("all-purpose flour");
@@ -26,6 +25,7 @@ public class IngredientList {
         ingredients.add("andouille sausage");
         ingredients.add("anelli");
         ingredients.add("anise");
+        ingredients.add("apple");
         ingredients.add("apple cider vinegar");
         ingredients.add("apricot");
         ingredients.add("apricot jam");

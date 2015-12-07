@@ -64,7 +64,7 @@ public class IngredientSearch extends AppCompatActivity
     static SearchView searchView;
 
     UPCFragment upcfrag = new UPCFragment();
-    SearchableIngredientFragment searchableFrag = new SearchableIngredientFragment();
+    static SearchableIngredientFragment searchableFrag = new SearchableIngredientFragment();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -343,6 +343,25 @@ public class IngredientSearch extends AppCompatActivity
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
+    private static ArrayList<String> insertAlphabetized (String string, ArrayList<String> arrayList) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            int compare = string.compareTo(arrayList.get(i));
+            if (compare < 0) {
+                arrayList.add(i, string);
+                return arrayList;
+            }
+        }
+
+        arrayList.add(string);
+        return  arrayList;
+    }
+
+    public static void addIngredientBack (String string) {
+        ArrayList<String> alphabetizedList = insertAlphabetized(string, searchableFrag.getSearchableIngredients());
+        searchableFrag.setSearchableIngredients(alphabetizedList);
+    }
+
 }
 
 class CustomAdapter<T> extends ArrayAdapter {
@@ -356,7 +375,7 @@ class CustomAdapter<T> extends ArrayAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup PARENT) {
         View v = convertView;
 
         if (v == null) {
@@ -378,13 +397,14 @@ class CustomAdapter<T> extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 int pos = (int) view.getTag();
+                IngredientSearch.addIngredientBack(list.get(pos));
                 list.remove(pos);
                 CustomAdapter.this.notifyDataSetChanged();
             }
         });
 
-
         return v;
+
     }
 
 }

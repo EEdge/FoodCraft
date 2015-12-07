@@ -2,8 +2,6 @@ package sfsu.csc413.foodcraft;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +34,6 @@ import static sfsu.csc413.foodcraft.R.layout.list_item_searchable_ingredients;
 public class SearchableIngredientFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     ArrayList<String> searchableIngredients = new ArrayList<>();
-    ArrayList<String> searchableIngredientsMemory = new ArrayList<>(); //used to remember which items have already been removed from the searchable list while filtering
     ArrayAdapter<String> lvIngredientSearchAdapter;
     ListView lvIngredientSearch;
     Boolean queryIsUnique = true;
@@ -84,13 +79,37 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
 
     }
 
+    public ArrayList<String> getSearchableIngredients() {
+        return searchableIngredients;
+    }
+
+    public void setSearchableIngredients(ArrayList<String> arrayList) {
+        this.searchableIngredients = arrayList;
+        lvIngredientSearchAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_searchable_ingredients, R.id.searchable_ingredient_item, searchableIngredients);
+        lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
+        lvIngredientSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position,
+                                    long arg3) {
+                String value = (String) adapter.getItemAtPosition(position);
+                if (!isInArray(value, IngredientSearch.selectedFoods)) {
+                    IngredientSearch.selectedFoods.add(0, value);
+                    IngredientSearch.lvSelectedIngredients.setAdapter(IngredientSearch.lvSelectedIngredientsAdapter);
+
+                }
+                searchableIngredients.remove(position);
+                lvIngredientSearchAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
 
         populateArray();
-        searchableIngredientsMemory = searchableIngredients;
+        searchableIngredients.addAll(searchableIngredients);
         final ArrayAdapter lvIngredientSearchAdapter = new ArrayAdapter<>(getActivity(), list_item_searchable_ingredients, searchable_ingredient_item, searchableIngredients);
         lvIngredientSearch = (ListView) view.findViewById(R.id.listView1);
         lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
@@ -106,8 +125,6 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
                     IngredientSearch.selectedFoods.add(0, value);
                     IngredientSearch.lvSelectedIngredients.setAdapter(IngredientSearch.lvSelectedIngredientsAdapter);
                     searchableIngredients.remove(position);
-                    if (queryIsUnique && position != 0) searchableIngredientsMemory.remove(position - 1);
-                    else if (!queryIsUnique) searchableIngredientsMemory.remove(position);
                     lvIngredientSearchAdapter.notifyDataSetChanged();
 
                 }
@@ -118,14 +135,14 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //on text submit, filter list to show search results as user types
-                filter(searchableIngredientsMemory, query);
+                filter(searchableIngredients, query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 //on text change, filter list to show search results as user types
-                filter(searchableIngredientsMemory, newText);
+                filter(searchableIngredients, newText);
                 return true;
             }
         });//listen for text change
@@ -184,7 +201,7 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
         //filter results by matching the query string and setting a new array to the ArrayAdapter on each text change
         searchQuery = searchQuery.toString().toLowerCase();
 
-        ArrayList<String> newFilterResults;
+        final ArrayList<String> newFilterResults;
 
         if (searchQuery != null && searchQuery.length() > 0) {
 
@@ -207,10 +224,27 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
 
         } else {
             queryIsUnique = true;
-            newFilterResults = searchableListArray;
+            newFilterResults = searchableIngredients;
         }
         lvIngredientSearchAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_searchable_ingredients, R.id.searchable_ingredient_item, newFilterResults);
         lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
+        lvIngredientSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position,
+                                    long arg3) {
+                String value = (String) adapter.getItemAtPosition(position);
+                if (!isInArray(value, IngredientSearch.selectedFoods)) {
+                    IngredientSearch.selectedFoods.add(0, value);
+                    IngredientSearch.lvSelectedIngredients.setAdapter(IngredientSearch.lvSelectedIngredientsAdapter);
+                    newFilterResults.remove(position);
+                    if (queryIsUnique && position != 0)
+                        searchableIngredients.remove(position - 1);
+                    else if (!queryIsUnique) searchableIngredients.remove(position);
+                    lvIngredientSearchAdapter.notifyDataSetChanged();
+
+                }
+            }
+        });
     }
 
     /**
