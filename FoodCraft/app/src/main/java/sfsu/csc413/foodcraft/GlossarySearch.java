@@ -1,6 +1,7 @@
 package sfsu.csc413.foodcraft;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
@@ -25,12 +26,9 @@ public class GlossarySearch{
     private static final String BIGOVEN_KEY = "vVK4HI1I9NublKJqy5QAEV00J861jtbS";
     Context context ;
     RecipeDetail detail;
-    GlossarySearch mGlossarySearch;
+    GlossaryActivity glossaryActivity;
     String parsedEntry = "";
     TextView textView;
-    CharSequence text = "Ingredient Not Found";
-    int duration = Toast.LENGTH_SHORT;
-    Toast toast;
 
     GlossarySearch(Context context, RecipeDetail detail, TextView textView){
         this.context = context;
@@ -48,7 +46,7 @@ public class GlossarySearch{
         return url;
     }
 
-    public void requestGlossaryResponse(String url, final RecipeDetail detail){
+    public void requestGlossaryResponse(String url){
 
         // String result;
         // Request a string response from the provided URL.
@@ -57,11 +55,8 @@ public class GlossarySearch{
                     @Override
                     public void onResponse(String response) {
 
-                            mGlossarySearch = new GlossarySearch(context, detail, textView);
-
                             try {
-
-                                processResponse(response, mGlossarySearch);
+                                processResponse(response);
                             } catch (SAXException e) {
                                 e.printStackTrace();
                             } catch (ParserConfigurationException e) {
@@ -84,7 +79,7 @@ public class GlossarySearch{
 
     }
 
-    public String processResponse(String response, GlossarySearch mGlossarySearch)
+    public void processResponse(String response)
             throws SAXException, ParserConfigurationException, IOException {
 
         SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -98,18 +93,23 @@ public class GlossarySearch{
         xr.parse(inStream);
 
         GlossaryData entry = mXMLHandler.entry;
-        parsedEntry += entry.getTerm();
+        String id = entry.getGlossaryEntryID();
+        parsedEntry = "<h3>" + entry.getTerm() + "</h3>";
         parsedEntry += entry.getDefinition();
 
-        if(entry.getGlossaryEntryID().equals("0")){
-            toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
-        else {
+        if(id.equals("0"))
+            textView.setText("Ingredient not found");
+        else
             textView.setText(Html.fromHtml(String.valueOf(this.parsedEntry)));
-        }
 
-        return parsedEntry;
+    }
+
+    public static String searchIngredient(RecipeDetail mRecipeDetail, int position){
+        String cleanedIngredient = Utilities.cleanString(mRecipeDetail.ingredients.get(position));
+        cleanedIngredient = cleanedIngredient.replace(" ", "%20");
+        String search = GlossarySearch.ingredientGlossarySearchURL(cleanedIngredient);
+
+        return search;
     }
 
 }

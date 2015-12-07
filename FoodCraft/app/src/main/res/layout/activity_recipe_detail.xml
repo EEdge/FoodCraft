@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<sfsu.csc413.foodcraft.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="false"
@@ -241,24 +241,22 @@
             android:layout_height="match_parent"
             android:paddingLeft="10dp">
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="New Text"
-                android:id="@+id/ingredient_list"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="#000000"
-                android:gravity="left"
-                android:textSize="15dp"
-                android:onClick="glossarySearch"
-                style="@style/Base.TextAppearance.AppCompat.Small" />
+
 
 
         </LinearLayout>
-
+        <sfsu.csc413.foodcraft.NestedListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ingredient_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#000000"
+            android:gravity="left"
+            android:textSize="15dp"
+            style="@style/Base.TextAppearance.AppCompat.Small" />
 
 
         <LinearLayout
@@ -299,4 +297,4 @@
 
     </LinearLayout>
 
-</ScrollView>
+</sfsu.csc413.foodcraft.VerticalScrollView>

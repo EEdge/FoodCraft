@@ -1,5 +1,7 @@
 package sfsu.csc413.foodcraft;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -9,9 +11,13 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -20,18 +26,21 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
     public static final String RECIPE_DETAILS = "sfsu.csc413.foodcraft.RECIPE_DETAILS";
-    TextView txt_ingredientsList, txt_servingSize, txt_totalTime, txt_title, txt_nutritionKey,txt_nutritionValue;
+    TextView  txt_servingSize, txt_totalTime, txt_title, txt_nutritionKey,txt_nutritionValue;
+    ListView txt_ingredientsList;
     NetworkImageView recipe_image;
 
     private Toolbar toolbar;
     private RecipeDetail mRecipeDetail;
     private ArrayList<String> preferencesIngredients;
+    GlossarySearch mGlossarySearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +60,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
 
 
-        txt_ingredientsList = (TextView) findViewById(R.id.ingredient_list);
+        txt_ingredientsList = (ListView) findViewById(R.id.ingredient_list);
         txt_servingSize = (TextView) findViewById(R.id.serving_size);
         txt_totalTime = (TextView) findViewById(R.id.total_time);
         txt_title = (TextView) findViewById(R.id.recipe_name);
@@ -94,12 +103,36 @@ public class RecipeDetailActivity extends AppCompatActivity {
         recipe_image.setImageURI(myUri);
         Log.i("IMAGE_DETAIL", mRecipeDetail.imageURL);
 
-        StringBuilder builder3 = new StringBuilder();
-        for (String details : mRecipeDetail.ingredients) {
-            builder3.append(details + "\n");
+        /**
+         * create listview and populate with list of ingredients
+         */
+        List<String> ingredientList = new ArrayList<String>();
+        for (int i = 0; i < mRecipeDetail.ingredients.size(); i++ ) {
+            ingredientList.add(mRecipeDetail.ingredients.get(i));
         }
 
-        txt_ingredientsList.setText(builder3.toString());
+         final ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, ingredientList);
+        txt_ingredientsList.setAdapter(adapter);
+
+        txt_ingredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String search = GlossarySearch.searchIngredient(mRecipeDetail, position);
+
+                Intent intent = new Intent(view.getContext(), GlossaryActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(RecipeDetailActivity.RECIPE_DETAILS, mRecipeDetail);
+                intent.putExtras(bundle);
+                intent.putExtra("search", search);
+                startActivity(intent);
+
+        }
+        });
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,11 +141,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
         return true;
     }
 
-    public void glossarySearch(View view){
-            Intent intent = new Intent(this, GlossaryActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(RecipeDetailActivity.RECIPE_DETAILS, mRecipeDetail);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
+
 }
