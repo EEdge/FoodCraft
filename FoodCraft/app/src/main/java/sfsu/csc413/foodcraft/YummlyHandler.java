@@ -151,6 +151,10 @@ public class YummlyHandler {
             JSONObject images = response.getJSONArray("images").getJSONObject(0);
             detail.imageURL = images.getString("hostedLargeUrl");
 
+            // Get recipe URL
+            detail.recipeURL = response.getJSONObject("source").getString("sourceRecipeUrl");
+            Log.i("RECIPE_URL",detail.recipeURL);
+
             // Get ingredients
             JSONArray ingredientList = response.getJSONArray("ingredientLines");
             Log.i("YTD","6" + " Ingredient List Length:" + ingredientList.length());
