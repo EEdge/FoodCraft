@@ -8,11 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Recipe class is a container class for transmitting essential information about
- * a recipe between activities.
+ * The Recipe class is a container class for storing and transmitting recipe meta-data between activities.
  *
  * @author: Brook Thomas, Maria Lienkaemper
- * @version: 0.1
+ * @version: 1.0
  */
 
 public class Recipe implements Serializable, Comparable<Recipe>  {
