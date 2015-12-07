@@ -1,4 +1,4 @@
-<sfsu.csc413.foodcraft.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="false"
@@ -297,4 +297,4 @@
 
     </LinearLayout>
 
-</sfsu.csc413.foodcraft.VerticalScrollView>
+</ScrollView>
