@@ -113,6 +113,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
          final ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, ingredientList);
         txt_ingredientsList.setAdapter(adapter);
+        //make sure that activity starts at top not at list
+        txt_ingredientsList.setFocusable(false);
 
         /**
          * onClickListener for
