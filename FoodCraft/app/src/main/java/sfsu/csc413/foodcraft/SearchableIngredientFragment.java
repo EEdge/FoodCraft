@@ -38,8 +38,10 @@ import static sfsu.csc413.foodcraft.R.layout.list_item_searchable_ingredients;
 public class SearchableIngredientFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     ArrayList<String> searchableIngredients = new ArrayList<>();
+    ArrayList<String> searchableIngredientsMemory = new ArrayList<>(); //used to remember which items have already been removed from the searchable list while filtering
     ArrayAdapter<String> lvIngredientSearchAdapter;
     ListView lvIngredientSearch;
+    Boolean queryIsUnique = true;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,6 +90,7 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
         View view = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
 
         populateArray();
+        searchableIngredientsMemory = searchableIngredients;
         final ArrayAdapter lvIngredientSearchAdapter = new ArrayAdapter<>(getActivity(), list_item_searchable_ingredients, searchable_ingredient_item, searchableIngredients);
         lvIngredientSearch = (ListView) view.findViewById(R.id.listView1);
         lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
@@ -103,6 +106,8 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
                     IngredientSearch.selectedFoods.add(0, value);
                     IngredientSearch.lvSelectedIngredients.setAdapter(IngredientSearch.lvSelectedIngredientsAdapter);
                     searchableIngredients.remove(position);
+                    if (queryIsUnique && position != 0) searchableIngredientsMemory.remove(position - 1);
+                    else if (!queryIsUnique) searchableIngredientsMemory.remove(position);
                     lvIngredientSearchAdapter.notifyDataSetChanged();
 
                 }
@@ -113,14 +118,14 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //on text submit, filter list to show search results as user types
-                filter(searchableIngredients, query);
+                filter(searchableIngredientsMemory, query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 //on text change, filter list to show search results as user types
-                filter(searchableIngredients, newText);
+                filter(searchableIngredientsMemory, newText);
                 return true;
             }
         });//listen for text change
@@ -181,10 +186,9 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
 
         ArrayList<String> newFilterResults;
 
-        Boolean queryIsUnique = true;
-
         if (searchQuery != null && searchQuery.length() > 0) {
 
+            queryIsUnique = true;
 
             ArrayList<String> auxData = new ArrayList<>();
 
@@ -196,12 +200,13 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
             newFilterResults = auxData;
 
             for (int j = 0; j < newFilterResults.size(); j++) {
-               if ((String) searchQuery == newFilterResults.get(j)) queryIsUnique = false;
+               if (searchQuery == newFilterResults.get(j)) queryIsUnique = false;
             }
 
             if (queryIsUnique) newFilterResults.add(0, (String) searchQuery);
-        } else {
 
+        } else {
+            queryIsUnique = true;
             newFilterResults = searchableListArray;
         }
         lvIngredientSearchAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_searchable_ingredients, R.id.searchable_ingredient_item, newFilterResults);
