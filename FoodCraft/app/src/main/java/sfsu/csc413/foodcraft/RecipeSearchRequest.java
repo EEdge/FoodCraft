@@ -65,11 +65,18 @@ public class RecipeSearchRequest {
      */
     private void searchCycle (final List<String> ingredients) {
 
-        if (ingredients.size()==0) {
-            // we can call a newSearch method on the searchActivity from here
-            // should check if we have any results at all, can potentially roll with just a few
-            return;
+
+        if (ingredients.size() == 0) {
+
+            if (recipes.size() > 0) {
+                searchActivity.launchSearchResultsActivity(recipes);
+                return;
+            } else {
+                searchActivity.createToast("No results found.");
+                return;
+            }
         }
+
 
         String url = YummlyHandler.formatYummlySearchURL(ingredients);
 
@@ -87,8 +94,10 @@ public class RecipeSearchRequest {
                             if (recipes.size() >= desiredNumberOfRecipes) {
 
                                 searchActivity.launchSearchResultsActivity(recipes);
+                                return;
 
                             } else {
+
                                 Thread.sleep(1000);
                                 ingredients.remove(ingredients.size()-1);
                                 searchCycle(ingredients);
@@ -96,6 +105,8 @@ public class RecipeSearchRequest {
 
                         } catch (Exception e) {
                             Log.i("searchCycle()", "Error.");
+                            e.printStackTrace();
+                            searchActivity.createToast("An error occurred. Try again.");
                         }
 
                     }

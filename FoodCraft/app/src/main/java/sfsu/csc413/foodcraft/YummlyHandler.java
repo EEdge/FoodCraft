@@ -36,7 +36,8 @@ public class YummlyHandler {
                 "?_app_id=" + YUMMLY_ID +
                 "&_app_key=" + YUMMLY_KEY +
                 encodedIngredient +
-                "&maxResult=50";
+                "&maxResult=50" +
+                "&requirePictures=true";
 
         Log.i("API_CALL", url);
 
@@ -66,12 +67,10 @@ public class YummlyHandler {
      * @param response a raw JSON blob of search results.
      * @return A list of Recipe objects.
      */
-    public static List<Recipe> yummlyToRecipe(JSONObject response, List<String> ingredients) {
+    public static List<Recipe> yummlyToRecipe(JSONObject response, List<String> ingredients) throws Exception {
 
         JSONArray results;
         List<Recipe> recipeList = new ArrayList<>();
-
-        try {
 
             results = response.getJSONArray("matches");
 
@@ -99,9 +98,9 @@ public class YummlyHandler {
                         buildRecipe.matchedingredients++;
                     } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-1))) {
                         buildRecipe.matchedingredients++;
-                    } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-2))) {
+                    } else if (ingredients.contains(Utilities.cleanString(ing))) {
                         buildRecipe.matchedingredients++;
-                    } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-3)+"y")) {
+                    } else if (ingredients.contains(ing.toLowerCase().substring(0, ing.length()-2))) {
                         buildRecipe.matchedingredients++;
                     }
                     buildRecipe.ingredients.add(ing);
@@ -128,13 +127,7 @@ public class YummlyHandler {
 
             return recipeList;
 
-        } catch (JSONException e) {
-            Log.i("yummlyToRecipe()", "Error.");
-            e.printStackTrace();
         }
-
-        return recipeList;
-    }
 
     /**
      * Given a Yummly Recipe ID, will return a formatted RecipeDetail object.
@@ -157,6 +150,10 @@ public class YummlyHandler {
             // Get image
             JSONObject images = response.getJSONArray("images").getJSONObject(0);
             detail.imageURL = images.getString("hostedLargeUrl");
+
+            // Get recipe URL
+            detail.recipeURL = response.getJSONObject("source").getString("sourceRecipeUrl");
+            Log.i("RECIPE_URL",detail.recipeURL);
 
             // Get ingredients
             JSONArray ingredientList = response.getJSONArray("ingredientLines");

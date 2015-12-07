@@ -7,9 +7,11 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,11 +27,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 
 import java.util.List;
-
 
 
 public class IngredientSearch extends AppCompatActivity
@@ -37,6 +44,7 @@ public class IngredientSearch extends AppCompatActivity
 
     private Toolbar toolbar;
     static ArrayList<String> selectedFoods = new ArrayList<>();
+    private static final String SELECTED_FOODS_ARRAY = "sfsu.csc413foodcraft.SELECTED_FOODS_ARRAY";
 
     // Activity self reference
     IngredientSearch selfReference;
@@ -56,7 +64,12 @@ public class IngredientSearch extends AppCompatActivity
     static SearchView searchView;
 
     UPCFragment upcfrag = new UPCFragment();
-    SearchableIngredientFragment searchableFrag = new SearchableIngredientFragment();
+    static SearchableIngredientFragment searchableFrag = new SearchableIngredientFragment();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +89,11 @@ public class IngredientSearch extends AppCompatActivity
         if (toolbar != null) {
             setActionBar(toolbar);
             getActionBar().setDisplayHomeAsUpEnabled(false);
-            getActionBar().setDisplayShowTitleEnabled(false);
+            getActionBar().setDisplayShowTitleEnabled(true);
+
+            // https://stackoverflow.com/questions/16240605/change-action-bar-title-color -- Brilliant!
+            getActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Select Ingredients</font>"));
+
             getActionBar().setElevation(7);
         }
         selfReference = this;
@@ -98,9 +115,13 @@ public class IngredientSearch extends AppCompatActivity
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) findViewById(R.id.menu_item_search);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("eggs, bacon, etc.");
         searchView.setSubmitButtonEnabled(true);
 
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     public void addselectedFoods(List<UPCObject> item, boolean cached) {
@@ -128,7 +149,7 @@ public class IngredientSearch extends AppCompatActivity
         LayoutInflater li = getLayoutInflater();
         final View promptsView = li.inflate(R.layout.single_ingredient_alert, null);
         EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-        userInput.setText(product.original_title,TextView.BufferType.EDITABLE);
+        userInput.setText(product.original_title, TextView.BufferType.EDITABLE);
 
         new AlertDialog.Builder(this.selfReference)
                 .setView(promptsView)
@@ -158,7 +179,7 @@ public class IngredientSearch extends AppCompatActivity
         RadioGroup radioGroup = new RadioGroup(this.selfReference);
         layout_root.addView(radioGroup);
         int counter = 0;
-        for (UPCObject item : matches){
+        for (UPCObject item : matches) {
             RadioButton radioButtonView = new RadioButton(this.selfReference);
             radioButtonView.setText(item.product_title);
             radioGroup.addView(radioButtonView, counter);
@@ -184,18 +205,36 @@ public class IngredientSearch extends AppCompatActivity
         // Add ingredients I always have to selectedFoods
         android.content.SharedPreferences sharedPrefs = getSharedPreferences("myprefs", MODE_PRIVATE);
 
-        if (sharedPrefs.getBoolean("salt", false)) { selectedFoods.add("salt"); }
-        if (sharedPrefs.getBoolean("pepper",false)) { selectedFoods.add("pepper"); }
-        if (sharedPrefs.getBoolean("sugar",false)) { selectedFoods.add("sugar"); }
-        if (sharedPrefs.getBoolean("butter",false)) { selectedFoods.add("butter"); }
-        if (sharedPrefs.getBoolean("eggs",false)) { selectedFoods.add("eggs"); }
-        if (sharedPrefs.getBoolean("water",false)) { selectedFoods.add("water"); }
+        if (sharedPrefs.getBoolean("salt", false)) {
+            selectedFoods.add("salt");
+        }
+        if (sharedPrefs.getBoolean("pepper", false)) {
+            selectedFoods.add("pepper");
+        }
+        if (sharedPrefs.getBoolean("sugar", false)) {
+            selectedFoods.add("sugar");
+        }
+        if (sharedPrefs.getBoolean("butter", false)) {
+            selectedFoods.add("butter");
+        }
+        if (sharedPrefs.getBoolean("eggs", false)) {
+            selectedFoods.add("eggs");
+        }
+        if (sharedPrefs.getBoolean("water", false)) {
+            selectedFoods.add("water");
+        }
 
         Intent intent = new Intent(this, CardviewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(CardviewActivity.RECIPE_SEARCH_RESULTS, recipes);
         bundle.putStringArrayList(CardviewActivity.SELECTED_FOODS_ARRAY, selectedFoods);
         intent.putExtras(bundle);
+
+        //reset lists in case user backtracks to this activity
+        selectedFoods.clear();
+        lvSelectedIngredientsAdapter.notifyDataSetChanged();
+        searchableFrag.refreshArray();
+
         Log.i("LAUNCH_RESULTS", "Starting new activity");
         selfReference.startActivity(intent);
 
@@ -229,9 +268,9 @@ public class IngredientSearch extends AppCompatActivity
         }
     }
 
-    public static void deleteIngredient(int position, ArrayAdapter adapter) {
-        selectedFoods.remove(position);
-        adapter.notifyDataSetChanged();
+    public void createToast(String text) {
+        // Modified from https://developer.android.com/guide/topics/ui/notifiers/toasts.html
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -264,6 +303,65 @@ public class IngredientSearch extends AppCompatActivity
     public boolean onQueryTextChange(String newText) {
         return false;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "IngredientSearch Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://sfsu.csc413.foodcraft/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "IngredientSearch Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://sfsu.csc413.foodcraft/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
+    private static ArrayList<String> insertAlphabetized (String string, ArrayList<String> arrayList) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            int compare = string.compareTo(arrayList.get(i));
+            if (compare < 0) {
+                arrayList.add(i, string);
+                return arrayList;
+            }
+        }
+
+        arrayList.add(string);
+        return  arrayList;
+    }
+
+    public static void addIngredientBack (String string) {
+        ArrayList<String> alphabetizedList = insertAlphabetized(string, searchableFrag.getSearchableIngredients());
+        searchableFrag.setSearchableIngredients(alphabetizedList);
+    }
+
 }
 
 class CustomAdapter<T> extends ArrayAdapter {
@@ -277,7 +375,7 @@ class CustomAdapter<T> extends ArrayAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup PARENT) {
         View v = convertView;
 
         if (v == null) {
@@ -299,13 +397,14 @@ class CustomAdapter<T> extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 int pos = (int) view.getTag();
+                IngredientSearch.addIngredientBack(list.get(pos));
                 list.remove(pos);
                 CustomAdapter.this.notifyDataSetChanged();
             }
         });
 
-
         return v;
+
     }
 
 }
