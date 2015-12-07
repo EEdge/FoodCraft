@@ -1,5 +1,14 @@
 package sfsu.csc413.foodcraft;
 
+/**
+ * Activity responsible for creating the card view using the data taken from the search ingredients activity. The card view is created by
+ * the card view adapter. This activity also contains the dynamically created toolbar which is responsible for filtering the recipes by
+ * the type of course chosen by the user.
+ *
+ * @author Robert Chung
+ * @version 1.0 November 15, 2015.
+ */
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,13 +28,12 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
 
-public class CardviewActivity extends ActionBarActivity {
+public class
+
+        CardviewActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
     private Spinner spinner_nav;
-
-
-    private Activity myActivity;
 
     private RecyclerView mRecyclerView;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
@@ -55,13 +63,14 @@ public class CardviewActivity extends ActionBarActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         recipeList = ((List<Recipe>) bundle.getSerializable(RECIPE_SEARCH_RESULTS));
+        // before modify list becomes a new array with filtered elements, point to the full recipe list
+        modifyRecipe = recipeList;
         selectedFoods = (bundle.getStringArrayList(SELECTED_FOODS_ARRAY));
         Collections.sort(recipeList);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         spinner_nav = (Spinner) findViewById(R.id.spinner_nav);
         setUpActionBar();
         addItemsToSpinner();
-
 
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
@@ -74,13 +83,15 @@ public class CardviewActivity extends ActionBarActivity {
 
         mAdapter.setOnItemClickListener(onItemClickListener);
 
+        System.out.println("Main function: " + modifyRecipe);
+
         isListView = true;
     }
 
     CardviewAdapter.OnItemClickListener onItemClickListener = new CardviewAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
-            Recipe selected_recipe = recipeList.get(position);
+            Recipe selected_recipe = modifyRecipe.get(position);
             //TODO MAKE CALL TO API WITH NEW SELECTED RECIPE
             RecipeDetailRequest request = new RecipeDetailRequest(getApplicationContext(), selfReference);
             request.run(selected_recipe);
@@ -124,6 +135,7 @@ public class CardviewActivity extends ActionBarActivity {
 
     public void sortCourse(String course) {
 
+
         modifyRecipe = new ArrayList<>(recipeList);
 
         for (int i = recipeList.size() - 1; i >= 0; i--){
@@ -137,6 +149,7 @@ public class CardviewActivity extends ActionBarActivity {
                 modifyRecipe.remove(i);
             }
         }
+
         if (modifyRecipe.size() != 0) {
             mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
@@ -151,7 +164,6 @@ public class CardviewActivity extends ActionBarActivity {
 
             isListView = true;
         }
-
     }
 
     protected void launchDetailActivity(RecipeDetail recipeDetail) {
@@ -275,6 +287,5 @@ public class CardviewActivity extends ActionBarActivity {
 
                 }
             });
-
         }
     }

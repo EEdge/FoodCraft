@@ -1,61 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/placeCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
+    android:layout_marginBottom="15dp"
     android:layout_marginTop="0dp"
     android:layout_marginRight="0dp"
     android:layout_marginLeft="0dp"
-    card_view:cardCornerRadius="@dimen/card_corner_radius"
+    card_view:cardCornerRadius="0dp"
     card_view:cardElevation="@dimen/card_elevation">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-  <FrameLayout
+    <FrameLayout
 
-      android:layout_width="match_parent"
-      android:layout_height="200dp">
-      <include
-      layout="@layout/toolbar"/>
-
-      <com.android.volley.toolbox.NetworkImageView
-          android:id="@+id/NetworkrecipeImage"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scaleType="centerCrop"
-          android:transitionName="tImage"
-          />
-    <LinearLayout
-        android:id="@+id/mainHolder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:selectableItemBackground"
-        android:orientation="horizontal" />
+        android:layout_height="220dp">
 
-    <LinearLayout
-        android:id="@+id/recipeNameHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:transitionName="tNameHolder">
+        <include layout="@layout/toolbar" />
 
-      <TextView
-          android:id="@+id/recipeName"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="left"
-          android:textAppearance="?android:attr/textAppearanceLarge"
-          android:background="@color/black_50_opacity"
-          android:textColor="@android:color/white" />
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/NetworkrecipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:transitionName="tImage" />
 
-    </LinearLayout>
-  </FrameLayout>
+        <LinearLayout
+            android:id="@+id/mainHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:selectableItemBackground"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/recipeNameHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:transitionName="tNameHolder">
+
+            <TextView
+                android:id="@+id/recipeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:background="@color/black_50_opacity"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+    </FrameLayout>
 </android.support.v7.widget.CardView>
 

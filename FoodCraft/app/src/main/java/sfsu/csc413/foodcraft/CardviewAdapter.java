@@ -1,17 +1,20 @@
 package sfsu.csc413.foodcraft;
 
+/**
+ * This activity is how the card view is created. using the recycler view widget, we are able to create a list of card view objects which
+ * takes multiple properties of the recipe object and translates it into a card.
+ *
+ * @author Robert Chung
+ * @version 1.0 November 15, 2015.
+ */
+
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.picasso.Picasso;
