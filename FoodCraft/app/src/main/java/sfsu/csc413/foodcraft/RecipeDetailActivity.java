@@ -103,9 +103,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         recipe_image.setImageURI(myUri);
         Log.i("IMAGE_DETAIL", mRecipeDetail.imageURL);
 
-        /**
-         * create listview and populate with list of ingredients
-         */
+
+        //create listview and populate with list of ingredients
         List<String> ingredientList = new ArrayList<String>();
         for (int i = 0; i < mRecipeDetail.ingredients.size(); i++ ) {
             ingredientList.add(mRecipeDetail.ingredients.get(i));
@@ -115,6 +114,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, ingredientList);
         txt_ingredientsList.setAdapter(adapter);
 
+        /**
+         * onClickListener for
+         */
         txt_ingredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
