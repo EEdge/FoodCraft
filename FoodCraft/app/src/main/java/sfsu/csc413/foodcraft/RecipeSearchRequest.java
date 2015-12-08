@@ -25,7 +25,7 @@ import java.util.Map;
  * new search should begin with instantiating a new instance.
  *
  * @author: Maria Lienkaemper, Brook Thomas
- * @version: 0.1
+ * @version: 1.0
  *
  */
 public class RecipeSearchRequest {
@@ -65,6 +65,7 @@ public class RecipeSearchRequest {
      */
     private void searchCycle (final List<String> ingredients) {
 
+        searchActivity.createToast("Searching...");
 
         if (ingredients.size() == 0) {
 
@@ -113,7 +114,7 @@ public class RecipeSearchRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("RECIPE_SEARCH", "Recipe Search Request Unsuccessful");
+                searchActivity.createToast("Server Error. Please retry.");
             }
         }) {
 

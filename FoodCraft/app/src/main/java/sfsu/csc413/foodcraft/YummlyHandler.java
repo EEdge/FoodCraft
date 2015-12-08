@@ -172,27 +172,31 @@ public class YummlyHandler {
 
                 JSONObject element = ingredients.getJSONObject(x);
 
+                // Floor value
+                String elementValue = element.getString("value");
+                int elementDecimalLocation = elementValue.indexOf(".");
+
                 // We only care about some of the metrics in the array
                 switch (element.getString("attribute")) {
 
                     case "ENERC_KCAL":
-                        detail.nutrition.put("calories",element.getString("value"));
+                        detail.nutrition.put("calories",elementValue.substring(0,elementDecimalLocation) + " calories");
                         break;
 
                     case "FAT":
-                        detail.nutrition.put("fat",element.getString("value"));
+                        detail.nutrition.put("fat",elementValue.substring(0, elementDecimalLocation) + " grams");
                         break;
 
                     case "PROCNT":
-                        detail.nutrition.put("protein",element.getString("value"));
+                        detail.nutrition.put("protein",elementValue.substring(0, elementDecimalLocation) + " grams");
                         break;
 
                     case "FIBTG":
-                        detail.nutrition.put("fiber",element.getString("value"));
+                        detail.nutrition.put("fiber",elementValue.substring(0, elementDecimalLocation) + " grams");
                         break;
 
                     case "SUGAR":
-                        detail.nutrition.put("sugar",element.getString("value"));
+                        detail.nutrition.put("sugar",elementValue.substring(0,elementDecimalLocation) + " grams");
                         break;
 
                     default:

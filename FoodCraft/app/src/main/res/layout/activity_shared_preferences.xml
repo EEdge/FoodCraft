@@ -7,6 +7,22 @@
     tools:context="sfsu.csc413.foodcraft.Activity2"
     android:background="#ffffff">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Select ingredients you already have"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_horizontal"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif-medium"
+        android:textAlignment="center"
+        style="@style/Base.TextAppearance.AppCompat.Subhead"
+        android:textSize="20dp"
+        android:id="@+id/textView3" />
+
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,7 +30,7 @@
         android:id="@+id/salt"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="65dp"
         android:checked="false" />
 
     <CheckBox
@@ -57,13 +73,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:id="@+id/button1"
+        android:id="@+id/save"
         android:onClick="saveData"
         android:background="#a62128"
         android:textColor="#ffffff"
+        android:layout_marginTop="49dp"
         android:layout_below="@+id/flour"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="71dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -82,4 +99,16 @@
         android:checked="false"
         android:layout_below="@+id/water"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Undo"
+        android:id="@+id/undo"
+        android:onClick="undoSave"
+        android:background="#a62128"
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/save"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp" />
 </RelativeLayout>

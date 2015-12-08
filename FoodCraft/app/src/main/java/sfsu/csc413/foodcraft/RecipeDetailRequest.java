@@ -14,7 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by brook on 11/10/15.
+ * This class manages the workflow between a user clicking a recipe in the Search Results activity
+ * and the details of that recipe being loaded in Details Activity.
+ *
+ * @author: Brook Thomas
+ * @version: 1.0
  */
 public class RecipeDetailRequest {
 
@@ -23,6 +27,7 @@ public class RecipeDetailRequest {
 
 
     RecipeDetailRequest(Context context, CardviewActivity detailsActivity) {
+        // Volley always needs to know the UI context
         mContext = context;
         mResultsList = detailsActivity;
     }
@@ -33,8 +38,6 @@ public class RecipeDetailRequest {
 
         String url = YummlyHandler.formatYummlyDetailURL(recipeID);
 
-        Log.i("URL",url);
-
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -43,13 +46,11 @@ public class RecipeDetailRequest {
 
                             RecipeDetail detail = YummlyHandler.yummlyToDetail(response);
 
-                            Log.i("ONR","1");
                             mResultsList.launchDetailActivity(detail);
 
 
                         } catch (Exception e) {
                             Log.i("RecipeDetail.run()", "Error.");
-                            e.printStackTrace();
                         }
 
                     }
@@ -69,8 +70,6 @@ public class RecipeDetailRequest {
         };
 
         VolleyRequest.getInstance(mContext).addToRequestQueue(req);
-
     }
-
 }
 

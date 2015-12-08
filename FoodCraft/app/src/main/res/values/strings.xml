@@ -70,4 +70,5 @@ distribution media, documentation, registration cards, and insertions.</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_activity_sharedpreferences">activity_sharedpreferences</string>
     <string name="title_activity_shared_preferences">SharedPreferences</string>
+    <string name="title_activity_view_recipe">ViewRecipe</string>
 </resources>
