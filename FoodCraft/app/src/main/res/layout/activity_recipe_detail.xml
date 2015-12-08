@@ -297,43 +297,6 @@
             android:textSize="15dp"
             style="@style/Base.TextAppearance.AppCompat.Small" />
 
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:background="#a62128">
-
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:paddingLeft="5dp"
-                    android:text="View Recipe"
-                    android:id="@+id/textView6"
-                    android:linksClickable="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="#ffffff"
-                    android:textIsSelectable="false"
-                    style="@style/TextAppearance.AppCompat.Title" />
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
     </LinearLayout>
 
 </ScrollView>
