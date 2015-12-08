@@ -56,7 +56,7 @@ public class UPCRequest {
                                 parse_response(response.getString(UPC_KEYWORD), upc_code);
                             }
                             else {
-                                parse_response(null, upc_code);
+                                parse_response("", upc_code);
                             }
 
                         } catch (Exception exception) {
@@ -119,7 +119,7 @@ public class UPCRequest {
             if (results.size() == 0){
                 results.add(new UPCObject(upc_code, null, scanned_product));
             }
-            callback.onTaskCompleted(results);
         }
+        callback.onTaskCompleted(results);
     }
 }

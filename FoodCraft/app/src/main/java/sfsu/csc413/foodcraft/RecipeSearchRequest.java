@@ -74,6 +74,7 @@ public class RecipeSearchRequest {
                 return;
             } else {
                 searchActivity.createToast("No results found.");
+                IngredientSearch.clearSelectedIngredientsList();
                 return;
             }
         }
