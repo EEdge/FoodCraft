@@ -4,4 +4,4 @@
     android:layout_height="match_parent" android:id="@+id/map"
     tools:context="sfsu.csc413.foodcraft.MapsActivity"
     android:name="com.google.android.gms.maps.SupportMapFragment"
-    map:cameraZoom="12ixe"/>
+    map:cameraZoom="12"/>

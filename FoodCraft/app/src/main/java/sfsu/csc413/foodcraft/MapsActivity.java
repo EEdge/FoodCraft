@@ -29,6 +29,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -171,7 +172,8 @@ public class MapsActivity extends FragmentActivity implements
             Marker placeMarker = mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(place.name)
-                    .snippet(place.address));
+                    .snippet(place.address.substring(2,place.address.length()-2))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             placeMarker.showInfoWindow();
         }
 
