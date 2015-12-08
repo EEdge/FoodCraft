@@ -114,6 +114,8 @@ public class IngredientSearch extends AppCompatActivity
         //initialize SearchView for searchable ingredient list
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) findViewById(R.id.menu_item_search);
+        searchView.setIconified(false);
+        searchView.clearFocus();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setQueryHint("eggs, bacon, etc.");
         searchView.setSubmitButtonEnabled(true);
@@ -400,6 +402,7 @@ class CustomAdapter<T> extends ArrayAdapter {
                 IngredientSearch.addIngredientBack(list.get(pos));
                 list.remove(pos);
                 CustomAdapter.this.notifyDataSetChanged();
+
             }
         });
 
