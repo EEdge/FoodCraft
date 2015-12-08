@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 /**
  * Created by pklein on 11/2/15.
+ * TODO Make this a singleton / static class
  */
 public class IngredientList {
 

@@ -132,9 +132,9 @@ public class IngredientSearch extends AppCompatActivity
             lvSelectedIngredients.setAdapter(lvSelectedIngredientsAdapter);
         }
         if (item.size() == 1 && cached && item.get(0).product_title != null) {
-            selectedFoods.add(item.get(0).product_title);
+            selectedFoods.add(item.get(0).product_title.toLowerCase());
             lvSelectedIngredientsAdapter.notifyDataSetChanged();
-        } else if (item.size() == 1 && !cached && item.get(0).product_title != null) {
+        } else if (item.size() == 1 && !cached) {
             //Prompt edit string of the title, add to cache
             //Confirmation of title
             SingleIngredientAlert(item.get(0));
@@ -142,8 +142,6 @@ public class IngredientSearch extends AppCompatActivity
             //// TODO: 12/1/15  fix radio button selection
             //Radio button selection of each item, and 'Other' selection that adds custom title to database
             MultipleIngredientAlert(item);
-        } else if (item.size() == 1 && item.get(0).product_title == null) {
-            SingleIngredientAlert(item.get(0));
         }
     }
 
@@ -160,7 +158,7 @@ public class IngredientSearch extends AppCompatActivity
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-                        selectedFoods.add(userInput.getText().toString());
+                        selectedFoods.add(userInput.getText().toString().toLowerCase());
                         lvSelectedIngredientsAdapter.notifyDataSetChanged();
                         upcfrag.addtoDatabase(product.code, userInput.getText().toString(), selfReference.getApplicationContext());
                     }
@@ -174,30 +172,53 @@ public class IngredientSearch extends AppCompatActivity
                 .show();
     }
 
-    private void MultipleIngredientAlert(List<UPCObject> matches) {
+    private void MultipleIngredientAlert(final List<UPCObject> matches) {
         LayoutInflater li = getLayoutInflater();
         View promptsView = li.inflate(R.layout.multiple_ingredient_alert, null);
         RelativeLayout layout_root = (RelativeLayout) promptsView.findViewById(R.id.multiple_layout_root);
-        RadioGroup radioGroup = new RadioGroup(this.selfReference);
+        final RadioGroup radioGroup = new RadioGroup(this.selfReference);
         layout_root.addView(radioGroup);
         int counter = 0;
         for (UPCObject item : matches) {
             RadioButton radioButtonView = new RadioButton(this.selfReference);
             radioButtonView.setText(item.product_title);
             radioGroup.addView(radioButtonView, counter);
-            //((ViewGroup)layout_root.getParent()).removeView(layout_root); //this line causes it to crash
             counter++;
         }
-        //RadioButton radioButtonView = new RadioButton(this.selfReference);
-        //radioButtonView.setText("Not listed");
-        //radioGroup.addView(radioButtonView, counter);
+        RadioButton radioButtonView = new RadioButton(this.selfReference);
+        radioButtonView.setText("Not Listed");
+        radioGroup.addView(radioButtonView, counter);
+        int selected;
         new AlertDialog.Builder(this.selfReference)
                 .setView(promptsView)
                 .setTitle("Unable to detect ingredient!")
                 .setMessage("Please select the ingredient that you scanned. This will be saved for the next time you scan this item.")
-
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        int radioButtonID = radioGroup.getCheckedRadioButtonId();
+                        RadioButton radioButton = (RadioButton) radioGroup.findViewById(radioButtonID);
+                        String selection = (String) radioButton.getText();
+                        if (selection.equals("Not Listed")) {
+                            SingleIngredientAlert(matches.get(0));
+                        } else {
+                            selectedFoods.add(selection.toLowerCase());
+                            lvSelectedIngredientsAdapter.notifyDataSetChanged();
+                            upcfrag.addtoDatabase(matches.get(0).code, selection, selfReference.getApplicationContext());
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public static void clearSelectedIngredientsList() {
+        selectedFoods.clear();
+        lvSelectedIngredientsAdapter.notifyDataSetChanged();
     }
 
     protected void launchSearchResultsActivity(ArrayList<Recipe> recipes) {
