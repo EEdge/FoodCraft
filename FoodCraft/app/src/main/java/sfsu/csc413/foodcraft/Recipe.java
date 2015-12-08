@@ -27,9 +27,22 @@ public class Recipe implements Serializable, Comparable<Recipe>  {
         ingredients = new ArrayList<>();
     }
 
+    /**
+     * Placeholder image loader for slow internet connections.
+     *
+     * @param context The application context.
+     * @return The appropriate image resource ID.
+     */
     public int getImageResourceId(Context context) {
         return context.getResources().getIdentifier("background_plate", "drawable", context.getPackageName());
     }
+
+    /**
+     * Enable comparisons for Recipe objects. Comparisons are based on the relative number of matched ingredients.
+     *
+     * @param other Another Recipe object.
+     * @return  The result of the comparison.
+     */
     public int compareTo(Recipe other) {
         return Integer.compare((this.ingredients.size() - this.matchedingredients), (other.ingredients.size() - other.matchedingredients));
     }
