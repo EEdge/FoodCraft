@@ -9,6 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/activity_recipe_detail_toolbar" />
+
         <com.android.volley.toolbox.NetworkImageView
             android:layout_width="fill_parent"
             android:layout_height="300dp"
@@ -38,7 +42,7 @@
             android:textSize="23dp"/>
 
         <View
-            android:layout_width="365dp"
+            android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:layout_marginLeft="10dp"
             android:background="#a62128"/>
@@ -48,17 +52,15 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp">
 
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="120dp"
-                android:gravity="center_vertical|center_horizontal"
+                android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
-
 
                 <Button
                     android:layout_width="wrap_content"
@@ -72,7 +74,7 @@
                     android:linksClickable="true"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="#ffffff"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
                     style="@style/TextAppearance.AppCompat.Title"
                     android:onClick="viewRecipe"
                     android:clickable="true" />
@@ -81,7 +83,7 @@
 
         </LinearLayout>
         <View
-            android:layout_width="365dp"
+            android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
             android:background="#a62128"/>
@@ -253,7 +255,7 @@
 
 
         <View
-            android:layout_width="365dp"
+            android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
             android:background="#a62128"/>
