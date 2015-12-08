@@ -1,9 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fillViewport="false"
     android:background="#ffffff">
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -17,22 +16,21 @@
             android:layout_width="fill_parent"
             android:layout_height="300dp"
             android:id="@+id/recipe_image"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:layout_weight="0.43"
             android:scaleType="fitXY"
             android:src="@drawable/foodcraft_white" />
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Food Craft"
             android:id="@+id/recipe_name"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:background="#ffffff"
             android:fontFamily="sans-serif-medium"
             android:textStyle="normal|bold|italic"
@@ -40,28 +38,25 @@
             android:textIsSelectable="false"
             style="@style/TextAppearance.AppCompat.Title"
             android:textSize="23dp"/>
-
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|center_horizontal"
             android:background="#a62128"/>
-
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp">
-
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="120dp"
-                android:gravity="center"
+                android:gravity="center_vertical|center_horizontal"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
-
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
@@ -74,36 +69,31 @@
                     android:linksClickable="true"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="#ffffff"
-                    android:gravity="center"
+                    android:gravity="center_vertical|center_horizontal"
                     style="@style/TextAppearance.AppCompat.Title"
                     android:onClick="viewRecipe"
                     android:clickable="true" />
             </LinearLayout>
-
-
         </LinearLayout>
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="#a62128"/>
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:gravity="left"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_weight="0.03"
-            android:weightSum="1">
-
+            android:paddingRight="10dp">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.06">
-
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="30dp"
@@ -112,7 +102,6 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:src="@drawable/hourglass" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
@@ -124,7 +113,6 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textAlignment="center"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,19 +122,16 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="#000000"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
-
             </LinearLayout>
             <View
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#c0c0c0"/>
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
-
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="25dp"
@@ -155,7 +140,6 @@
                     android:paddingRight="10dp"
                     android:id="@+id/imageView3"
                     android:src="@drawable/people" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -166,7 +150,6 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="#000000"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -176,21 +159,17 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="#000000"
                     style="@style/Base.TextAppearance.AppCompat.Subhead" />
-
             </LinearLayout>
-
             <View
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#c0c0c0"/>
         </LinearLayout>
-
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
+            android:gravity="left"
             android:layout_height="wrap_content">
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -198,68 +177,62 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:layout_marginTop="10dp">
-
                 <ImageView
                     android:layout_width="30dp"
-                    android:layout_height="22dp"
+                    android:layout_height="23dp"
                     android:scaleType="centerCrop"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:id="@+id/imageView"
                     android:src="@drawable/nutrition" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nutrition :  "
-                    android:layout_marginTop="10dp"
+                    android:text="Nutrition  "
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:paddingLeft="10dp"
-                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical"
                     android:id="@+id/textView2"
                     style="@style/Base.TextAppearance.AppCompat.Subhead"
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="#000000" />
             </LinearLayout>
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="40dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Medium Text   "
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:id="@+id/nutrition_key"
                     style="@style/Base.TextAppearance.AppCompat.Subhead"
                     android:fontFamily="sans-serif-condensed"
-                    android:textColor="#000000"
-                    android:textSize="15dp" />
-
+                    android:textColor="#000000" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="  Medium Text"
                     android:id="@+id/nutrition_value"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     style="@style/Base.TextAppearance.AppCompat.Subhead"
                     android:fontFamily="sans-serif-condensed"
-                    android:textColor="#000000"
-                    android:textSize="15dp"/>
+                    android:textColor="#000000"/>
             </LinearLayout>
-
         </LinearLayout>
-
-
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="#a62128"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -275,30 +248,22 @@
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
             android:textSize="20dp" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="10dp">
-
-
-
-
         </LinearLayout>
         <sfsu.csc413.foodcraft.NestedListView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/ingredient_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textColor="#000000"
             android:gravity="left"
-            android:textSize="15dp"
-            style="@style/Base.TextAppearance.AppCompat.Small" />
-
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000"
+            style="@style/Base.TextAppearance.AppCompat.Subhead" />
     </LinearLayout>
-
 </ScrollView>

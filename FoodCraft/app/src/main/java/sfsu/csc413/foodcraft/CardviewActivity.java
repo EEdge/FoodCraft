@@ -101,7 +101,7 @@ public class
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_view_recipe, menu);
         this.menu=menu;
         return true;
     }
@@ -112,7 +112,6 @@ public class
             getActionBar().setDisplayHomeAsUpEnabled(false);
             getActionBar().setDisplayShowTitleEnabled(false);
             getActionBar().setElevation(7);
-            getActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Recipes List</font>"));
         }
     }
 
