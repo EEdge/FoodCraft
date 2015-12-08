@@ -37,6 +37,14 @@ public class UPCFragment extends Fragment {
                     objlist.add(barcode_scanner.getCachedCode(result.toString()));
                     ((IngredientSearch) getActivity()).addselectedFoods(objlist, true);
                 }
+                else if (result.toString().equals("03424005")){
+                    List<UPCObject> objlist = new ArrayList<UPCObject>(){};
+                    UPCObject obj = new UPCObject(result.toString(), "chocolate", "");
+                    UPCObject ob2 = new UPCObject(result.toString(), "milk", "");
+                    objlist.add(obj);
+                    objlist.add(ob2);
+                    ((IngredientSearch) getActivity()).addselectedFoods(objlist, false);
+                }
                 else {
                     barcode_scanner.craftUPCRequest(result.toString(), getActivity(), taskCallback);
                 }
