@@ -54,6 +54,12 @@ public class UPCFragment extends Fragment {
             ((IngredientSearch) getActivity()).addselectedFoods(result, false);
             barcodeView.pause();
         }
+
+        @Override
+        void onTaskCompleted(ArrayList<Place> result) {
+
+        }
+
         public void onTaskCompleted(UPCObject result, boolean cached) {
             List<UPCObject> resultlist = new ArrayList<UPCObject>();
             resultlist.add(result);

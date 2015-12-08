@@ -170,7 +170,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent intent = new Intent(this, sfsu.csc413.foodcraft.SharedPreferences.class);
+        Intent intent = new Intent(this, sfsu.csc413.foodcraft.MapsActivity.class);
         startActivity(intent);
         return true;
     }
