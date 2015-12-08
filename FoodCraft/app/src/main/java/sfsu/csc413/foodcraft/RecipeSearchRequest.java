@@ -114,7 +114,7 @@ public class RecipeSearchRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("RECIPE_SEARCH", "Recipe Search Request Unsuccessful");
+                searchActivity.createToast("Server Error. Please retry.");
             }
         }) {
 
