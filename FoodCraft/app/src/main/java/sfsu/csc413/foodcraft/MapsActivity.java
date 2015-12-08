@@ -19,8 +19,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdate;
@@ -63,8 +65,11 @@ public class MapsActivity extends FragmentActivity implements
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+    private LocationCallback locationCallback;
     SharedPreferences sharedPreferences;
     int locationCount = 0;
+    String mLatitudeText = "";
+    String mLongitudeText = "";
 
     YelpAPIRequest yelpRequest;
     private ArrayList<Place> yelpPlacesArray = new ArrayList<>();
@@ -76,8 +81,7 @@ public class MapsActivity extends FragmentActivity implements
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
         Location mLastLocation;
-        String mLatitudeText = "";
-        String mLongitudeText = "";
+
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -109,34 +113,37 @@ public class MapsActivity extends FragmentActivity implements
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
 
-            if(mLastLocation == null) {
-                mLatitudeText = "37.723609";
-                mLongitudeText = "-122.475796";
-                LatLng latLng = new LatLng(37.723609, -122.475796);
-                CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 10);
-                mMap.animateCamera(zoom);
+//            locationCallback.onLocationResult(mLastLocation);
+//            {
+
+                if (mLastLocation == null) {
+                    mLatitudeText = "37.723609";
+                    mLongitudeText = "-122.475796";
+                    LatLng latLng = new LatLng(37.723609, -122.475796);
+                    Log.i("latlng", "hard coded");
+
+                }
+
+                if (mLastLocation != null) {
+                    mLatitudeText = String.valueOf(mLastLocation.getLatitude());
+                    mLongitudeText = String.valueOf(mLastLocation.getLongitude());
+                    LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                    Log.i("latlng", "found");
+
+                }
+
+                String latLngString = mLatitudeText + "," + mLongitudeText;
+                yelpRequest = new YelpAPIRequest("groceries", latLngString, getApplicationContext(), taskCallback);
+
+                try {
+                    yelpRequest.makeRequest();
+                    Log.i("yelp response.:", "madeRequest in maps");
+                } catch (Exception e) {
+                    Log.i("MapsActivity Yelp call", "Error");
+                }
             }
 
-            if (mLastLocation != null) {
-                mLatitudeText = String.valueOf(mLastLocation.getLatitude());
-                mLongitudeText = String.valueOf(mLastLocation.getLongitude());
-                LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(latLng, 10);
-                mMap.animateCamera(zoom);
-
-            }
-
-            String latLngString = mLatitudeText + "," + mLongitudeText;
-            yelpRequest = new YelpAPIRequest("groceries", latLngString, getApplicationContext(), taskCallback);
-
-            try {
-                yelpRequest.makeRequest();
-                Log.i("yelp response.:", "madeRequest in maps");
-            } catch (Exception e) {
-                Log.i("MapsActivity Yelp call", "Error");
-            }
-
-        }
+       // }
 
     }
 
@@ -153,6 +160,8 @@ public class MapsActivity extends FragmentActivity implements
 
         }
     };
+
+
 
     private static void drawYelp (ArrayList<Place> yelpPlacesArray, GoogleMap mMap) {
 
