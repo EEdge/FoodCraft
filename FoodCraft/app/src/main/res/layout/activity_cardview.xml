@@ -14,20 +14,21 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/activity_cardview_toolbar" />
 
     <FrameLayout
 
         android:layout_width="match_parent"
         android:layout_height="220dp">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/activity_cardview_toolbar" />
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/NetworkrecipeImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:src="@drawable/background_plate"
             android:transitionName="tImage" />
 
         <LinearLayout

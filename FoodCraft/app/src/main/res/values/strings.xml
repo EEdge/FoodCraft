@@ -1,14 +1,6 @@
 <resources>
     <string name="app_name">FoodCraft</string>
     <string name="action_settings">Settings</string>
-    <string name="breakfast_cuisine">Breakfast</string>
-    <string name="lunch_cuisine">Lunch</string>
-    <string name="dinner_cuisine">Dinner"</string>
-    <string name="appetizer_cuisine">Appetizers</string>
-    <string name="beverage_cuisine">Beverages</string>
-    <string name="dessert_cuisine">Desserts</string>
-    <string name="bread_cuisine">Breads</string>
-    <string name="salad_cuisine">Salads</string>
     <string name="upc_scanner">Scan a UPC code</string>
     <string name="upc_scanner_fragment">Scan a UPC code via Fragment</string>
     <string name="database_backend">Use the database</string>

@@ -44,7 +44,7 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
 
         final Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.name);
-        Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
+        //Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
         ImageLoader mImageLoader = VolleyRequest.getInstance(mContext).getImageLoader();
         holder.recipeImage.setImageUrl(recipe.imageURL, mImageLoader);
     }

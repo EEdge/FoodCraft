@@ -2,19 +2,19 @@ package sfsu.csc413.foodcraft;
 
 /**
  * Activity responsible for creating the card view using the data taken from the search ingredients activity. The card view is created by
- * the card view adapter. This activity also contains the dynamically created toolbar which is responsible for filtering the recipes by
+ * the card view adapter. This activity also contains the dynamically created activity_cardview_toolbar which is responsible for filtering the recipes by
  * the type of course chosen by the user.
  *
  * @author Robert Chung
  * @version 1.0 November 15, 2015.
  */
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Html;
 import android.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -52,7 +52,7 @@ public class
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cardview_toolbar);
+        setContentView(R.layout.activity_cardview_searchresults);
 
         recipeList = new ArrayList<>();
         selectedFoods = new ArrayList<>();
@@ -101,7 +101,7 @@ public class
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_view_recipe, menu);
         this.menu=menu;
         return true;
     }

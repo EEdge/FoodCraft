@@ -3,15 +3,20 @@ package sfsu.csc413.foodcraft;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.Toolbar;
 
 public class ViewRecipe extends AppCompatActivity {
     public static final String RECIPE_URL = "sfsu.csc413.foodcraft.RECIPE_URL";
+
+    private Toolbar toolbar;
 
     WebView wb;
     String recipeURL;
@@ -26,7 +31,17 @@ public class ViewRecipe extends AppCompatActivity {
         wb.getSettings().setUseWideViewPort(true);
         wb.getSettings().setBuiltInZoomControls(true);
 
-        /* Unpack */
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setActionBar(toolbar);
+            getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActionBar().setDisplayShowTitleEnabled(true);
+
+            // https://stackoverflow.com/questions/16240605/change-action-bar-title-color -- Brilliant!
+            getActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Viewing Recipe...</font>"));
+
+            getActionBar().setElevation(7);
+        }        /* Unpack */
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         recipeURL = (String) bundle.getString(RECIPE_URL);

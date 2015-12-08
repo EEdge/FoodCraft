@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import sfsu.csc413.foodcraft.dummy.DummyContent;
 
 import static sfsu.csc413.foodcraft.R.id.searchable_ingredient_item;
+import static sfsu.csc413.foodcraft.R.id.searchview_container;
+import static sfsu.csc413.foodcraft.R.layout.abc_search_view;
 import static sfsu.csc413.foodcraft.R.layout.list_item_searchable_ingredients;
 
 /**
@@ -95,10 +97,10 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
                 if (!isInArray(value, IngredientSearch.selectedFoods)) {
                     IngredientSearch.selectedFoods.add(0, value);
                     IngredientSearch.lvSelectedIngredients.setAdapter(IngredientSearch.lvSelectedIngredientsAdapter);
-
                 }
                 searchableIngredients.remove(position);
                 lvIngredientSearchAdapter.notifyDataSetChanged();
+                IngredientSearch.searchView.clearFocus();
             }
         });
     }

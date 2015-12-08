@@ -39,6 +39,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     NetworkImageView recipe_image;
     Button btn_viewRecipe;
 
+    private Menu menu;
     private Toolbar toolbar;
     private RecipeDetail mRecipeDetail;
     private ArrayList<String> preferencesIngredients;
@@ -98,8 +99,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
             builder1.append(key + "\n");
             builder2.append(value + "\n");
         }
-        txt_nutritionKey.setText(builder1.toString());
-        txt_nutritionValue.setText(builder2.toString());
+
+        if (builder2.toString()==""){
+            txt_nutritionKey.setText("Nutritional information is not available.");
+            txt_nutritionValue.setText("");
+        }
+        else {
+            txt_nutritionKey.setText(builder1.toString());
+            txt_nutritionValue.setText(builder2.toString());
+        }
 
         //Parse image URL
         Uri myUri = Uri.parse(mRecipeDetail.imageURL);
@@ -156,7 +164,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_shared_preferences, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent intent = new Intent(this, sfsu.csc413.foodcraft.SharedPreferences.class);
+        startActivity(intent);
         return true;
     }
 
