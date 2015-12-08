@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The Recipe class is a container class for storing and transmitting recipe details for a single
- * recipe as returned from the API.
+ * The RecipeDetail class is the core class for transmitting data between the
+ * Search Results Activity and the Recipe Detail Activity. The class is constructed
+ * in the RecipeDetailRequest class.
  *
  * @author: Brook Thomas
  * @version: 1.0
@@ -22,9 +23,9 @@ public class RecipeDetail implements Serializable {
     protected String imageURL;
     protected String recipeURL;
     protected List<String> ingredients;
-    protected Map<String,String> nutrition;
+    protected Map<String, String> nutrition;
 
-    RecipeDetail () {
+    RecipeDetail() {
         ingredients = new ArrayList<>();
         nutrition = new HashMap<>();
     }
