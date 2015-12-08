@@ -11,11 +11,11 @@
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/white" />
+        android:layout_gravity="end"
+        android:textSize="10sp"
+        android:textColor="#FFF" />
 
 </android.widget.Toolbar>
