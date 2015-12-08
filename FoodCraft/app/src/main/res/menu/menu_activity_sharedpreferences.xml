@@ -4,4 +4,5 @@
     tools:context="sfsu.csc413.foodcraft.activity_sharedpreferences">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    
 </menu>
