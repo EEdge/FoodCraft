@@ -280,19 +280,55 @@
             android:layout_height="match_parent"
             android:paddingLeft="10dp">
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="New Text"
-                android:id="@+id/ingredient_list"
-                android:paddingBottom="5dp"
+
+
+
+        </LinearLayout>
+        <sfsu.csc413.foodcraft.NestedListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ingredient_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#000000"
+            android:gravity="left"
+            android:textSize="15dp"
+            style="@style/Base.TextAppearance.AppCompat.Small" />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="#a62128">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="#000000"
-                android:gravity="left"
-                style="@style/Base.TextAppearance.AppCompat.Small"
-                android:textSize="15dp" />
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:paddingLeft="5dp"
+                    android:text="View Recipe"
+                    android:id="@+id/textView6"
+                    android:linksClickable="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="#ffffff"
+                    android:textIsSelectable="false"
+                    style="@style/TextAppearance.AppCompat.Title" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>

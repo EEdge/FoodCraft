@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GlossaryActivity extends AppCompatActivity {
 
@@ -13,28 +15,25 @@ public class GlossaryActivity extends AppCompatActivity {
     TextView txt_glossary;
     RecipeDetail mRecipeDetail;
     GlossarySearch mGlossarySearch;
-    Context context;
+    static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glossary);
         txt_glossary = (TextView)findViewById(R.id.glossary_entry);
+        txt_glossary.setMovementMethod(new ScrollingMovementMethod());
 
+        //unpack
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         mRecipeDetail = (RecipeDetail) bundle.getSerializable(RECIPE_DETAILS);
+        String search = intent.getExtras().getString("search");
 
         mGlossarySearch = new GlossarySearch(context,mRecipeDetail, txt_glossary);
 
-        //Clean ingredient search string
-        String cleanedIngredient = Utilities.cleanString(mRecipeDetail.ingredients.get(0));
-        //cleanedIngredient = cleanedIngredient.replaceFirst(" ", "");
-        cleanedIngredient = cleanedIngredient.replace(" ", "%20");
-        String search = GlossarySearch.ingredientGlossarySearchURL(cleanedIngredient);
-        //String search = GlossarySearch.ingredientGlossarySearchURL("egg");
-
-        mGlossarySearch.requestGlossaryResponse(search, mRecipeDetail);
+        mGlossarySearch.requestGlossaryResponse(search);
 
     }
+
 }

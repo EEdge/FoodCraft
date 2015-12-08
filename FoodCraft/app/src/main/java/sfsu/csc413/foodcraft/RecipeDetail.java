@@ -7,8 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by brook on 11/10/15.
+ * The Recipe class is a container class for storing and transmitting recipe details for a single
+ * recipe as returned from the API.
+ *
+ * @author: Brook Thomas
+ * @version: 1.0
  */
+
 public class RecipeDetail implements Serializable {
 
     protected String title;
