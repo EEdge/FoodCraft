@@ -11,7 +11,7 @@ import android.widget.Toast;
 public class SharedPreferences extends AppCompatActivity {
 
     CheckBox salt, sugar, butter, eggs, pepper, water, flour;
-    Button buttonSave;
+    Button buttonSave, buttonUndo;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,41 +23,76 @@ public class SharedPreferences extends AppCompatActivity {
         pepper = (CheckBox) findViewById(R.id.pepper);
         water = (CheckBox) findViewById(R.id.water);
         flour = (CheckBox) findViewById(R.id.flour);
-        buttonSave = (Button) findViewById(R.id.button1);
+        buttonSave = (Button) findViewById(R.id.save);
+        buttonUndo = (Button) findViewById(R.id.undo);
+        savedState();
 
+
+    }
+
+
+    public void savedState () {
         android.content.SharedPreferences sharedprefs = getSharedPreferences("myprefs", MODE_PRIVATE);
 
         String Ingredient1 = sharedprefs.getString(salt.getText().toString(), null);
         if(Ingredient1!=null) {
             salt.setChecked(true);
         }
+
+        else {
+            salt.setChecked(false);
+        }
+
         String Ingredient2 = sharedprefs.getString(sugar.getText().toString(), null);
         if(Ingredient2!=null) {
             sugar.setChecked(true);
         }
+        else {
+            sugar.setChecked(false);
+        }
+
         String Ingredient3 = sharedprefs.getString(butter.getText().toString(), null);
         if(Ingredient3!=null) {
             butter.setChecked(true);
         }
+        else {
+            butter.setChecked(false);
+        }
+
         String Ingredient4 = sharedprefs.getString(eggs.getText().toString(), null);
         if(Ingredient4!=null) {
             eggs.setChecked(true);
         }
+        else {
+            eggs.setChecked(false);
+        }
+
         String Ingredient5 = sharedprefs.getString(pepper.getText().toString(), null);
         if(Ingredient5!=null) {
             pepper.setChecked(true);
         }
+        else {
+            pepper.setChecked(false);
+        }
+
         String Ingredient6 = sharedprefs.getString(water.getText().toString(), null);
         if(Ingredient6!=null) {
-            pepper.setChecked(true);
+            water.setChecked(true);
         }
+        else {
+            water.setChecked(false);
+        }
+
         String Ingredient7 = sharedprefs.getString(flour.getText().toString(), null);
         if(Ingredient7!=null) {
-            pepper.setChecked(true);
+            flour.setChecked(true);
+        }
+        else {
+            flour.setChecked(false);
         }
 
-
     }
+
 
     public void saveData(View view) {
 
@@ -131,33 +166,10 @@ public class SharedPreferences extends AppCompatActivity {
 
     }
 
-    /*public void apply(View view) {
 
-        //This creates an object for SharedPreferences.
-        android.content.SharedPreferences sharedprefs = getSharedPreferences("myprefs", MODE_PRIVATE);
+    public void undoSave (View view) {
+        savedState();
 
-        //This is used to get data from the file.
-        String I1 = sharedprefs.getString(salt.getText().toString(), null);
-        String I2 = sharedprefs.getString(sugar.getText().toString(), null);
-        String I3 = sharedprefs.getString(butter.getText().toString(), null);
-        String I4 = sharedprefs.getString(eggs.getText().toString(), null);
-        String I5 = sharedprefs.getString(pepper.getText().toString(), null);
-        String I6 = sharedprefs.getString(water.getText().toString(), null);
-        String I7 = sharedprefs.getString(flour.getText().toString(), null);
-
-
-
-        StringBuilder builder1 = new StringBuilder();
-        builder1.append(I1 + "\n" + I2 + "\n" + I3 + "\n" + I4 + "\n" + I5 +"\n" + I6 +"\n" + I7);
-        showMessage("Data", builder1.toString());
     }
 
-    public void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }*/
-
-}
+    }

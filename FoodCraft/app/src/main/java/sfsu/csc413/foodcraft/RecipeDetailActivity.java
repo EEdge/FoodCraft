@@ -9,6 +9,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.view.View;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     public static final String RECIPE_DETAILS = "sfsu.csc413.foodcraft.RECIPE_DETAILS";
     TextView txt_ingredientsList, txt_servingSize, txt_totalTime, txt_title, txt_nutritionKey,txt_nutritionValue;
     NetworkImageView recipe_image;
+    Button btn_viewRecipe;
 
     private Toolbar toolbar;
     private RecipeDetail mRecipeDetail;
@@ -57,6 +59,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         txt_title = (TextView) findViewById(R.id.recipe_name);
         txt_nutritionKey = (TextView) findViewById(R.id.nutrition_key);
         txt_nutritionValue = (TextView) findViewById(R.id.nutrition_value);
+        btn_viewRecipe = (Button) findViewById(R.id.view_recipe);
         //preferencesIngredients = SharedPreferences.getSharedPreferences();
 
         /* Unpack */
@@ -100,7 +103,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
 
         txt_ingredientsList.setText(builder3.toString());
+
+
     }
+
+
+    public void viewRecipe (View view) {
+
+        Intent intent = new Intent(this, ViewRecipe.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(ViewRecipe.RECIPE_URL, mRecipeDetail.recipeURL);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
