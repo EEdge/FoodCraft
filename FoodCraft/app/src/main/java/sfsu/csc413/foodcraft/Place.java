@@ -1,13 +1,10 @@
 package sfsu.csc413.foodcraft;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Place class is used to hold data for Google Places API search results
- *
+ * <p/>
  * Created by evanedge on 11/27/15.
  */
 public class Place {

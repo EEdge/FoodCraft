@@ -1,31 +1,25 @@
 package sfsu.csc413.foodcraft;
 
-import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+import android.app.Dialog;
 import android.content.IntentSender;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -34,19 +28,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.app.Dialog;
-import android.content.SharedPreferences;
-import android.view.Menu;
-import android.widget.Toast;
-
-
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
-
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MapsActivity extends FragmentActivity implements
@@ -69,11 +51,14 @@ public class MapsActivity extends FragmentActivity implements
     private LocationCallback locationCallback;
     SharedPreferences sharedPreferences;
     int locationCount = 0;
+    double mLatitude;
+    double mLongitude;
     String mLatitudeText = "";
     String mLongitudeText = "";
 
     YelpAPIRequest yelpRequest;
     private ArrayList<Place> yelpPlacesArray = new ArrayList<>();
+    private FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -83,13 +68,11 @@ public class MapsActivity extends FragmentActivity implements
         setUpMapIfNeeded();
         Location mLastLocation;
 
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-
 
         // Create the LocationRequest object
         mLocationRequest = LocationRequest.create()
@@ -107,9 +90,7 @@ public class MapsActivity extends FragmentActivity implements
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
             dialog.show();
 
-        }
-
-        else { // Google Play Services are available
+        } else { // Google Play Services are available
 
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
@@ -117,45 +98,40 @@ public class MapsActivity extends FragmentActivity implements
 //            locationCallback.onLocationResult(mLastLocation);
 //            {
 
-                if (mLastLocation == null) {
-                    mLatitudeText = "37.723609";
-                    mLongitudeText = "-122.475796";
-                    LatLng latLng = new LatLng(37.723609, -122.475796);
-                    Log.i("latlng", "hard coded");
+//            if (mLastLocation == null) {
+//                mLatitudeText = "37.723609";
+//                mLongitudeText = "-122.475796";
+//                LatLng latLng = new LatLng(37.723609, -122.475796);
+//                Log.i("latlng", "hard coded");
+//
+//            }
 
-                }
 
-                if (mLastLocation != null) {
-                    mLatitudeText = String.valueOf(mLastLocation.getLatitude());
-                    mLongitudeText = String.valueOf(mLastLocation.getLongitude());
-                    LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                    Log.i("latlng", "found");
+            mLatitudeText = String.valueOf(mLatitude);
+            mLongitudeText = String.valueOf(mLongitude);
+            String latLngString = mLatitudeText + "," + mLongitudeText;
+            yelpRequest = new YelpAPIRequest("groceries", latLngString, getApplicationContext(), taskCallback);
 
-                }
-
-                String latLngString = mLatitudeText + "," + mLongitudeText;
-                yelpRequest = new YelpAPIRequest("groceries", latLngString, getApplicationContext(), taskCallback);
-
-                try {
-                    yelpRequest.makeRequest();
-                    Log.i("yelp response.:", "madeRequest in maps");
-                } catch (Exception e) {
-                    Log.i("MapsActivity Yelp call", "Error");
-                }
+            try {
+                yelpRequest.makeRequest();
+                Log.i("yelp response.:", "madeRequest in maps");
+            } catch (Exception e) {
+                Log.i("MapsActivity Yelp call", "Error");
             }
+        }
 
-       // }
+        // }
 
     }
+
 
     TaskCallback taskCallback = new TaskCallback() {
         @Override
         public void onTaskCompleted(ArrayList<Place> result) {
-            if (result.size() == 0){
+            if (result.size() == 0) {
 
-            }
-            else {
-             yelpPlacesArray.addAll(result);
+            } else {
+                yelpPlacesArray.addAll(result);
                 drawYelp(yelpPlacesArray, mMap);
             }
 
@@ -163,16 +139,30 @@ public class MapsActivity extends FragmentActivity implements
     };
 
 
+    private static void drawYelp(ArrayList<Place> yelpPlacesArray, GoogleMap mMap) {
 
-    private static void drawYelp (ArrayList<Place> yelpPlacesArray, GoogleMap mMap) {
+        if (yelpPlacesArray.size() == 0) {
+            Place tj = new Place();
+            tj.lng = -122.476590;
+            tj.lat = 37.726611;
+            tj.name = "Trader Joe's";
+            tj.address = "3251 20th Ave";
+            yelpPlacesArray.add(tj);
+            Place safeWay = new Place();
+            safeWay.lng = -122.474153;
+            safeWay.lat = 37.743416;
+            safeWay.name = "Safeway";
+            safeWay.address = "730 Taraval St";
+            yelpPlacesArray.add(safeWay);
 
+        }
         for (int i = 0; i < yelpPlacesArray.size(); i++) {
             Place place = yelpPlacesArray.get(i);
-            LatLng  latLng = new LatLng(place.lat, place.lng);
+            LatLng latLng = new LatLng(place.lat, place.lng);
             Marker placeMarker = mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(place.name)
-                    .snippet(place.address.substring(2,place.address.length()-2))
+                    .snippet(place.address.substring(2, place.address.length() - 2))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             placeMarker.showInfoWindow();
         }
@@ -264,6 +254,21 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onConnected(Bundle bundle) {
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        mLatitude = location.getLatitude();
+        mLongitude = location.getLongitude();
+        mLatitudeText = String.valueOf(mLatitude);
+        mLongitudeText = String.valueOf(mLongitude);
+        String latLngString = mLatitudeText + "," + mLongitudeText;
+        yelpRequest = new YelpAPIRequest("groceries", latLngString, getApplicationContext(), taskCallback);
+
+        try {
+            yelpRequest.makeRequest();
+            Log.i("yelp response.:", "madeRequest in maps");
+        } catch (Exception e) {
+            Log.i("MapsActivity Yelp call", "Error");
+            Toast toast = Toast.makeText(this.getApplicationContext(), "Grocery stores not found- please try again", Toast.LENGTH_SHORT);
+            toast.show();
+        }
         if (location == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         } else {
