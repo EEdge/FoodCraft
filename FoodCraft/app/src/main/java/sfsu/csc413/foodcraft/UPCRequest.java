@@ -43,7 +43,7 @@ public class UPCRequest {
      * Written by Paul Klein
      *  TODO: Parse Item for Ingredients, and return that ingredient as a String instead of a toast.
      */
-    public void craftUPCRequest(final String upc_code, final Context context, TaskCallback callback){
+    public void craftUPCRequest(final String upc_code, final Context context, final TaskCallback callback){
         final String requesturl = UPC_URL + upc_code + "/" + UPC_KEYWORD;
         this.callback = callback;
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
