@@ -80,7 +80,7 @@ public class Utilities {
     private static String scrubKeywords(String ingredient) {
 
         String[] keywords = {"granulated", "boiling", "softened", "diced", "sliced", "slices", "slice",
-                "ground", "shredded", "grated", "minced", "dried", "finely chopped", "chopped",
+                "shredded", "grated", "minced", "dried", "finely chopped", "chopped",
                 "mashed", "crushed", "boiled", "baked", "cold", "warm", "hot", "warmed", "fresh", "organic",
                 "cooked", "large", "medium", "small", "plain", "distilled", "frozen", "pitted", "peeled",
                 "cup", "cups", "tsp", "tbsp", "teaspoon", "tablespoon", "oz", "and", "/", ",", "(", ")",
