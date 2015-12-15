@@ -17,6 +17,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+
+/**
+ * This is class designed to generate an OAuth signature for our Volley request to Yelp.
+ * @file:VolleyOAuthRequest.java
+ * @author: Paul Klein
+ * @version: 1.0
+ */
 public class VolleyOAuthRequest<T> extends Request<T> {
 
     private HashMap<String, String> params;
@@ -38,6 +45,14 @@ public class VolleyOAuthRequest<T> extends Request<T> {
         params.put(key, value);
     }
 
+    /* An oAuth signed request requires a few things. In addition to the various public keys, it requires a
+    timestamp and a 'signature'. This signature encodes the URL using your private key, and then
+    adds a parameter called signature. When the API receives the url along with the encoded signature
+    it decodes the signature to verify that the URL is the same as the one encoded. It also checks to ensure
+    that the request was made before the timestamp expired. If all of these conditions are met, Yelp will
+    return the requested data.
+    //The method below builds the oAuthRequest using the Scribe library.
+    */
     private void buildOAuthRequest() {
         oAuthRequest = new OAuthRequest(getVerb(), super.getUrl());
         for(Map.Entry<String, String> entry : getParams().entrySet()) {
@@ -75,6 +90,10 @@ public class VolleyOAuthRequest<T> extends Request<T> {
         return params;
     }
 
+    /**
+     *
+     * @return a URL with a signed oAuth signature as a paramater.
+     */
     @Override
     public String getUrl() {
         if(oAuthRequest == null) {

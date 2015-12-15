@@ -3,7 +3,8 @@ package sfsu.csc413.foodcraft;
 import java.util.List;
 
 /**
- * Created by pklein on 11/12/15.
+ * This is an interface for implementing different task callbacks. We use these to share data from non-activity classes
+ * to activities asynchronously.
  */
 public interface TaskCallbackInterface{
     void  onTaskCompleted(String result, boolean cached);

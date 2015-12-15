@@ -63,6 +63,8 @@ public class CardviewActivity extends ActionBarActivity {
         // Before modifyList becomes a new array with filtered elements, it will point to the full unaltered recipe list.
         modifyRecipe = recipeList;
         selectedFoods = (bundle.getStringArrayList(SELECTED_FOODS_ARRAY));
+        //This is where we sort the actual recipeList from least to greatest using the following algorithm:
+        //      (Total Ingredients in Recipe) - (Matched Ingredients) = Ingredients to completion
         Collections.sort(recipeList);
 
         // Toolbar and spinner are set up for this activity.

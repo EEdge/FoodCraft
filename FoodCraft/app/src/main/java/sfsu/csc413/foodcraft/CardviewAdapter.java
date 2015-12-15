@@ -65,7 +65,8 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
      */
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        // where we updated the contents of each card
+        // where we update the contents of each card
+        // The netWork image layout if filled using mImageLoader - Paul
 
         final Recipe recipe = recipeList.get(position);
 
@@ -94,8 +95,6 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
 
         // The text view inside of the linear layout above.
         public TextView recipeName;
-
-        //public ImageView recipeImage;
         public NetworkImageView recipeImage;
 
         /**
@@ -143,3 +142,4 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
     }
 
 }
+

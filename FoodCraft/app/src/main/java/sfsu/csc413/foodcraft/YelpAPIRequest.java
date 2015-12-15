@@ -2,10 +2,10 @@ package sfsu.csc413.foodcraft;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Response;
 import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -16,13 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-
-import javax.security.auth.callback.Callback;
 
 
 /**
@@ -45,10 +39,10 @@ public class YelpAPIRequest {
     public YelpAPIRequest(String term, String ll, Context context, TaskCallback callback) {
 
         this.callback = callback;
-        this.term = term;
-        this.ll = ll;
+        YelpAPIRequest.term = term;
+        YelpAPIRequest.ll = ll;
         this.context = context;
-        this.location = "america";
+        location = "america";
 
     }
 
@@ -58,7 +52,7 @@ public class YelpAPIRequest {
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error);
             }
-        }, CONSUMER_KEY,  CONSUMER_SECRET, TOKEN,  TOKEN_SECRET);
+        }, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
 
 
         request.addParameter("term", term);
@@ -86,10 +80,12 @@ public class YelpAPIRequest {
                         //get status code here
                         String statusCode = String.valueOf(error.networkResponse.statusCode);
                         Log.i("volley statusCode:::", statusCode);
+                        Toast toast = Toast.makeText(context, "Request error- please try again", Toast.LENGTH_LONG);
+                        toast.show();
                         //get response body and parse with appropriate encoding
-                        if(error.networkResponse.data!=null) {
+                        if (error.networkResponse.data != null) {
                             try {
-                                body = new String(error.networkResponse.data,"UTF-8");
+                                body = new String(error.networkResponse.data, "UTF-8");
                                 Log.i("volley network resp:::", body);
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
@@ -129,12 +125,13 @@ public class YelpAPIRequest {
             JSONObject object = JSONplaceArray.getJSONObject(i);
 
             Place place = new Place();
-            if(object.has("name")) place.name = object.getString("name");
-            if(object.has("id")) place.id = object.getString("id");
-            if(object.has("location")) place.location = object.getJSONObject("location");
+            if (object.has("name")) place.name = object.getString("name");
+            if (object.has("id")) place.id = object.getString("id");
+            if (object.has("location")) place.location = object.getJSONObject("location");
             if (place.location != null) place.address = place.location.getString("address");
-            if(object.has("display_phone")) place.phone = object.getString("display_phone");
-            if (place.location != null) place.coordinates = place.location.getJSONObject("coordinate");
+            if (object.has("display_phone")) place.phone = object.getString("display_phone");
+            if (place.location != null)
+                place.coordinates = place.location.getJSONObject("coordinate");
             if (place.coordinates != null) {
                 place.lat = place.coordinates.getDouble("latitude");
                 place.lng = place.coordinates.getDouble("longitude");
@@ -143,7 +140,6 @@ public class YelpAPIRequest {
         }
         callback.onTaskCompleted(placeArray);
     }
-
 
 
 }

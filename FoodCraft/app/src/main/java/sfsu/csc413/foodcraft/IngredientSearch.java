@@ -139,7 +139,6 @@ public class IngredientSearch extends AppCompatActivity
             //Confirmation of title
             SingleIngredientAlert(item.get(0));
         } else if (item.size() > 1 && !cached) {
-            //// TODO: 12/1/15  fix radio button selection
             //Radio button selection of each item, and 'Other' selection that adds custom title to database
             MultipleIngredientAlert(item);
         }

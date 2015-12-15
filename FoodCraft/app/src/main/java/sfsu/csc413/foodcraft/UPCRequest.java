@@ -1,12 +1,10 @@
 package sfsu.csc413.foodcraft;
 
-import android.content.*;
+import android.content.Context;
 import android.util.Base64;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
@@ -18,7 +16,9 @@ import java.util.Map;
 
 /**
  * This is the class that handles the calling of UPC API (Outpan) and Toasting the returned product name.
- * Written by Paul Klein
+ * @file:UPCRequest.java
+ * @author: Paul Klein
+ * @version: 1.0
  */
 public class UPCRequest {
     private static final String UPC_KEYWORD = "name";
@@ -31,19 +31,19 @@ public class UPCRequest {
      * The constructor for the UPCRequest class that establishes our variables.
      * Written by Paul Klein
      */
-    public UPCRequest(Context myActivity){
+    public UPCRequest(Context myActivity) {
         this.myActivity = myActivity;
     }
 
     /**
      * This method crafts the JSONObjectRequest for our UPC API and adds it to the VolleyRequest request queue.
      * Once there is a response to the request, it sends a toast of the product title.
+     *
      * @param upc_code
      * @param context
-     * Written by Paul Klein
-     *  TODO: Parse Item for Ingredients, and return that ingredient as a String instead of a toast.
+     * @param callback, this callback is used to return the response to calling fragment asynchronously.
      */
-    public void craftUPCRequest(final String upc_code, final Context context, TaskCallback callback){
+    public void craftUPCRequest(final String upc_code, final Context context, TaskCallback callback) {
         final String requesturl = UPC_URL + upc_code + "/" + UPC_KEYWORD;
         this.callback = callback;
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -54,21 +54,18 @@ public class UPCRequest {
                         try {
                             if (!response.getString(UPC_KEYWORD).equals("null")) {
                                 parse_response(response.getString(UPC_KEYWORD), upc_code);
-                            }
-                            else {
+                            } else {
                                 parse_response("", upc_code);
                             }
 
                         } catch (Exception exception) {
-                            VolleyLog.e("Error: ", exception.toString());
-                            Toast.makeText(context, "Error!", Toast.LENGTH_LONG).show();
+                            parse_response("", upc_code);
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.e("Error: ", error.getMessage());
-                        Toast.makeText(context, "Error!", Toast.LENGTH_LONG).show();
+                        parse_response("", upc_code);
                     }
                 }) {
             @Override
@@ -82,41 +79,72 @@ public class UPCRequest {
         };
         VolleyRequest.getInstance(context).addToRequestQueue(jsObjRequest);
     }
-    public UPCObject getCachedCode(String upc){
+
+    /**
+     * Checks the database for a cached code. If found, the product title set to the title returned from the database and,
+     * it returns a UPC object with the original code.
+     * If the code is not found, it still returns a UPCObject, but it sets the product title as null.
+     *
+     * @param upc, a string containing the UPC code.
+     * @return UPCObject, an object that encapsulates the product title, UPC code, and original scanned title
+     */
+    public UPCObject getCachedCode(String upc) {
         //get product name from database with matching UPC
         UPCDatabase database = new UPCDatabase(myActivity);
         String result = database.getProductByCode(upc);
         UPCObject obj = new UPCObject(upc, result, result);
         return obj;
     }
-    public void insertCachedCode(String upc, String title, Context context){
+
+    /**
+     * Inserts the UPC and title into the database. This stores the code for quick reference later, and keeps
+     * the data persistent.
+     *
+     * @param upc
+     * @param title
+     * @param context, the context is necessary for the database
+     */
+    public void insertCachedCode(String upc, String title, Context context) {
         UPCDatabase database = new UPCDatabase(context);
         database.insert(upc, title);
     }
-    public void parse_response(String scanned_product, String upc_code){
+
+    /**
+     * Parses the response of the original API request. Takes various combinations of the response from the Outpan API
+     * and checks it against the IngredientList. When the request is complete, it uses the callback to return the response
+     * to the original calling class.
+     *
+     * @param scanned_product
+     * @param upc_code
+     */
+    public void parse_response(String scanned_product, String upc_code) {
         IngredientList list = new IngredientList();
         String[] split_text = scanned_product.split("\\s+");
         List<UPCObject> results = new ArrayList<UPCObject>();
-        if (scanned_product.length() < 1){
+        if (scanned_product.length() < 1) {
+            //If the length is less than one, we probably won't
             results.add(new UPCObject(upc_code, null, scanned_product));
-        }
-        else {
-            for (String part: split_text) {
-                if (list.Contains(part.toLowerCase())){
+        } else {
+            for (String part : split_text) {
+                //This checks each individual part of the response against the ingredientList
+                if (list.Contains(part.toLowerCase())) {
                     results.add(new UPCObject(upc_code, part.toLowerCase(), scanned_product));
                 }
             }
-            for (int i = 1; i <= split_text.length - 2; i++){
+            for (int i = 1; i <= split_text.length - 2; i++) {
+                //This checks combinations of previous and post words against the ingredientList
+                //For example, if the response contained "Happy Orange Juice" it would create the strings
+                //"Happy Orange" and "Orange Juice"
                 String previouscombo = split_text[i - 1] + " " + split_text[i];
                 String postcombo = split_text[i] + " " + split_text[i + 1];
-                if (list.Contains(previouscombo.toLowerCase())){
+                if (list.Contains(previouscombo.toLowerCase())) {
                     results.add(new UPCObject(upc_code, previouscombo.toLowerCase(), scanned_product));
                 }
-                if (list.Contains(postcombo.toLowerCase())){
+                if (list.Contains(postcombo.toLowerCase())) {
                     results.add(new UPCObject(upc_code, postcombo.toLowerCase(), scanned_product));
                 }
             }
-            if (results.size() == 0){
+            if (results.size() == 0) {
                 results.add(new UPCObject(upc_code, null, scanned_product));
             }
         }
