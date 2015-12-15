@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context="sfsu.csc413.foodcraft.MainActivity"
-    tools:showIn="@layout/activity_main">
+    android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/upc_scanner_fragment"
-        android:id="@+id/scan_from_fragment"/>
+    <com.journeyapps.barcodescanner.CompoundBarcodeView
+        android:id="@+id/barcode_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.journeyapps.barcodescanner.CompoundBarcodeView>
 
-</LinearLayout>
+</RelativeLayout>
+

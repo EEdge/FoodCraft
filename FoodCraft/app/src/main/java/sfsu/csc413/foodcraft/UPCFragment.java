@@ -18,7 +18,7 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sfsu.csc413.foodcraft.R.layout.upc_scan;
+import static sfsu.csc413.foodcraft.R.layout.fragment_scan;
 
 /**
  * This fragment will hold the BarcodeScanner (Camera) preview. It took a lot of effort to reduce
@@ -103,7 +103,7 @@ public class UPCFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(upc_scan, container, false);
+        view = inflater.inflate(fragment_scan, container, false);
         return view;
     }
 
