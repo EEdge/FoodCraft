@@ -16,7 +16,6 @@ public class IngredientList {
     public ArrayList<String> ingredients = new ArrayList<>();
 
     public IngredientList(){
-        ingredients.add("abalone");
         ingredients.add("agave nectar");
         ingredients.add("all-purpose flour");
         ingredients.add("allspice");
