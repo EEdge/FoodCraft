@@ -40,11 +40,11 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        // where we updated the contents of each card
+        // where we update the contents of each card
+        // The netWork image layout if filled using mImageLoader - Paul
 
         final Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.name);
-        //Picasso.with(mContext).load(recipe.getImageResourceId(mContext)).into(holder.recipeImage);
         ImageLoader mImageLoader = VolleyRequest.getInstance(mContext).getImageLoader();
         holder.recipeImage.setImageUrl(recipe.imageURL, mImageLoader);
     }
@@ -58,7 +58,6 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.ViewHo
         public LinearLayout recipeHolder;
         public LinearLayout recipeNameHolder;
         public TextView recipeName;
-        //public ImageView recipeImage;
         public NetworkImageView recipeImage;
 
         public ViewHolder(View itemView) {

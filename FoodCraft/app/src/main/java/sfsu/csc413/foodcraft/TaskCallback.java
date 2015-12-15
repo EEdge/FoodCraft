@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by pklein on 11/12/15.
+ * Empty implementations of the TaskCallback interface. These will be overridden in the activity that's needed.
  */
 public abstract class TaskCallback implements TaskCallbackInterface{
     @Override

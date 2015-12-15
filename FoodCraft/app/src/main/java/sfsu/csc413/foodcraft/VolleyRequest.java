@@ -11,8 +11,9 @@ import com.android.volley.toolbox.Volley;
 
 /**
  * A simple Volley Class that creates our RequestQueue
- * Written by Paul Klein (modified from version found somewhere online, will add a link later)
- * TODO: Add a link to the original source
+ * @file:VolleyRequest.java
+ * @author: Paul Klein
+ * @version: 1.0
  */
 public class VolleyRequest {
 
@@ -21,6 +22,7 @@ public class VolleyRequest {
     private ImageLoader mImageLoader;
     private static Context mCtx;
 
+    //This is a singleton class, so we make the constructor static
     private VolleyRequest(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
@@ -35,8 +37,6 @@ public class VolleyRequest {
 
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
             mImageLoader = new ImageLoader(this.mRequestQueue,
                     new ImageLoader.ImageCache() {

@@ -66,6 +66,8 @@ public class
         // before modify list becomes a new array with filtered elements, point to the full recipe list
         modifyRecipe = recipeList;
         selectedFoods = (bundle.getStringArrayList(SELECTED_FOODS_ARRAY));
+        //This is where we sort the actual recipeList from least to greatest using the following algorithm:
+        //      (Total Ingredients in Recipe) - (Matched Ingredients) = Ingredients to completion
         Collections.sort(recipeList);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         spinner_nav = (Spinner) findViewById(R.id.spinner_nav);

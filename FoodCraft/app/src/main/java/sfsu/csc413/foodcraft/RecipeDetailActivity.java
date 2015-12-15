@@ -86,11 +86,25 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ImageLoader mImageLoader = VolleyRequest.getInstance(this).getImageLoader();
         recipe_image.setImageUrl(mRecipeDetail.imageURL, mImageLoader);
 
-        txt_title.setText(mRecipeDetail.title);
 
-        txt_servingSize.setText(Integer.toString(mRecipeDetail.numberServings));
+        //The below are quick catches in case the selected recipe is missing some information.
+        String title = mRecipeDetail.title;
+        if (title == null){
+            title = "A delicious recipe!";
+        }
+        txt_title.setText(title);
 
-        txt_totalTime.setText(mRecipeDetail.totalTime);
+        String servingSize = Integer.toString(mRecipeDetail.numberServings);
+        if(servingSize == null){
+            servingSize = "Serving size not available.";
+        }
+        txt_servingSize.setText(servingSize);
+
+        String time = mRecipeDetail.totalTime;
+        if(time == null){
+            time = "Cook time not available.";
+        }
+        txt_totalTime.setText(time);
 
         //Display all the nutrition info from the RecipeDetail bundle.
         StringBuilder builder1 = new StringBuilder();
