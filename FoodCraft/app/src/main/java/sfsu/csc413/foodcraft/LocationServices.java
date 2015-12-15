@@ -10,6 +10,7 @@ import android.provider.Settings;
 
 /**
  * Main class for the location services which pops up if the user does not have location services enabled.
+ *
  * @author Robert Chung
  * @version 1.0
  */
@@ -21,15 +22,19 @@ public class LocationServices extends Activity {
         myActivity = context;
     }
 
-    /** Method that presents a dialog box asking if the user wants to enable location services if it has not been enabled.
+    /**
+     * Method that presents a dialog box asking if the user wants to enable location services if it has not been enabled.
      */
     public void show() {
 
+        // Location manager is the instance of the LocationManager object which allows the current activity to obtain the status of the location services.
         LocationManager lm = (LocationManager) myActivity.getSystemService(Context.LOCATION_SERVICE);
 
+        // Boolean variables for whether the gps and the network are enabled.
         boolean gps_enabled = false;
         boolean network_enabled = false;
 
+        // Try catch block if for checking if the network and gps are fully functional.
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch (Exception ex) {
@@ -42,16 +47,16 @@ public class LocationServices extends Activity {
 
         if (!gps_enabled && !network_enabled) {
 
+            // The properties for the locations services are provided into the dialog builder and the alert dialog is created.
             String message = myActivity.getString(R.string.locationMessage);
-
             AlertDialog.Builder dialog = new AlertDialog.Builder(myActivity);
 
             dialog.setMessage(message);
-
             dialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
 
                 /**
                  * Method that starts a new activity which brings the user to the location services settings page.
+                 *
                  * @param paramDialogInterface The interface of the location services dialog box.
                  * @param paramInt The integer containing the parameter.
                  */
@@ -66,6 +71,7 @@ public class LocationServices extends Activity {
 
                 /**
                  * Method that closes the dialog box if the user presses cancel.
+                 *
                  * @param paramDialogInterface The interface of the location services dialog box.
                  * @param paramInt The integer containing the parameter.
                  */
