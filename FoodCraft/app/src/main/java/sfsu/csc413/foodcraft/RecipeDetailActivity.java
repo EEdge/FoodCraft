@@ -1,6 +1,8 @@
 package sfsu.csc413.foodcraft;
 
-
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +47,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private RecipeDetail mRecipeDetail;
     private ArrayList<String> preferencesIngredients;
     GlossarySearch mGlossarySearch;
+    RecipeDetailActivity selfReference;
+    String idGlossary;
+    Context context = this;
 
     /**
      * This method is called when the activity is first created.
@@ -67,6 +72,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
             getActionBar().setElevation(7);
         }
+        selfReference = this;
+
         //Cast TextViews and Buttons.
         txt_ingredientsList = (ListView) findViewById(R.id.ingredient_list);
         txt_servingSize = (TextView) findViewById(R.id.serving_size);
@@ -137,24 +144,16 @@ public class RecipeDetailActivity extends AppCompatActivity {
         //make sure that activity starts at top not at list
         txt_ingredientsList.setFocusable(false);
 
-         //onClickListener for the list of ingredients.
+        //onClickListener for launching the glossary activity
         txt_ingredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             //This method allows the user to see the information about a particular ingredient by clicking on it.
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
-                String search = GlossarySearch.searchIngredient(mRecipeDetail, position);
-
-                Intent intent = new Intent(view.getContext(), GlossaryActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(RecipeDetailActivity.RECIPE_DETAILS, mRecipeDetail);
-                intent.putExtras(bundle);
-                intent.putExtra("search", search);
-                startActivity(intent);
-
-            }
+                mGlossarySearch = new GlossarySearch(getApplicationContext(), mRecipeDetail, taskCallback);
+                mGlossarySearch.startGlossarySearch(mRecipeDetail, position);
+        }
         });
 
     }
@@ -172,6 +171,23 @@ public class RecipeDetailActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+    TaskCallback taskCallback = new TaskCallback() {
+        public void onTaskCompleted(UPCObject result, boolean cached) {
+        }
+        public void onTaskCompleted(String text){
+            Intent intent = new Intent(getApplicationContext(), GlossaryActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.getString(text);
+            intent.putExtra("entry", text);
+            intent.putExtras(bundle);
+
+            selfReference.startActivity(intent);
+        }
+        public void onTaskCompleted(Place holder) {
+        }
+        public void onTaskCompleted(ArrayList<Place> result){
+        }
+    };
 
     /**
      * Initialize the contents of the Activity's standard options menu.

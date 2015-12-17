@@ -12,6 +12,6 @@ public abstract class TaskCallback implements TaskCallbackInterface{
     }
     public void onTaskCompleted(List<UPCObject> result){
     }
-
+    abstract void onTaskCompleted(String text);
     abstract void onTaskCompleted(ArrayList<Place> result);
 }

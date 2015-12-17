@@ -1,7 +1,9 @@
 package sfsu.csc413.foodcraft;
 
 /**
- * http://www.mysamplecode.com/2011/11/android-parse-xml-file-example-using.html
+ * This class handles the xml response from BigOven
+ * Uses code from: http://www.mysamplecode.com/2011/11/android-parse-xml-file-example-using.html
+ * @author Maria Lienkaemper
  */
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

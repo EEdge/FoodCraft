@@ -75,6 +75,7 @@ public class UPCFragment extends Fragment {
             ((IngredientSearch) getActivity()).addselectedFoods(resultlist, false);
             barcodeView.pause();
         }
+        public void onTaskCompleted(String text){}
     };
 
     public UPCFragment() {

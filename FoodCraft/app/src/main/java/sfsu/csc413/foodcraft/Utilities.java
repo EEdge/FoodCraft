@@ -83,7 +83,7 @@ public class Utilities {
                 "shredded", "grated", "minced", "dried", "finely chopped", "chopped",
                 "mashed", "crushed", "boiled", "baked", "cold", "warm", "hot", "warmed", "fresh", "organic",
                 "cooked", "large", "medium", "small", "plain", "distilled", "frozen", "pitted", "peeled",
-                "cup", "cups", "tsp", "tbsp", "teaspoon", "tablespoon", "oz", "and", "/", ",", "(", ")",
+                "cup", "cups", "tsp", "tbsp", "teaspoon", "tablespoon", "oz", "and", "-", "*", "/", ",", "(", ")",
                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
 
 

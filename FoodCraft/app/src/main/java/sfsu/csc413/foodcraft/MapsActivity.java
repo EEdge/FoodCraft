@@ -113,7 +113,6 @@ public class MapsActivity extends FragmentActivity implements
      */
 
     TaskCallback taskCallback = new TaskCallback() {
-        @Override
         public void onTaskCompleted(ArrayList<Place> result) {
             if (result.size() == 0) {
 
@@ -121,6 +120,9 @@ public class MapsActivity extends FragmentActivity implements
                 yelpPlacesArray.addAll(result);
                 drawYelp(yelpPlacesArray, mMap);
             }
+
+        }
+        public void onTaskCompleted(String holder){
 
         }
     };
