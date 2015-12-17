@@ -18,26 +18,34 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sfsu.csc413.foodcraft.R.layout.upc_scan;
+import static sfsu.csc413.foodcraft.R.layout.fragment_scan;
 
-
+/**
+ * This fragment will hold the BarcodeScanner (Camera) preview. It took a lot of effort to reduce
+ * the fullscreen preview into a tiny fragment that we can swap in and out.
+ * @file:UPCFragment.java
+ * @author: Paul Klein
+ * @version: 1.0
+ */
 public class UPCFragment extends Fragment {
 
     private CompoundBarcodeView barcodeView;
     UPCRequest barcode_scanner = new UPCRequest(getActivity());
 
+    //This is the barcode callback that is called when a barcode is scanned and decoded
     BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
             UPCRequest barcode_scanner = new UPCRequest(getActivity());
-            //TODO HANDLE NULL RESPONSE
             if (result != null) {
-                if (barcode_scanner.getCachedCode(result.toString()).product_title != null){
-                    List<UPCObject> objlist = new ArrayList<UPCObject>(){};
+                //This logic check is looking to see if we already have cached the UPC code.
+                //We will always give priority to the cached data.
+                if (barcode_scanner.getCachedCode(result.toString()).product_title != null) {
+                    List<UPCObject> objlist = new ArrayList<UPCObject>() {
+                    };
                     objlist.add(barcode_scanner.getCachedCode(result.toString()));
                     ((IngredientSearch) getActivity()).addselectedFoods(objlist, true);
-                }
-                else {
+                } else {
                     barcode_scanner.craftUPCRequest(result.toString(), getActivity(), taskCallback);
                 }
             }
@@ -48,12 +56,19 @@ public class UPCFragment extends Fragment {
         }
     };
 
+    //This callback passes the completed scan data from the UPC fragment into the IngredientSearch.
     TaskCallback taskCallback = new TaskCallback() {
         @Override
         public void onTaskCompleted(List<UPCObject> result) {
             ((IngredientSearch) getActivity()).addselectedFoods(result, false);
             barcodeView.pause();
         }
+
+        @Override
+        void onTaskCompleted(ArrayList<Place> result) {
+
+        }
+
         public void onTaskCompleted(UPCObject result, boolean cached) {
             List<UPCObject> resultlist = new ArrayList<UPCObject>();
             resultlist.add(result);
@@ -89,10 +104,16 @@ public class UPCFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(upc_scan, container, false);
+        view = inflater.inflate(fragment_scan, container, false);
         return view;
     }
 
+    /**
+     * This function begins the scanning of barcodes using the scanner. It uses the callback to launch
+     * the API call once a barcode is captured and decoded.
+     *
+     * @param view
+     */
     @TargetApi(Build.VERSION_CODES.M)
     public void scanFromFragment(View view) {
         barcodeView = (CompoundBarcodeView) view.findViewById(R.id.barcode_scanner);
@@ -100,7 +121,14 @@ public class UPCFragment extends Fragment {
         barcodeView.resume();
         barcodeView.decodeSingle(callback);
     }
-    public void addtoDatabase(String code, String title, Context context){
+
+    /** This function is called from within the IngredientSearch class. It is used to add new
+     *  code - product title combinations to our database, for later quick access.
+     * @param code    UPC code
+     * @param title   User entered title
+     * @param context
+     */
+    public void addtoDatabase(String code, String title, Context context) {
         barcode_scanner.insertCachedCode(code, title, context);
     }
 }

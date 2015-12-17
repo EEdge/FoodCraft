@@ -4,14 +4,14 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@drawable/spinner_selector"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvCategory"
+        android:id="@+id/courseCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 </RelativeLayout>

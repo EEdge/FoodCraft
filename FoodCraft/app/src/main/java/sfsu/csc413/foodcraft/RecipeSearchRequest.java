@@ -25,8 +25,7 @@ import java.util.Map;
  * new search should begin with instantiating a new instance.
  *
  * @author: Maria Lienkaemper, Brook Thomas
- * @version: 0.1
- *
+ * @version: 1.0
  */
 public class RecipeSearchRequest {
 
@@ -41,17 +40,22 @@ public class RecipeSearchRequest {
     /**
      * Constructor method that defines the new search.
      *
-     * @param context The application context.
+     * @param context        The application context.
      * @param searchActivity A reference to the Search activity. The results of the search will be returned
      *                       to this activity.
      */
-    public RecipeSearchRequest(Context context, IngredientSearch searchActivity)  {
+    public RecipeSearchRequest(Context context, IngredientSearch searchActivity) {
         this.context = context;
         this.searchActivity = searchActivity;
     }
 
-    public void run (List<String> ingredients) {
-        this.ingredients = ingredients;
+    /**
+     * Initiates the search cycle.
+     *
+     * @param searchIngredients The list of ingredients from the Search Activity that will be sent to the API.
+     */
+    public void run(List<String> searchIngredients) {
+        ingredients = searchIngredients;
         recipes = new ArrayList<>();
 
         searchCycle(ingredients);
@@ -59,13 +63,16 @@ public class RecipeSearchRequest {
 
     /**
      * Given a list of ingredients, will search the Recipe APIs for ever decreasing subsets until
-     * the target number of recipes is hit, or the subset size reaches zero.
+     * the target number of recipes is hit, or the subset size reaches zero. Provided at least one
+     * Recipe is returned during this process, we will go ahead with the Search Results Activity.
      *
      * @param ingredients A list of ingredients.
      */
-    private void searchCycle (final List<String> ingredients) {
+    private void searchCycle(final List<String> ingredients) {
 
+        searchActivity.createToast("Searching...");
 
+        // End of the line for any recursive search that gets this far
         if (ingredients.size() == 0) {
 
             if (recipes.size() > 0) {
@@ -73,15 +80,16 @@ public class RecipeSearchRequest {
                 return;
             } else {
                 searchActivity.createToast("No results found.");
+                IngredientSearch.clearSelectedIngredientsList();
                 return;
             }
         }
-
 
         String url = YummlyHandler.formatYummlySearchURL(ingredients);
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
+
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -91,21 +99,19 @@ public class RecipeSearchRequest {
 
                             recipes.addAll(results);
 
+                            // Recursive search may also stop here if we reach 50 results
                             if (recipes.size() >= desiredNumberOfRecipes) {
 
                                 searchActivity.launchSearchResultsActivity(recipes);
                                 return;
 
                             } else {
-
-                                Thread.sleep(1000);
-                                ingredients.remove(ingredients.size()-1);
+                                Thread.sleep(1000); // lest we exhaust the API
+                                ingredients.remove(ingredients.size() - 1);
                                 searchCycle(ingredients);
                             }
 
                         } catch (Exception e) {
-                            Log.i("searchCycle()", "Error.");
-                            e.printStackTrace();
                             searchActivity.createToast("An error occurred. Try again.");
                         }
 
@@ -113,10 +119,10 @@ public class RecipeSearchRequest {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("RECIPE_SEARCH", "Recipe Search Request Unsuccessful");
+                searchActivity.createToast("Server Error. Please retry.");
             }
         }) {
-
+            // Yummly requires a custom ACCEPT header or it will return XML
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();

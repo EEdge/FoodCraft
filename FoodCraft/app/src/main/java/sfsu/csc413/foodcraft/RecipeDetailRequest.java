@@ -14,7 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by brook on 11/10/15.
+ *  The RecipeDetailRequest class is a controller class between the Search Results Activity and the
+ *  Recipe Detail Activity. When initialized and given a Recipe object, the class will retrieve
+ *  Recipe details from the relevant API, construct a RecipeDetail object, and launch the Recipe
+ *  Detail Activity.
+ *
+ * @author: Brook Thomas
+ * @version: 1.0
  */
 public class RecipeDetailRequest {
 
@@ -27,39 +33,42 @@ public class RecipeDetailRequest {
         mResultsList = detailsActivity;
     }
 
-    public void run(Recipe recipe) {
+    /**
+     * When given a Recipe object, will retrieve Recipe details from the API, construct a
+     * RecipeDetail object, and launch the RecipeDetail Activity with the detail object in
+     * the Bundle.
+     *
+     * @param recipe The Recipe object for which you want details.
+     */
+    public void run (Recipe recipe) {
 
-        String recipeID = recipe.id;
-
-        String url = YummlyHandler.formatYummlyDetailURL(recipeID);
-
-        Log.i("URL",url);
+        String url = YummlyHandler.formatYummlyDetailURL(recipe.id);
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
+
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
 
                             RecipeDetail detail = YummlyHandler.yummlyToDetail(response);
 
-                            Log.i("ONR","1");
                             mResultsList.launchDetailActivity(detail);
 
 
                         } catch (Exception e) {
                             Log.i("RecipeDetail.run()", "Error.");
-                            e.printStackTrace();
                         }
 
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("RECIPE_DETAIL", "Recipe Detail Request Unsuccessful");
-            }
-        }) {
 
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("RECIPE_DETAIL", "Recipe Detail Request Unsuccessful");
+                    }
+        }) {
+            // Yummly requires a custom ACCEPT header or it will return XML.
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -69,8 +78,6 @@ public class RecipeDetailRequest {
         };
 
         VolleyRequest.getInstance(mContext).addToRequestQueue(req);
-
     }
-
 }
 

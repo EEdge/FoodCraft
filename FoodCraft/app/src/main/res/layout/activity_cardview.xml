@@ -6,28 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="15dp"
-    android:layout_marginTop="0dp"
-    android:layout_marginRight="0dp"
     android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
+    android:layout_marginTop="0dp"
     card_view:cardCornerRadius="0dp"
     card_view:cardElevation="@dimen/card_elevation">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/activity_cardview_toolbar" />
 
     <FrameLayout
 
         android:layout_width="match_parent"
         android:layout_height="220dp">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/activity_cardview_toolbar" />
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/NetworkrecipeImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:src="@drawable/background_plate"
             android:transitionName="tImage" />
 
         <LinearLayout
@@ -49,9 +50,9 @@
                 android:id="@+id/recipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/black_50_opacity"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:background="@color/black_50_opacity"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

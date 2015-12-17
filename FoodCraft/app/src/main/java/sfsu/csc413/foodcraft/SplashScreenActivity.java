@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 //Slash screen image reference: https://wallpaperscraft.com/download/spices_dried_nuts_crockery_92083/800x1280
 
 /**
- * Splash Screen activity for creating the animations for the splash screen image.
+ * Splash Screen activity for creating the animations for the activity_splashscreen screen image.
  *
  * @author Robert Chung
  * @version 1.0 October 15, 2015.
@@ -23,24 +23,26 @@ public class SplashScreenActivity extends Activity {
 
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
+
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
     }
 
     /**
      * Method that sets the state of the activity when it's first created.
+     *
      * @param savedInstanceState Information about the current state of the activity.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.splash);
+        setContentView(R.layout.activity_splashscreen);
         StartFirstAnimation();
     }
 
     /**
-     * Method that creates the first animation which drags the splash screen from the bottom to the top.
+     * Method that creates the first animation which drags the activity_splashscreen screen from the bottom to the top.
      */
     private void StartFirstAnimation() {
         Animation scrollUp = AnimationUtils.loadAnimation(this, R.anim.translate);
@@ -53,6 +55,7 @@ public class SplashScreenActivity extends Activity {
 
             /**
              * Method that does not do anything when the first animation starts.
+             *
              * @param animation The first animation which scrolls up the page.
              */
             @Override
@@ -61,6 +64,7 @@ public class SplashScreenActivity extends Activity {
 
             /**
              * Method which starts the second animation after the first is completed.
+             *
              * @param animation The first animation which scrolls up the page.
              */
             @Override
@@ -70,6 +74,7 @@ public class SplashScreenActivity extends Activity {
 
             /**
              * Method that does not do anything to repeat the animation.
+             *
              * @param animation The first animation which scrolls up the page.
              */
             @Override

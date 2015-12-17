@@ -20,16 +20,14 @@ import java.util.ArrayList;
 import sfsu.csc413.foodcraft.dummy.DummyContent;
 
 import static sfsu.csc413.foodcraft.R.id.searchable_ingredient_item;
+import static sfsu.csc413.foodcraft.R.id.searchview_container;
+import static sfsu.csc413.foodcraft.R.layout.abc_search_view;
 import static sfsu.csc413.foodcraft.R.layout.list_item_searchable_ingredients;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
- * interface.
+ *SearchableIngredientFragment holds the listview of searchable ingredients.
+ *
+ * @author: Evan Edge
  */
 public class SearchableIngredientFragment extends Fragment implements AbsListView.OnItemClickListener {
 
@@ -83,6 +81,10 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
         return searchableIngredients;
     }
 
+    /**
+     *This method creates the searchable ingredient list and sets its on click listener.
+     * @param arrayList
+     */
     public void setSearchableIngredients(ArrayList<String> arrayList) {
         this.searchableIngredients = arrayList;
         lvIngredientSearchAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_searchable_ingredients, R.id.searchable_ingredient_item, searchableIngredients);
@@ -92,16 +94,25 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
             public void onItemClick(AdapterView<?> adapter, View v, int position,
                                     long arg3) {
                 String value = (String) adapter.getItemAtPosition(position);
-                if (!isInArray(value, IngredientSearch.selectedFoods)) {
+                if (!isInArray(value, IngredientSearch.selectedFoods)) { //checks to make sure item is not already added
                     IngredientSearch.selectedFoods.add(0, value);
                     IngredientSearch.lvSelectedIngredients.setAdapter(IngredientSearch.lvSelectedIngredientsAdapter);
-
                 }
                 searchableIngredients.remove(position);
                 lvIngredientSearchAdapter.notifyDataSetChanged();
+                IngredientSearch.searchView.clearFocus();
             }
         });
     }
+
+    /**
+     * Method called when the view is created.
+     *
+     * @param inflater LayoutInflater
+     * @param container The container the fragment is in
+     * @param savedInstanceState Saved state of the fragment from last use
+     * @return
+     */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -185,17 +196,13 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
     }
 
     /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
+     * This is the method for filtering through the searchable ingredients to find
+     * search matches. It is called each time a character is entered or deleted
+     * from the search box
+     *
+     * @param searchableListArray
+     * @param searchQuery
      */
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = lvIngredientSearch.getEmptyView();
-
-        if (emptyView instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
-    }
 
     private void filter(ArrayList<String> searchableListArray, CharSequence searchQuery) {
         //filter results by matching the query string and setting a new array to the ArrayAdapter on each text change
@@ -203,7 +210,7 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
 
         final ArrayList<String> newFilterResults;
 
-        if (searchQuery != null && searchQuery.length() > 0) {
+        if (searchQuery != null && searchQuery.length() > 0) { //check to make sure there is something in the search box
 
             queryIsUnique = true;
 
@@ -222,10 +229,11 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
 
             if (queryIsUnique) newFilterResults.add(0, (String) searchQuery);
 
-        } else {
+        } else { //search box is empty
             queryIsUnique = true;
             newFilterResults = searchableIngredients;
         }
+        //reset the searchable list with new filtered data set
         lvIngredientSearchAdapter = new ArrayAdapter<>(getActivity(), R.layout.list_item_searchable_ingredients, R.id.searchable_ingredient_item, newFilterResults);
         lvIngredientSearch.setAdapter(lvIngredientSearchAdapter);
         lvIngredientSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -262,10 +270,17 @@ public class SearchableIngredientFragment extends Fragment implements AbsListVie
         void onFragmentInteraction(String id);
     }
 
+    /**
+     * This method populates the searchableIngredients ArrayList from the list in IngrdientList.java.
+     */
     private void populateArray () {
         IngredientList list = new IngredientList();
         searchableIngredients = list.ingredients;
     }
+
+    /**
+     * This method is called when the Array needs to be refilled with the full original ingredient list.
+     */
 
     public void refreshArray () {
         populateArray();

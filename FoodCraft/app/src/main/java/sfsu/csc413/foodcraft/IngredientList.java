@@ -2,20 +2,20 @@ package sfsu.csc413.foodcraft;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 
 
 /**
- * Created by pklein on 11/2/15.
+ * This is a single, large, list of ingredients that we use through the application for
+ * various parsing, searching, and display reasons.
+ * @file:IngredientList.java
+ * @author: Paul Klein
+ * @version: 1.0
  */
 public class IngredientList {
 
     public ArrayList<String> ingredients = new ArrayList<>();
 
-
-    IngredientList(){
-        ingredients.add("abalone");
+    public IngredientList(){
         ingredients.add("agave nectar");
         ingredients.add("all-purpose flour");
         ingredients.add("allspice");
@@ -524,6 +524,7 @@ public class IngredientList {
         ingredients.add("ziti");
         ingredients.add("zucchini");
     }
+
     public boolean Contains(String ingredient_part){
         return ingredients.contains(ingredient_part);
 
