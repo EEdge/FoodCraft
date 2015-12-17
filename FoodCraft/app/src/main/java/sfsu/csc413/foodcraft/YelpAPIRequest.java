@@ -20,21 +20,28 @@ import java.util.ArrayList;
 
 
 /**
- * Created by evanedge on 12/6/15.
+ * YelpAPIRequest class handles making the request to the Yelp API and parsing the results to send
+ * back to MapsActivity.
+ *
+ * @author: Evan Edge
  */
+
 public class YelpAPIRequest {
 
-    private static String response;
     private static String term;
     private static String ll;
     private static String location;
     private Context context;
     private TaskCallback callback;
 
+    //API keys:
+
     private static final String CONSUMER_KEY = "OqEWi7bYa62SDgILJCMf1w";
     private static final String CONSUMER_SECRET = "Q4zujzPgymW14_amhfkmb3_TlWY";
     private static final String TOKEN = "O5e25OK9aT__OlEUublu6gLapEHdyIfY";
     private static final String TOKEN_SECRET = "upj5pummkmA91ixrg_ZaEIngwb0";
+
+    //creating the request:
 
     public YelpAPIRequest(String term, String ll, Context context, TaskCallback callback) {
 
@@ -54,6 +61,7 @@ public class YelpAPIRequest {
             }
         }, CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
 
+        //creating request URL:
 
         request.addParameter("term", term);
         request.addParameter("ll", ll);
@@ -67,7 +75,7 @@ public class YelpAPIRequest {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            parseYelpResponse(response);
+                            parseYelpResponse(response);//on response, parse response
                         } catch (Exception exception) {
                             VolleyLog.e("Parse catch: ", exception.toString());
                         }
@@ -117,6 +125,13 @@ public class YelpAPIRequest {
         Log.i("yelp response.:", "added request to queue in yelpAPIReq");
     }
 
+    /**
+     * This method parses the Yelp API response into Place objects and places them into
+     * an ArrayList to be sent to MapsActivity
+     *
+     * @param response the response from the Yelp API call
+     * @throws JSONException
+     */
     public void parseYelpResponse(JSONObject response) throws JSONException {
         JSONArray JSONplaceArray = response.getJSONArray("businesses");
         ArrayList<Place> placeArray = new ArrayList<>();

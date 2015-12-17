@@ -38,6 +38,15 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+/**
+ * The IngredientSearch activity is the starting point of the app, after the splash screen displays.
+ * It allows users to search for ingredients by text search or UPC scan, then select ingredients to add
+ * to their list of ingredients they have. The IngredientSearch activity makes API calls to find recipes
+ * using those ingredients, then bundles recipes and ingredient data to open the CardViewActivity.
+ *
+ * @author: Evan Edge
+ * @version: 1.0
+ */
 
 public class IngredientSearch extends AppCompatActivity
         implements SearchView.OnQueryTextListener, SearchableIngredientFragment.OnFragmentInteractionListener {
@@ -71,6 +80,12 @@ public class IngredientSearch extends AppCompatActivity
      */
     private GoogleApiClient client;
 
+    /**
+     * This method is called when the activity is first created. It creates all the fragments and
+     * listviews needed in the activity.
+     *
+     * @param savedInstanceState Information about the current state of the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +141,7 @@ public class IngredientSearch extends AppCompatActivity
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+
     public void addselectedFoods(List<UPCObject> item, boolean cached) {
         togglePhotoFragment(upcfrag.getView());
         if (selectedFoods.size() == 0) {
@@ -139,6 +155,7 @@ public class IngredientSearch extends AppCompatActivity
             //Confirmation of title
             SingleIngredientAlert(item.get(0));
         } else if (item.size() > 1 && !cached) {
+            //// TODO: 12/1/15  fix radio button selection
             //Radio button selection of each item, and 'Other' selection that adds custom title to database
             MultipleIngredientAlert(item);
         }
@@ -215,10 +232,21 @@ public class IngredientSearch extends AppCompatActivity
                 .show();
     }
 
+    /**
+     * This is a public method to clear the SelectedFoods ArrayList and update the ListView.
+     */
+
     public static void clearSelectedIngredientsList() {
         selectedFoods.clear();
         lvSelectedIngredientsAdapter.notifyDataSetChanged();
     }
+
+    /**
+     * This method bundles selectedFoods, including saved ingredients from shared preferences.
+     * It also bundles the ArrayList of recipes, then opens CardViewActivity with both bundles.
+     *
+     * @param recipes ArrayList containing recipes returned from API call
+     */
 
     protected void launchSearchResultsActivity(ArrayList<Recipe> recipes) {
 
@@ -262,6 +290,13 @@ public class IngredientSearch extends AppCompatActivity
 
     }
 
+    /**
+     * This method toggles between SearchableIngredientFragment and UPCFragment,
+     * initializing the UPCFragment if it isn't already.
+     *
+     * @param view the view of the activity
+     */
+
     public void togglePhotoFragment(View view) {
         if (!upcfrag.isAdded()) {
             FragmentManager manager = getFragmentManager();
@@ -290,6 +325,12 @@ public class IngredientSearch extends AppCompatActivity
         }
     }
 
+    /**
+     * This method creates a toast message to display to the user.
+     *
+     * @param text The text that will be displayed to the user
+     */
+
     public void createToast(String text) {
         // Modified from https://developer.android.com/guide/topics/ui/notifiers/toasts.html
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
@@ -303,13 +344,19 @@ public class IngredientSearch extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Method to open shared preferences menu
+     *
+     * @param item The item that is selected from the options menu
+     * @return
+     */
+
     public boolean onOptionsItemSelected(MenuItem item) {
 
         Intent intent = new Intent(this, SharedPreferences.class);
         startActivity(intent);
         return true;
     }
-
 
     @Override
     public void onFragmentInteraction(String id) {
@@ -366,6 +413,16 @@ public class IngredientSearch extends AppCompatActivity
         client.disconnect();
     }
 
+    /**
+     * This method inserts a string into an ArrayList in alphabetical order.
+     * It is used when a selected ingredient is deleted from its list and needs
+     * to be added back to the searchable ingredients list
+     *
+     * @param string The string that will be inserted into the ArrayList
+     * @param arrayList The arrayList that the string will be inserted into
+     * @return
+     */
+
     private static ArrayList<String> insertAlphabetized (String string, ArrayList<String> arrayList) {
         for (int i = 0; i < arrayList.size(); i++) {
             int compare = string.compareTo(arrayList.get(i));
@@ -379,12 +436,26 @@ public class IngredientSearch extends AppCompatActivity
         return  arrayList;
     }
 
+    /**
+     * This method adds selected ingredients back to the searchable ingredients list
+     * when they are deleted/deselected
+     *
+     * @param string The string that will be added back to the searchable list
+     */
+
     public static void addIngredientBack (String string) {
         ArrayList<String> alphabetizedList = insertAlphabetized(string, searchableFrag.getSearchableIngredients());
         searchableFrag.setSearchableIngredients(alphabetizedList);
     }
 
 }
+
+/**
+ * The CustomAdapter class extends ArrayAdapter to create a custom listview
+ * with a delete button next to the displayed text.
+ *
+ * @param <T> Generic type
+ */
 
 class CustomAdapter<T> extends ArrayAdapter {
 

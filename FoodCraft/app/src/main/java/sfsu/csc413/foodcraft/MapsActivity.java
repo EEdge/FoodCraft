@@ -30,6 +30,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+/**
+ * The MapsActivity is where FoodCraft displays nearby grocery stores. It makes an API call to
+ * Google Maps, creates a map in the view, then makes an API call to Yelp to find grocery stores
+ * in the area and draws those on the map.
+ *
+ * @author: Evan Edge
+ * @version: 1.0
+ */
 
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -58,10 +66,16 @@ public class MapsActivity extends FragmentActivity implements
 
     YelpAPIRequest yelpRequest;
     private ArrayList<Place> yelpPlacesArray = new ArrayList<>();
-    private FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
+
+    /**
+     * The onCreate method establishes a connection with Google Maps and sets up on connection
+     * listeners to make other API calls.
+     *
+     * @param savedInstanceState the bundle of saved information from last time the activity was used
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
@@ -90,40 +104,13 @@ public class MapsActivity extends FragmentActivity implements
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
             dialog.show();
 
-        } else { // Google Play Services are available
-
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-
-//            locationCallback.onLocationResult(mLastLocation);
-//            {
-
-//            if (mLastLocation == null) {
-//                mLatitudeText = "37.723609";
-//                mLongitudeText = "-122.475796";
-//                LatLng latLng = new LatLng(37.723609, -122.475796);
-//                Log.i("latlng", "hard coded");
-//
-//            }
-
-
-            mLatitudeText = String.valueOf(mLatitude);
-            mLongitudeText = String.valueOf(mLongitude);
-            String latLngString = mLatitudeText + "," + mLongitudeText;
-            yelpRequest = new YelpAPIRequest("groceries", latLngString, getApplicationContext(), taskCallback);
-
-            try {
-                yelpRequest.makeRequest();
-                Log.i("yelp response.:", "madeRequest in maps");
-            } catch (Exception e) {
-                Log.i("MapsActivity Yelp call", "Error");
-            }
         }
-
-        // }
 
     }
 
+    /**
+     * overridden TaskCallback method to draw Yelp Places on the map when app gets API response
+     */
 
     TaskCallback taskCallback = new TaskCallback() {
         @Override
@@ -138,6 +125,12 @@ public class MapsActivity extends FragmentActivity implements
         }
     };
 
+    /**
+     * This method takes all the Place objects parsed from the Yelp response and draws them on the Google Map
+     *
+     * @param yelpPlacesArray the array of Place objects
+     * @param mMap The GoogleMap
+     */
 
     private static void drawYelp(ArrayList<Place> yelpPlacesArray, GoogleMap mMap) {
 
@@ -169,20 +162,6 @@ public class MapsActivity extends FragmentActivity implements
 
     }
 
-    private void drawMarker(LatLng point) {
-        // Creating an instance of MarkerOptions
-        MarkerOptions markerOptions = new MarkerOptions();
-
-        // Setting latitude and longitude for the marker
-        markerOptions.position(point);
-        markerOptions.title("New Marker @ " + point.latitude + " " + point.longitude);
-        MarkerOptions draggable = markerOptions.draggable(true);
-
-        // Adding marker on the Google Map
-        mMap.addMarker(draggable); //draggable but the longitude latitude does not update!
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -208,7 +187,10 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-    //make sure the map is instantiated
+    /**
+     * This method makes sure the GoogleMap is instantiated
+     */
+
     private void setUpMapIfNeeded() {
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -221,18 +203,16 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-    public interface ClusterItem {
-
-        /**
-         * The position of this marker. This must always return the same value.
-         */
-        LatLng getPosition();
-    }
-
     private void setUpMap() {
         //my initial test for adding a marker.
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Test Marker"));
     }
+
+    /**
+     * This method is called if the original location of the user changes
+     *
+     * @param location Location object with latitude and longitude coordinates
+     */
 
     private void handleNewLocation(Location location) {
         Log.d(TAG, location.toString());
@@ -250,6 +230,14 @@ public class MapsActivity extends FragmentActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
     }
+
+    /**
+     * This method is called once the app has a response from Google Maps.
+     * With that response comes Latitude and Longitute coordinates and the
+     * ability to call the Yelp API using those coordinates.
+     *
+     * @param bundle This is the bundle containing the information returned from Google Maps API
+     */
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -281,6 +269,11 @@ public class MapsActivity extends FragmentActivity implements
 
     }
 
+    /**
+     * This method is called if the Google Maps connections fails.
+     *
+     * @param connectionResult ConnectionResult object containing details of connection failure
+     */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 

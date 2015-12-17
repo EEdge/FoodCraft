@@ -4,8 +4,8 @@ import org.json.JSONObject;
 
 /**
  * Place class is used to hold data for Google Places API search results
- * <p/>
- * Created by evanedge on 11/27/15.
+ *
+ * @author: Evan Edge
  */
 public class Place {
 
