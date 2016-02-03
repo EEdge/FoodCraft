@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class UPCRequest {
     private static final String UPC_KEYWORD = "name";
-    private static final String UPC_KEY = "459563971cd36022e52e0c936ce2836c";
+    private static final String UPC_KEY = "XXXXXXXXXXXXX";
     private static final String UPC_URL = "https://api.outpan.com/v1/products/";
     private TaskCallback callback;
     private Context myActivity;

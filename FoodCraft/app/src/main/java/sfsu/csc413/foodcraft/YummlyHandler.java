@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class YummlyHandler {
 
-    private static final String YUMMLY_ID = "222ff589";
-    private static final String YUMMLY_KEY = "2c26bf6069830ab90b07f6fa26cbef3b";
+    private static final String YUMMLY_ID = "XXXXXXXXXXXXX";
+    private static final String YUMMLY_KEY = "XXXXXXXXXXXXX";
     private static final String YUMMLY_ENDPOINT_SEARCH = "http://api.yummly.com/v1/api/recipes";
     private static final String YUMMLY_ENDPOINT_DETAIL = "http://api.yummly.com/v1/api/recipe/";
 

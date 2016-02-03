@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class GlossarySearch extends Activity{
     private static final String BIGOVEN_GLOSSARY_ENDPOINT_SEARCH = "http://api.bigoven.com/glossary/byterm/";
-    private static final String BIGOVEN_KEY = "vVK4HI1I9NublKJqy5QAEV00J861jtbS";
+    private static final String BIGOVEN_KEY = "XXXXXXXXXXXXX";
     public static final String GLOSSARY = "sfsu.csc413.foodcraft.GLOSSARY";
     Context context;
     RecipeDetail detail;
