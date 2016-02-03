@@ -36,10 +36,10 @@ public class YelpAPIRequest {
 
     //API keys:
 
-    private static final String CONSUMER_KEY = "OqEWi7bYa62SDgILJCMf1w";
-    private static final String CONSUMER_SECRET = "Q4zujzPgymW14_amhfkmb3_TlWY";
-    private static final String TOKEN = "O5e25OK9aT__OlEUublu6gLapEHdyIfY";
-    private static final String TOKEN_SECRET = "upj5pummkmA91ixrg_ZaEIngwb0";
+    private static final String CONSUMER_KEY = "XXXXXXXXXXXXX";
+    private static final String CONSUMER_SECRET = "XXXXXXXXXXXXX";
+    private static final String TOKEN = "XXXXXXXXXXXXX";
+    private static final String TOKEN_SECRET = "XXXXXXXXXXXXX";
 
     //creating the request:
 
